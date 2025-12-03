@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proofbound - Temporarily Unavailable</title>
+    <title>Proofbound</title>
+    <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
     <style>
         * {
             margin: 0;
@@ -23,31 +25,43 @@
             text-align: center;
             padding: 2rem;
         }
+        .logo {
+            width: 150px;
+            height: auto;
+            margin-bottom: 2rem;
+            filter: invert(1);
+        }
         h1 {
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 1rem;
             font-weight: 600;
         }
         p {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #a0a0a0;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
+            max-width: 400px;
         }
-        .status {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 2rem;
-            font-size: 0.9rem;
+        a {
+            color: #6ea8fe;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .comeback {
+            margin-top: 2rem;
+            font-size: 1rem;
             color: #ccc;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Proofbound is not available</h1>
-        <p>We're working to restore service. Please check back soon.</p>
-        <span class="status">Maintenance in progress</span>
+        <img src="logo-562x675.png" alt="Proofbound" class="logo">
+        <h1>Proofbound is currently limited to a select number of users</h1>
+        <p>Interested in access? Email us at <a href="mailto:info@proofbound.com">info@proofbound.com</a></p>
+        <p class="comeback">Come back soon!</p>
     </div>
 </body>
 </html>
