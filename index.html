@@ -3,69 +3,528 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Proofbound</title>
+    <title>Proofbound - AI-Powered Book Creation</title>
+    <meta name="description" content="Transform your ideas into professionally formatted, print-ready books with AI-powered ghostwriting.">
     <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
+        :root {
+            --primary: #007bff;
+            --primary-dark: #0056b3;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
         body {
-            font-family: 'Crimson Text', serif;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef, #dee2e6);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
             min-height: 100vh;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: auto;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 3rem 0 4rem;
+        }
+
+        .construction-banner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #ff9500, #ff6b00);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .construction-icon {
+            font-size: 1.25rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .insider-callout {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.05));
+            border: 2px dashed var(--primary);
+            border-radius: 1rem;
+            padding: 1.5rem 2rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .insider-callout h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .insider-callout p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .insider-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.75rem 1.25rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9375rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .insider-email:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .hero h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
+        }
+
+        .hero-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 3rem 0;
+        }
+
+        .section-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            color: var(--text-dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .feature-icon {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 1rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #1a1a1a;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            margin: 0 auto 1rem;
+            font-size: 1.5rem;
         }
-        .container {
-            text-align: center;
-            padding: 2rem;
-        }
-        .logo {
-            width: 150px;
-            height: auto;
-            margin-bottom: 2rem;
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+
+        .feature-card h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.25rem;
             font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
         }
-        p {
-            font-size: 1.1rem;
-            color: #495057;
+
+        .feature-card p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 3rem 0;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 48px;
+            height: 48px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .step p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* Testimonial Section */
+        .testimonial {
+            padding: 3rem 0;
+        }
+
+        .testimonial-card {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 2.5rem;
+        }
+
+        .quote-mark {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.3;
+            line-height: 1;
+            margin-bottom: -1rem;
+        }
+
+        .testimonial-text {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.375rem;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 3rem 0 4rem;
+            text-align: center;
+        }
+
+        .contact-card {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 2.5rem;
+        }
+
+        .contact h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
             margin-bottom: 1rem;
-            max-width: 400px;
+            color: var(--text-dark);
         }
-        a {
-            color: #0066cc;
+
+        .contact p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .email-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.875rem 1.5rem;
+            border-radius: 0.5rem;
             text-decoration: none;
+            font-weight: 500;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
-        a:hover {
-            text-decoration: underline;
+
+        .email-link:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
         }
-        .comeback {
-            margin-top: 2rem;
-            font-size: 1rem;
-            color: #6c757d;
+
+        .comeback-text {
+            margin-top: 1.5rem;
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 2rem 0 3rem;
+            }
+
+            .features, .how-it-works, .testimonial, .contact {
+                padding: 2rem 0;
+            }
+
+            .glass-card {
+                padding: 1.5rem;
+            }
+
+            .testimonial-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="logo-562x675.png" alt="Proofbound" class="logo">
-        <h1>Proofbound is currently limited to a select number of users</h1>
-        <p>Interested in access? Email us at <a href="mailto:info@proofbound.com">info@proofbound.com</a></p>
-        <p class="comeback">Come back soon!</p>
-    </div>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <img src="logo-562x675.png" alt="Proofbound" class="logo">
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="construction-banner">
+                <span class="construction-icon">&#9888;</span>
+                <span>Under Construction</span>
+                <span class="construction-icon">&#9888;</span>
+            </div>
+            <h1>Transform Your Ideas Into<br><span>Professional Books</span></h1>
+            <p class="hero-subtitle">
+                Proofbound uses AI-powered ghostwriting to turn your unpolished notes and ideas
+                into professionally formatted, print-ready books in minutes.
+            </p>
+            <div class="insider-callout">
+                <h3>Want Early Access?</h3>
+                <p>We're building something special. Get insider access while we're in development.</p>
+                <a href="mailto:info@proofbound.com" class="insider-email">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    info@proofbound.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">Why Proofbound?</h2>
+            <div class="features-grid">
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <h3>AI-Powered Generation</h3>
+                    <p>Advanced AI transforms your raw ideas into polished, compelling prose</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                            <polyline points="10,9 9,9 8,9"/>
+                        </svg>
+                    </div>
+                    <h3>Professional Formatting</h3>
+                    <p>Beautiful typography and layout that meets publishing industry standards</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                            <line x1="3" y1="6" x2="21" y2="6"/>
+                            <path d="M16 10a4 4 0 0 1-8 0"/>
+                        </svg>
+                    </div>
+                    <h3>Print-Ready Output</h3>
+                    <p>Export PDFs ready for Amazon KDP, IngramSpark, or direct printing</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <div class="feature-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                            <circle cx="8.5" cy="8.5" r="1.5"/>
+                            <polyline points="21,15 16,10 5,21"/>
+                        </svg>
+                    </div>
+                    <h3>Custom Cover Design</h3>
+                    <p>Generate eye-catching book covers that stand out on any shelf</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Share Your Ideas</h3>
+                    <p>Upload your notes, outline, or simply describe your book concept</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>AI Creates Your Book</h3>
+                    <p>Our AI ghostwriter expands your ideas into a complete manuscript</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Review &amp; Publish</h3>
+                    <p>Edit, customize, and export your print-ready book</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="testimonial">
+        <div class="container">
+            <div class="glass-card testimonial-card">
+                <div class="quote-mark">"</div>
+                <p class="testimonial-text">
+                    Proofbound makes it effortless to turn your expertise into a professional book
+                    that establishes your authority. What used to take months now takes minutes.
+                </p>
+                <p class="testimonial-author">— The Proofbound Team</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact">
+        <div class="container">
+            <div class="glass-card contact-card">
+                <h2>Coming Soon</h2>
+                <p>We're putting the finishing touches on Proofbound. Check back soon for public access, or reach out now for early insider access.</p>
+                <a href="mailto:info@proofbound.com" class="email-link">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                        <polyline points="22,6 12,13 2,6"/>
+                    </svg>
+                    info@proofbound.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Proofbound. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
