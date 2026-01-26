@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TextKeep - Export iMessage to Markdown</title>
+    <meta name="description" content="Export your iMessage conversations to clean, readable Markdown files. Free Mac app from Proofbound.">
+    <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #007bff;
+            --primary-dark: #0056b3;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Back link */
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 1.5rem 0;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 2rem 0 3rem;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .tagline {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: background 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .download-btn:hover {
+            background: #000;
+            transform: translateY(-2px);
+        }
+
+        .download-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .platform-note {
+            margin-top: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Glass Card */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 2rem 0 3rem;
+        }
+
+        .section-title {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .feature-card h3 span {
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        /* Privacy Section */
+        .privacy {
+            padding: 2rem 0 3rem;
+        }
+
+        .privacy-card {
+            text-align: center;
+            padding: 2.5rem;
+        }
+
+        .privacy-card h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .privacy-card p {
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 1.5rem 0 2rem;
+            }
+
+            .features, .privacy {
+                padding: 1.5rem 0 2rem;
+            }
+
+            .glass-card {
+                padding: 1.5rem;
+            }
+
+            .logo {
+                width: 100px;
+                height: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15,18 9,12 15,6"/>
+            </svg>
+            Back to Proofbound
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo.svg" alt="TextKeep" class="logo">
+            <h1>TextKeep</h1>
+            <p class="tagline">
+                Export your iMessage conversations to clean, readable Markdown files.
+            </p>
+            <a href="https://github.com/Proofbound/textkeep/releases" class="download-btn" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+                </svg>
+                Download for macOS
+            </a>
+            <p class="platform-note">Free and open source. macOS only.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">What TextKeep Does</h2>
+            <div class="features-grid">
+                <div class="glass-card feature-card">
+                    <h3><span>💬</span> iMessage Export</h3>
+                    <p>Converts your iMessage conversations into clean Markdown files with proper formatting and structure.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <h3><span>👥</span> Groups & Contacts</h3>
+                    <p>Handles one-on-one and group chats. Shows real contact names, not phone numbers.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <h3><span>📎</span> Media & Attachments</h3>
+                    <p>Copies images, videos, and audio to an attachments folder with proper Markdown linking.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <h3><span>😂</span> Reactions & Emoji</h3>
+                    <p>Preserves iMessage reactions (likes, hearts, laughs) with corresponding emoji display.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <h3><span>📅</span> Date Filtering</h3>
+                    <p>Export messages from specific date ranges. Preview conversations before exporting.</p>
+                </div>
+                <div class="glass-card feature-card">
+                    <h3><span>🔒</span> 100% Local</h3>
+                    <p>Runs entirely on your Mac. No network access, no telemetry, no cloud.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Section -->
+    <section class="privacy">
+        <div class="container">
+            <div class="glass-card privacy-card">
+                <h2>Privacy First</h2>
+                <p>
+                    TextKeep operates completely offline. It never modifies your Messages database,
+                    never sends data anywhere, and includes no tracking or telemetry. Your conversations stay yours.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>
+                TextKeep is free and open source.
+                <a href="https://github.com/Proofbound/textkeep" target="_blank" rel="noopener">View on GitHub</a>
+            </p>
+            <p style="margin-top: 0.5rem;">&copy; 2025 Proofbound. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
