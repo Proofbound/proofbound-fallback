@@ -41,6 +41,33 @@
             line-height: 1.6;
         }
 
+        /* TextKeep Banner */
+        .textkeep-banner {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .textkeep-banner a {
+            color: var(--white);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .textkeep-banner a:hover {
+            opacity: 0.8;
+        }
+
+        .textkeep-banner img {
+            width: 20px;
+            height: 20px;
+        }
+
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -376,6 +403,14 @@
     </style>
 </head>
 <body>
+    <!-- TextKeep Banner -->
+    <div class="textkeep-banner">
+        <a href="https://github.com/Proofbound/textkeep/" target="_blank" rel="noopener">
+            <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
+            Download free Mac app TextKeep
+        </a>
+    </div>
+
     <!-- Header -->
     <header>
         <div class="container">
