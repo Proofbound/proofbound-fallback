@@ -1,0 +1,19 @@
+# Git and system files
+.git/
+.DS_Store
+
+# Claude configuration
+.claude/
+
+# Not needed for context
+favicons/
+*.png
+*.svg
+*.ico
+*.jpg
+*.jpeg
+
+# Archive and backup files
+*.zip
+*.tar.gz
+*.bak

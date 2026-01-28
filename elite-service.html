@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elite Service - Proofbound</title>
+    <meta name="description" content="Premium book creation service with professional editing, research enhancement, and custom publishing support.">
+    <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #007bff;
+            --primary-dark: #0056b3;
+            --purple: #9333ea;
+            --purple-dark: #7e22ce;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #faf5ff 0%, #f3e8ff 50%, #e9d5ff 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* TextKeep Banner */
+        .textkeep-banner {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .textkeep-banner a {
+            color: var(--white);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .textkeep-banner a:hover {
+            opacity: 0.8;
+        }
+
+        .textkeep-banner img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.7;
+        }
+
+        .logo {
+            width: 32px;
+            height: auto;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--purple);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--purple-dark);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0 4rem;
+            text-align: center;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .crown-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .status-badge {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .feature-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(147, 51, 234, 0.2);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(147, 51, 234, 0.4);
+            box-shadow: 0 8px 32px rgba(147, 51, 234, 0.15);
+        }
+
+        .feature-card h3 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .feature-card p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* How to Get Section */
+        .how-to-get {
+            background: linear-gradient(135deg, rgba(147, 51, 234, 0.05), rgba(147, 51, 234, 0.02));
+            border: 2px solid rgba(147, 51, 234, 0.2);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .how-to-get-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .how-to-get-header svg {
+            width: 24px;
+            height: 24px;
+            color: var(--purple);
+        }
+
+        .how-to-get h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            text-align: left;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            background: var(--purple);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.875rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+
+        .step-content p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+        }
+
+        .how-to-get .cta-button {
+            margin-top: 1.5rem;
+        }
+
+        /* CTA Buttons */
+        .cta-container {
+            margin-top: 2rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Bottom CTA */
+        .bottom-cta {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        .bottom-cta h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .bottom-cta p {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .cta-button.secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--bg-light);
+            transform: translateY(-2px);
+        }
+
+        .note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glass-card, .bottom-cta {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2.25rem;
+            }
+
+            .status-badge {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.125rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TextKeep Banner -->
+    <div class="textkeep-banner">
+        <a href="textkeep.html">
+            <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
+            TextKeep: save your text messages (macOS)
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="container">
+        <a href="index.html" class="logo-link">
+            <img src="logo-562x675.png" alt="Proofbound" class="logo">
+            <span>Proofbound</span>
+        </a>
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="glass-card">
+            <div class="crown-icon">👑</div>
+            <h1>Elite Service</h1>
+            <div class="status-badge">Now Available</div>
+            <p class="subtitle">
+                Premium book creation service with personal attention from our experienced team, professional editing, research enhancement, and beautiful bound copies delivered to your door.
+            </p>
+
+            <!-- Features Grid -->
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>🎯 Personal Project Manager</h3>
+                    <p>Dedicated publishing consultant who becomes your partner, guiding every step from initial concept refinement through final publication and marketing strategy.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>✍️ Professional Editing & Development</h3>
+                    <p>Multi-stage editing process including developmental editing, copyediting, and proofreading by experienced editors who specialize in your book's genre and subject matter.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🔬 Premium Research & Fact-Checking</h3>
+                    <p>In-depth research to enhance credibility, verify facts, add authoritative sources, and strengthen your expertise with current data and industry insights.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📚 Premium Physical Production</h3>
+                    <p>Professionally designed covers, high-quality paper, perfect binding, and elegant presentation worthy of bookstore shelves - delivered ready for distribution.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>🎨 Custom Design & Layout</h3>
+                    <p>Professional typography, custom chapter layouts, tailored cover design, and formatting that reflects your brand and maximizes reader engagement.</p>
+                </div>
+
+                <div class="feature-card">
+                    <h3>📈 Publication & Marketing Support</h3>
+                    <p>ISBN registration, copyright assistance, publishing platform setup, and strategic guidance for launching your book with maximum impact and reach.</p>
+                </div>
+            </div>
+
+            <!-- How to Get Elite Service -->
+            <div class="how-to-get">
+                <div class="how-to-get-header">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="8" r="7"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>
+                    </svg>
+                    <h3>How to Get Elite Service</h3>
+                </div>
+
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Generate Your Book</h4>
+                            <p>Use our AI Generator to create your book with your ideas and expertise</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Save to Your Account</h4>
+                            <p>Complete the generation process and save your book to your dashboard</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Request Elite Service</h4>
+                            <p>Go to your dashboard and click the "Elite Service" button on your completed book</p>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h4>We Contact You</h4>
+                            <p>Our team will reach out within 24 hours to discuss your project and provide a custom quote</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cta-container">
+                    <a href="https://app.proofbound.com/signup" class="cta-button">
+                        Start Your Book Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom CTA -->
+        <div class="bottom-cta">
+            <h2>Ready to Transform Your Ideas into a Professional Book?</h2>
+            <p>Start with our AI-powered book generation, then upgrade to Elite Service for the ultimate publishing experience</p>
+
+            <div class="cta-buttons">
+                <a href="https://app.proofbound.com/demo" class="cta-button secondary">
+                    Try Free Demo
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                </a>
+                <a href="https://app.proofbound.com/signup" class="cta-button">
+                    Start AI Generation - $99
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+
+            <p class="note">Generate your book with AI, then upgrade to Elite Service from your dashboard</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="service-tiers.html">Service Tiers</a>
+                <a href="faq.html">FAQ</a>
+                <a href="elite-service.html">Elite Service</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+            <p>&copy; 2026 Proofbound. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

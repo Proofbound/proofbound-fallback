@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Tiers - Proofbound</title>
+    <meta name="description" content="Choose the right publishing path for your book. From proof of concept to premium consulting.">
+    <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #007bff;
+            --primary-dark: #0056b3;
+            --amber: #f59e0b;
+            --amber-dark: #d97706;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* TextKeep Banner */
+        .textkeep-banner {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .textkeep-banner a {
+            color: var(--white);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .textkeep-banner a:hover {
+            opacity: 0.8;
+        }
+
+        .textkeep-banner img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.7;
+        }
+
+        .logo {
+            width: 32px;
+            height: auto;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0 4rem;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Pricing Tiers */
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .tier-card {
+            background: var(--white);
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .tier-card.popular {
+            border-color: var(--primary);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .tier-icon {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .tier-card h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .tier-price {
+            font-size: 2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-card.concept .tier-price {
+            color: var(--primary);
+        }
+
+        .tier-card.professional .tier-price {
+            color: var(--primary);
+        }
+
+        .tier-card.premium .tier-price {
+            color: var(--amber);
+        }
+
+        .tier-description {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-features {
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-features h4 {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-dark);
+        }
+
+        .tier-features ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .tier-features li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: var(--text-dark);
+            font-size: 0.9375rem;
+        }
+
+        .checkmark {
+            color: #10b981;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .best-for {
+            background: var(--bg-light);
+            border-radius: 0.75rem;
+            padding: 1rem;
+        }
+
+        .best-for h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .best-for p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: var(--bg-light);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .cta-section h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+        }
+
+        .cta-section .note {
+            color: var(--text-muted);
+            font-size: 0.9375rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(0, 123, 255, 0.4);
+        }
+
+        .cta-button.secondary {
+            background: var(--white);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: none;
+        }
+
+        .cta-button.secondary:hover {
+            background: var(--bg-light);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.125rem;
+            }
+
+            .tiers-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TextKeep Banner -->
+    <div class="textkeep-banner">
+        <a href="textkeep.html">
+            <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
+            TextKeep: save your text messages (macOS)
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="container">
+        <a href="index.html" class="logo-link">
+            <img src="logo-562x675.png" alt="Proofbound" class="logo">
+            <span>Proofbound</span>
+        </a>
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="glass-card">
+            <h1>Choose Your Publishing Path</h1>
+            <p class="subtitle">Three Ways to Turn Your Expertise Into Published Authority</p>
+
+            <div class="tiers-grid">
+                <!-- Proof of Concept -->
+                <div class="tier-card concept">
+                    <div class="tier-icon">📚</div>
+                    <h3>Proof of Concept Books</h3>
+                    <div class="tier-price">Starting at $49</div>
+                    <p class="tier-description">Perfect for business development and market testing</p>
+
+                    <div class="tier-features">
+                        <h4>What's Included:</h4>
+                        <ul>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Professional book based on proven templates</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Quick customization with your branding and content</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Ideal for door-openers and business development</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Great for testing market response to your ideas</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Self-service web portal for fast turnaround</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="best-for">
+                        <h4>Best For:</h4>
+                        <p>Entrepreneurs, sales professionals, and consultants who need professional materials for business development and relationship building.</p>
+                    </div>
+                </div>
+
+                <!-- Professional Books -->
+                <div class="tier-card professional popular">
+                    <span class="popular-badge">Most Popular</span>
+                    <div class="tier-icon">📖</div>
+                    <h3>Professional Books</h3>
+                    <div class="tier-price">$500 - $2,000</div>
+                    <p class="tier-description">Comprehensive custom publications for serious thought leadership</p>
+
+                    <div class="tier-features">
+                        <h4>What's Included:</h4>
+                        <ul>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Complete custom book from your materials and expertise</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Full research synthesis and professional writing</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Conference-quality publication ready for Amazon</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Professional cover design and formatting</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Consultation on content strategy and positioning</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Perfect for building industry credibility</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="best-for">
+                        <h4>Best For:</h4>
+                        <p>Industry experts, conference speakers, and established professionals who want to establish serious thought leadership.</p>
+                    </div>
+                </div>
+
+                <!-- Premium Consulting -->
+                <div class="tier-card premium">
+                    <div class="tier-icon">🏆</div>
+                    <h3>Premium Consulting</h3>
+                    <div class="tier-price">$2,000 - $5,000</div>
+                    <p class="tier-description">White-glove service with dedicated project management</p>
+
+                    <div class="tier-features">
+                        <h4>What's Included:</h4>
+                        <ul>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Dedicated project manager and publishing consultant</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Multiple revision cycles and collaborative development</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Premium research and content development</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>International market optimization</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Complete Amazon publishing support with marketing guidance</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Ongoing support and potential series development</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="best-for">
+                        <h4>Best For:</h4>
+                        <p>C-level executives, international professionals, and organizations requiring the highest quality publications with full service support.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Section -->
+            <div class="cta-section">
+                <h3>Not Sure Which is Right for You?</h3>
+                <p><strong>Start with a free consultation</strong> to discuss your goals and determine the best approach for your specific needs.</p>
+                <p class="note">Every tier delivers professional results—the difference is in the level of customization, research depth, and hands-on support.</p>
+
+                <div class="cta-buttons">
+                    <a href="https://app.proofbound.com/signup" class="cta-button">
+                        Get Started Now
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="https://app.proofbound.com/demo" class="cta-button secondary">
+                        Try Free Demo
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="service-tiers.html">Service Tiers</a>
+                <a href="faq.html">FAQ</a>
+                <a href="elite-service.html">Elite Service</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+            <p>&copy; 2026 Proofbound. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -20,6 +20,10 @@
         :root {
             --primary: #007bff;
             --primary-dark: #0056b3;
+            --purple: #9333ea;
+            --purple-dark: #7e22ce;
+            --orange: #ff6b00;
+            --orange-dark: #e65c00;
             --text-dark: #212529;
             --text-secondary: #495057;
             --text-muted: #6c757d;
@@ -89,73 +93,8 @@
         .hero {
             text-align: center;
             padding: 3rem 0 4rem;
-        }
-
-        .construction-banner {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: linear-gradient(135deg, #ff9500, #ff6b00);
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 1.5rem;
-            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .construction-icon {
-            font-size: 1.25rem;
-            animation: bounce 1s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
-        }
-
-        .insider-callout {
-            background: linear-gradient(135deg, rgba(0, 123, 255, 0.1), rgba(0, 123, 255, 0.05));
-            border: 2px dashed var(--primary);
-            border-radius: 1rem;
-            padding: 1.5rem 2rem;
-            max-width: 500px;
+            max-width: 1000px;
             margin: 0 auto;
-        }
-
-        .insider-callout h3 {
-            font-family: 'Crimson Text', Georgia, serif;
-            font-size: 1.25rem;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .insider-callout p {
-            font-size: 0.9375rem;
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-
-        .insider-email {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9375rem;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .insider-email:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
         }
 
         .hero h1 {
@@ -167,15 +106,221 @@
             line-height: 1.2;
         }
 
-        .hero h1 span {
+        .typing-container {
+            display: inline-block;
             color: var(--primary);
+            min-width: 10.5ch;
+            text-align: center;
+        }
+
+        .hero h1 .published-book {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 123, 255, 0.3);
+            margin-top: 1rem;
+        }
+
+        .book-video {
+            width: 4rem;
+            height: auto;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 1rem;
+            font-weight: 500;
+        }
+
+        .hero-description {
             font-size: 1.125rem;
             color: var(--text-secondary);
             max-width: 600px;
             margin: 0 auto 2rem;
+        }
+
+        /* Perfect For Card */
+        .perfect-for-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .perfect-for-card h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .perfect-for-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .perfect-for-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .perfect-for-grid div {
+            font-size: 0.9375rem;
+            color: var(--text-dark);
+        }
+
+        /* CTA Buttons */
+        .cta-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(0, 123, 255, 0.4);
+        }
+
+        .cta-elite {
+            background: linear-gradient(135deg, var(--purple), var(--purple-dark));
+            box-shadow: 0 4px 20px rgba(147, 51, 234, 0.3);
+        }
+
+        .cta-elite:hover {
+            background: linear-gradient(135deg, var(--purple-dark), #6b21a8);
+            box-shadow: 0 6px 28px rgba(147, 51, 234, 0.4);
+        }
+
+        /* Service Description Cards */
+        .service-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .service-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            text-align: left;
+        }
+
+        .service-card.try-free {
+            border-color: rgba(0, 123, 255, 0.3);
+        }
+
+        .service-card.elite {
+            border-color: rgba(147, 51, 234, 0.3);
+        }
+
+        .service-card h3 {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .service-card p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Amazon KDP Panel */
+        .kdp-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 2px solid rgba(255, 107, 0, 0.3);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            max-width: 800px;
+            margin: 3rem auto;
+        }
+
+        .kdp-panel h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .kdp-panel p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .kdp-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #ff9500, var(--orange));
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
+        }
+
+        .kdp-cta:hover {
+            background: linear-gradient(135deg, var(--orange-dark), #cc5200);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(255, 107, 0, 0.4);
+        }
+
+        .kdp-note {
+            font-size: 0.9375rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
         }
 
         /* Glass Card */
@@ -245,135 +390,6 @@
             color: var(--text-secondary);
         }
 
-        /* How It Works Section */
-        .how-it-works {
-            padding: 3rem 0;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .step {
-            text-align: center;
-            position: relative;
-        }
-
-        .step-number {
-            width: 48px;
-            height: 48px;
-            background: var(--primary);
-            color: var(--white);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.25rem;
-            margin: 0 auto 1rem;
-        }
-
-        .step h3 {
-            font-family: 'Crimson Text', Georgia, serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .step p {
-            font-size: 0.9375rem;
-            color: var(--text-secondary);
-            max-width: 280px;
-            margin: 0 auto;
-        }
-
-        /* Testimonial Section */
-        .testimonial {
-            padding: 3rem 0;
-        }
-
-        .testimonial-card {
-            max-width: 700px;
-            margin: 0 auto;
-            text-align: center;
-            padding: 2.5rem;
-        }
-
-        .quote-mark {
-            font-family: 'Crimson Text', Georgia, serif;
-            font-size: 4rem;
-            color: var(--primary);
-            opacity: 0.3;
-            line-height: 1;
-            margin-bottom: -1rem;
-        }
-
-        .testimonial-text {
-            font-family: 'Crimson Text', Georgia, serif;
-            font-size: 1.375rem;
-            font-style: italic;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.6;
-        }
-
-        .testimonial-author {
-            font-weight: 600;
-            color: var(--primary);
-        }
-
-        /* Contact Section */
-        .contact {
-            padding: 3rem 0 4rem;
-            text-align: center;
-        }
-
-        .contact-card {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 2.5rem;
-        }
-
-        .contact h2 {
-            font-family: 'Crimson Text', Georgia, serif;
-            font-size: 1.75rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--text-dark);
-        }
-
-        .contact p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-        }
-
-        .email-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--primary);
-            color: var(--white);
-            padding: 0.875rem 1.5rem;
-            border-radius: 0.5rem;
-            text-decoration: none;
-            font-weight: 500;
-            transition: background 0.3s ease, transform 0.3s ease;
-        }
-
-        .email-link:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .comeback-text {
-            margin-top: 1.5rem;
-            font-size: 0.9375rem;
-            color: var(--text-muted);
-        }
-
         /* Footer */
         footer {
             text-align: center;
@@ -382,13 +398,31 @@
             font-size: 0.875rem;
         }
 
+        .footer-links {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .hero {
                 padding: 2rem 0 3rem;
             }
 
-            .features, .how-it-works, .testimonial, .contact {
+            .features {
                 padding: 2rem 0;
             }
 
@@ -396,7 +430,21 @@
                 padding: 1.5rem;
             }
 
-            .testimonial-card {
+            .cta-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .cta-button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .service-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .kdp-panel {
                 padding: 1.5rem;
             }
         }
@@ -407,7 +455,7 @@
     <div class="textkeep-banner">
         <a href="textkeep.html">
             <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
-            Download free Mac app TextKeep
+            TextKeep: save your text messages (macOS)
         </a>
     </div>
 
@@ -421,27 +469,82 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="construction-banner">
-                <span class="construction-icon">&#9888;</span>
-                <span>Under Construction</span>
-                <span class="construction-icon">&#9888;</span>
-            </div>
-            <h1>Transform Your Ideas Into<br><span>Professional Books</span></h1>
+            <h1>
+                Turn your <span class="typing-container" id="typing">ideas</span> into a<br>
+                <span class="published-book">
+                    <video autoplay loop muted playsinline class="book-video">
+                        <source src="book-pages-flipping.mp4" type="video/mp4">
+                    </video>
+                    Published Book
+                </span>
+            </h1>
+
             <p class="hero-subtitle">
-                Proofbound uses AI-powered ghostwriting to turn your unpolished notes and ideas
-                into professionally formatted, print-ready books in minutes.
+                You have the expertise. You have the notes. Let us finish it for you.
             </p>
-            <div class="insider-callout">
-                <h3>Want Early Access?</h3>
-                <p>We're building something special. Get insider access while we're in development.</p>
-                <a href="mailto:info@proofbound.com" class="insider-email">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
+
+            <p class="hero-description">
+                We'll turn your knowledge into a professional 200-page book — in days, not weeks.
+            </p>
+
+            <!-- Perfect For Card -->
+            <div class="perfect-for-card">
+                <h3>Perfect for:</h3>
+                <div class="perfect-for-grid">
+                    <div>✓ Busy professionals with scattered notes but no time</div>
+                    <div>✓ Non-native speakers with great ideas</div>
+                    <div>✓ Experts who hate writing</div>
+                    <div>✓ Anyone who's been "meaning to write that book"</div>
+                </div>
+            </div>
+
+            <!-- CTA Buttons -->
+            <div class="cta-container">
+                <a href="https://app.proofbound.com/signup" class="cta-button">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
                     </svg>
-                    info@proofbound.com
+                    Try for Free
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <a href="elite-service.html" class="cta-button cta-elite">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="8" r="7"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>
+                    </svg>
+                    Elite Service
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
                 </a>
             </div>
+
+            <!-- Service Description Cards -->
+            <div class="service-cards">
+                <div class="service-card try-free">
+                    <h3>Try for Free</h3>
+                    <p>Create your first book at no cost. Upload your notes and ideas, and our AI generates a complete book with professional formatting. No credit card required.</p>
+                </div>
+                <div class="service-card elite">
+                    <h3>Elite Service</h3>
+                    <p>Premium service with professional editing, research enhancement, and custom publishing support. Perfect for serious authors.</p>
+                </div>
+            </div>
+
+            <!-- Amazon KDP Panel -->
+            <div class="kdp-panel">
+                <h2>Publish to Amazon Today</h2>
+                <p>Every Proofbound book comes with Amazon KDP-ready files. Upload and publish under your name in minutes.</p>
+                <a href="https://app.proofbound.com/kdp-instructions" class="kdp-cta">
+                    <span>Step-by-Step Publishing Guide</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+                <p class="kdp-note">Free guide • No additional fees • Keep 100% of royalties</p>
+            </div>
+
         </div>
     </section>
 
@@ -500,66 +603,37 @@
         </div>
     </section>
 
-    <!-- How It Works Section -->
-    <section class="how-it-works">
-        <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <div class="steps-grid">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Share Your Ideas</h3>
-                    <p>Upload your notes, outline, or simply describe your book concept</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>AI Creates Your Book</h3>
-                    <p>Our AI ghostwriter expands your ideas into a complete manuscript</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Review &amp; Publish</h3>
-                    <p>Edit, customize, and export your print-ready book</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonial Section -->
-    <section class="testimonial">
-        <div class="container">
-            <div class="glass-card testimonial-card">
-                <div class="quote-mark">"</div>
-                <p class="testimonial-text">
-                    Proofbound makes it effortless to turn your expertise into a professional book
-                    that establishes your authority. What used to take months now takes minutes.
-                </p>
-                <p class="testimonial-author">— The Proofbound Team</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section class="contact">
-        <div class="container">
-            <div class="glass-card contact-card">
-                <h2>Coming Soon</h2>
-                <p>We're putting the finishing touches on Proofbound. Check back soon for public access, or reach out now for early insider access.</p>
-                <a href="mailto:info@proofbound.com" class="email-link">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                        <polyline points="22,6 12,13 2,6"/>
-                    </svg>
-                    info@proofbound.com
-                </a>
-            </div>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Proofbound. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="how-it-works.html">How It Works</a>
+                <a href="service-tiers.html">Service Tiers</a>
+                <a href="faq.html">FAQ</a>
+                <a href="elite-service.html">Elite Service</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+            <p>&copy; 2026 Proofbound. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Typing Animation Script -->
+    <script>
+        const words = ["ideas", "notes", "expertise", "knowledge"];
+        let currentWord = 0;
+        const typingElement = document.getElementById('typing');
+
+        function typeWord() {
+            typingElement.textContent = words[currentWord];
+            currentWord = (currentWord + 1) % words.length;
+        }
+
+        // Initial word
+        typeWord();
+
+        // Change word every 3 seconds
+        setInterval(typeWord, 3000);
+    </script>
 </body>
 </html>

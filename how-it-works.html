@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How It Works - Proofbound</title>
+    <meta name="description" content="Learn how Proofbound transforms your expertise into a published book in 4 simple steps.">
+    <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #007bff;
+            --primary-dark: #0056b3;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            line-height: 1.6;
+        }
+
+        /* TextKeep Banner */
+        .textkeep-banner {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.5rem 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+        }
+
+        .textkeep-banner a {
+            color: var(--white);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: opacity 0.2s ease;
+        }
+
+        .textkeep-banner a:hover {
+            opacity: 0.8;
+        }
+
+        .textkeep-banner img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header */
+        header {
+            padding: 1.5rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: opacity 0.2s ease;
+        }
+
+        .logo-link:hover {
+            opacity: 0.7;
+        }
+
+        .logo {
+            width: 32px;
+            height: auto;
+        }
+
+        .back-link {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .back-link:hover {
+            color: var(--primary-dark);
+        }
+
+        /* Main Content */
+        main {
+            padding: 2rem 0 4rem;
+        }
+
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* Steps */
+        .steps {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .step {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 1.5rem;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            padding-top: 0.5rem;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-icon {
+            font-size: 1.5rem;
+        }
+
+        .step h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .step p {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            line-height: 1.7;
+        }
+
+        .step-details {
+            background: var(--bg-light);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+        }
+
+        .step-details h4 {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .step-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-details li {
+            padding: 0.5rem 0;
+            color: var(--text-dark);
+            display: flex;
+            align-items: baseline;
+            gap: 0.5rem;
+        }
+
+        .step-details li:before {
+            content: "•";
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background: linear-gradient(135deg, rgba(0, 123, 255, 0.05), rgba(0, 123, 255, 0.02));
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .benefits h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--text-dark);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .benefit {
+            padding: 0 1rem;
+        }
+
+        .benefit h4 {
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .benefit p {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* Quality Section */
+        .quality-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .quality-section h3 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .quality-section p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        .cta-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--primary);
+            color: var(--white);
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 123, 255, 0.3);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 28px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        .footer-links {
+            margin-bottom: 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 1rem;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .glass-card {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.125rem;
+            }
+
+            .step {
+                grid-template-columns: 1fr;
+            }
+
+            .step-number {
+                margin: 0 auto 1rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- TextKeep Banner -->
+    <div class="textkeep-banner">
+        <a href="textkeep.html">
+            <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
+            TextKeep: save your text messages (macOS)
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="container">
+        <a href="index.html" class="logo-link">
+            <img src="logo-562x675.png" alt="Proofbound" class="logo">
+            <span>Proofbound</span>
+        </a>
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+        </a>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="glass-card">
+            <h1>How Proofbound Works</h1>
+            <p class="subtitle">From Your Expertise to Published Book in 4 Simple Steps</p>
+
+            <div class="steps">
+                <!-- Step 1 -->
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <div class="step-header">
+                            <span class="step-icon">📝</span>
+                            <h3>Share Your Vision</h3>
+                        </div>
+                        <p>Tell us about your book concept and goals. Upload any supporting materials you have—presentations, notes, research, product specifications, or previous writing. Don't worry about organization; we work with whatever you provide.</p>
+                        <div class="step-details">
+                            <h4>What You Can Share:</h4>
+                            <ul>
+                                <li>Business concepts and industry insights</li>
+                                <li>Research papers and case studies</li>
+                                <li>Product documentation and specifications</li>
+                                <li>Personal expertise and experience</li>
+                                <li>Materials in any language</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <div class="step-header">
+                            <span class="step-icon">🧠</span>
+                            <h3>AI-Powered Content Creation</h3>
+                        </div>
+                        <p>Our advanced AI synthesis engine transforms your materials into comprehensive, well-structured content. We don't just summarize—we expand, research, and create professional-quality writing that reflects deep expertise.</p>
+                        <div class="step-details">
+                            <h4>Our Process:</h4>
+                            <ul>
+                                <li>Multi-language input processing</li>
+                                <li>Research augmentation and fact-checking</li>
+                                <li>Professional writing with proper citations</li>
+                                <li>Structured chapters with logical flow</li>
+                                <li>Quality assurance and copy editing</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <div class="step-header">
+                            <span class="step-icon">✏️</span>
+                            <h3>Review and Refine</h3>
+                        </div>
+                        <p>You receive a complete draft for review. Depending on your service tier, you can make revisions through our easy-to-use platform or work directly with our publishing consultants for major changes.</p>
+                        <div class="step-details">
+                            <h4>Your Control:</h4>
+                            <ul>
+                                <li>Chapter-by-chapter review</li>
+                                <li>Easy revision requests</li>
+                                <li>Direct collaboration with our team</li>
+                                <li>Multiple format previews</li>
+                                <li>Real-time progress tracking</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <div class="step-header">
+                            <span class="step-icon">🚀</span>
+                            <h3>Publish and Promote</h3>
+                        </div>
+                        <p>We handle all the technical aspects of publication, from Amazon KDP setup to ISBN registration. You get a professional book that's ready for distribution, marketing, and building your authority.</p>
+                        <div class="step-details">
+                            <h4>Final Deliverables:</h4>
+                            <ul>
+                                <li>Professional print-ready PDF</li>
+                                <li>Amazon Kindle-compatible formats</li>
+                                <li>High-resolution cover files</li>
+                                <li>Complete publishing package</li>
+                                <li>Marketing guidance and support</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Benefits Section -->
+            <div class="benefits">
+                <h3>Why This Works Better Than Traditional Publishing</h3>
+                <div class="benefits-grid">
+                    <div class="benefit">
+                        <h4>Faster:</h4>
+                        <p>Days instead of months or years</p>
+                    </div>
+                    <div class="benefit">
+                        <h4>Affordable:</h4>
+                        <p>Fraction of ghostwriter costs</p>
+                    </div>
+                    <div class="benefit">
+                        <h4>Professional:</h4>
+                        <p>Quality comparable to traditional publishing</p>
+                    </div>
+                    <div class="benefit">
+                        <h4>Accessible:</h4>
+                        <p>No publishing experience required</p>
+                    </div>
+                    <div class="benefit">
+                        <h4>Comprehensive:</h4>
+                        <p>From concept to published book</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quality Section -->
+            <div class="quality-section">
+                <h3>Quality You Can Trust</h3>
+                <p>Every Proofbound book meets professional publishing standards with proper structure, citations, and formatting. We're not creating marketing brochures—we're building authoritative publications that enhance your professional credibility.</p>
+                <a href="https://app.proofbound.com/signup" class="cta-button">
+                    Start Your Book Today
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="how-it-works.html">How It Works</a>
+                <a href="service-tiers.html">Service Tiers</a>
+                <a href="faq.html">FAQ</a>
+                <a href="elite-service.html">Elite Service</a>
+                <a href="privacy.html">Privacy</a>
+                <a href="terms.html">Terms</a>
+            </div>
+            <p>&copy; 2026 Proofbound. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
