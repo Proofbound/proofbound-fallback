@@ -74,19 +74,29 @@
 
         /* Under Construction Banner */
         .construction-banner {
-            background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
-            color: var(--white);
-            padding: 0.75rem 1rem;
-            text-align: center;
-            font-size: 0.9375rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: linear-gradient(135deg, #ff9500, #ff6b00);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
             font-weight: 600;
-            border-bottom: 3px solid rgba(0, 0, 0, 0.1);
+            color: var(--white);
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .construction-banner a {
-            color: var(--white);
-            text-decoration: underline;
-            font-weight: 700;
+        .construction-icon {
+            font-size: 1.25rem;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
         }
 
         .container {
@@ -97,19 +107,32 @@
 
         /* Header */
         header {
-            padding: 1.5rem 0;
+            padding: 1rem 0 0.25rem 0;
             text-align: center;
         }
 
+        .brand-name {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 0 0 0.5rem 0;
+        }
+
+        .brand-name sup {
+            font-size: 0.6em;
+            vertical-align: super;
+        }
+
         .logo {
-            width: 80px;
+            width: 150px;
             height: auto;
         }
 
         /* Hero Section */
         .hero {
             text-align: center;
-            padding: 3rem 0 4rem;
+            padding: 0 0 3rem;
             max-width: 1000px;
             margin: 0 auto;
         }
@@ -119,7 +142,7 @@
             font-size: clamp(2.5rem, 6vw, 3.5rem);
             font-weight: 700;
             color: var(--text-dark);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             line-height: 1.2;
         }
 
@@ -140,7 +163,7 @@
             border-radius: 0.75rem;
             font-size: 2rem;
             box-shadow: 0 8px 24px rgba(0, 123, 255, 0.3);
-            margin-top: 1rem;
+            margin-top: 0.75rem;
         }
 
         .book-video {
@@ -151,18 +174,21 @@
         }
 
         .hero-subtitle {
+            font-family: 'Crimson Text', Georgia, serif;
             font-size: 1.25rem;
             color: var(--text-secondary);
             max-width: 700px;
             margin: 0 auto 1rem;
-            font-weight: 500;
+            font-weight: 400;
         }
 
         .hero-description {
-            font-size: 1.125rem;
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.25rem;
             color: var(--text-secondary);
             max-width: 600px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1.5rem;
+            font-weight: 400;
         }
 
         /* Perfect For Card */
@@ -172,9 +198,9 @@
             -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 1rem;
-            padding: 2rem;
+            padding: 1.5rem;
             max-width: 700px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1.5rem;
         }
 
         .perfect-for-card h3 {
@@ -476,21 +502,22 @@
         </a>
     </div>
 
-    <!-- Under Construction Banner -->
-    <div class="construction-banner">
-        🚧 Under Construction — <a href="mailto:info@proofbound.com">Get Insider Access</a>
-    </div>
-
     <!-- Header -->
     <header>
         <div class="container">
-            <img src="proofbound-logo-with-text.svg" alt="Proofbound" class="logo">
+            <h1 class="brand-name">Proofbound<sup>™</sup></h1>
+            <img src="proofbound-logo.svg" alt="Proofbound" class="logo">
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
+            <div class="construction-banner">
+                <span class="construction-icon">&#9888;</span>
+                <span>Under Construction</span>
+                <span class="construction-icon">&#9888;</span>
+            </div>
             <h1>
                 Turn your <span class="typing-container" id="typing">ideas</span> into a<br>
                 <span class="published-book">
