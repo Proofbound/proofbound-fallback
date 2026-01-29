@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Tiers - Proofbound</title>
@@ -408,7 +417,7 @@
 <body>
     <!-- TextKeep Banner -->
     <div class="textkeep-banner">
-        <a href="textkeep.html">
+        <a href="textkeep.html" onclick="gtag('event', 'textkeep_click', {'event_category': 'engagement', 'event_label': 'banner'});">
             <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
             TextKeep: save your text messages (macOS)
         </a>
@@ -569,13 +578,13 @@
                 <p class="note">Every tier delivers professional results—the difference is in the level of customization, research depth, and hands-on support.</p>
 
                 <div class="cta-buttons">
-                    <a href="https://app.proofbound.com/signup" class="cta-button">
+                    <a href="https://app.proofbound.com/signup" class="cta-button" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'get_started_service_tiers'});">
                         Get Started Now
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </a>
-                    <a href="https://app.proofbound.com/demo" class="cta-button secondary">
+                    <a href="https://app.proofbound.com/demo" class="cta-button secondary" onclick="gtag('event', 'cta_click', {'event_category': 'engagement', 'event_label': 'demo_service_tiers'});">
                         Try Free Demo
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>

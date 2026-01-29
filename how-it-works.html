@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>How It Works - Proofbound</title>
@@ -372,7 +381,7 @@
 <body>
     <!-- TextKeep Banner -->
     <div class="textkeep-banner">
-        <a href="textkeep.html">
+        <a href="textkeep.html" onclick="gtag('event', 'textkeep_click', {'event_category': 'engagement', 'event_label': 'banner'});">
             <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
             TextKeep: save your text messages (macOS)
         </a>
@@ -519,7 +528,7 @@
             <div class="quality-section">
                 <h3>Quality You Can Trust</h3>
                 <p>Every Proofbound book meets professional publishing standards with proper structure, citations, and formatting. We're not creating marketing brochures—we're building authoritative publications that enhance your professional credibility.</p>
-                <a href="https://app.proofbound.com/signup" class="cta-button">
+                <a href="https://app.proofbound.com/signup" class="cta-button" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'start_book_how_it_works'});">
                     Start Your Book Today
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>

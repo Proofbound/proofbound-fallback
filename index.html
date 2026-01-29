@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL');
+    </script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Proofbound - AI-Powered Book Creation</title>
@@ -507,7 +516,7 @@
     <!-- TextKeep Banner -->
     <div class="textkeep-banner">
         <span class="download-notice">Free download click here</span>
-        <a href="textkeep.html">
+        <a href="textkeep.html" onclick="gtag('event', 'textkeep_click', {'event_category': 'engagement', 'event_label': 'banner'});">
             <img src="https://raw.githubusercontent.com/Proofbound/textkeep/main/marketing/textkeep-logo-white.svg" alt="TextKeep">
             TextKeep: save your text messages (macOS)
         </a>
@@ -560,7 +569,7 @@
 
             <!-- CTA Buttons -->
             <div class="cta-container">
-                <a href="https://app.proofbound.com/signup" class="cta-button">
+                <a href="https://app.proofbound.com/signup" class="cta-button" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'try_for_free_hero'});">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
                     </svg>
@@ -569,7 +578,7 @@
                         <path d="M5 12h14M12 5l7 7-7 7"/>
                     </svg>
                 </a>
-                <a href="elite-service.html" class="cta-button cta-elite">
+                <a href="elite-service.html" class="cta-button cta-elite" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'elite_service_hero'});">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <circle cx="12" cy="8" r="7"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>
                     </svg>
@@ -596,7 +605,7 @@
             <div class="kdp-panel">
                 <h2>Publish to Amazon Today</h2>
                 <p>Every Proofbound book comes with Amazon KDP-ready files. Upload and publish under your name in minutes.</p>
-                <a href="https://app.proofbound.com/kdp-instructions" class="kdp-cta">
+                <a href="https://app.proofbound.com/kdp-instructions" class="kdp-cta" onclick="gtag('event', 'cta_click', {'event_category': 'engagement', 'event_label': 'kdp_guide'});">
                     <span>Step-by-Step Publishing Guide</span>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <path d="M5 12h14M12 5l7 7-7 7"/>
