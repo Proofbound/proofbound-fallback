@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/sprague/dev/proofbound/proofbound-monorepo/**)"
+    ]
+  }
+}
