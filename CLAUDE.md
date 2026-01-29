@@ -61,7 +61,7 @@ const TIMEOUT_MS = 5000;
 
 ### Current URLs
 - **Fallback Page**: [https://status.proofbound.com/](https://status.proofbound.com/)
-- **Digital Ocean**: [https://king-prawn-app-zmwl2.ondigitalocean.app/](https://king-prawn-app-zmwl2.ondigitalocean.app/)
+- **Digital Ocean**: [https://proofbound-main.ondigitalocean.app/](https://proofbound-main.ondigitalocean.app/)
 
 ### Local Development
 ```bash
@@ -260,14 +260,14 @@ proofbound-oof/
 ```
 A      proofbound.com           →  143.110.145.237 (Digital Ocean droplet)
 A      app.proofbound.com       →  143.110.145.237 (Digital Ocean droplet)
-CNAME  status.proofbound.com    →  king-prawn-app-zmwl2.ondigitalocean.app
+CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app
 ```
 
 **Target (After Deployment):**
 ```
 CNAME  proofbound.com           →  [new-static-app].ondigitalocean.app
 A      app.proofbound.com       →  143.110.145.237 (unchanged)
-CNAME  status.proofbound.com    →  king-prawn-app-zmwl2.ondigitalocean.app (unchanged)
+CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app (unchanged)
 ```
 
 ### Deployment Process

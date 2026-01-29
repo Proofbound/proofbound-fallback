@@ -42,7 +42,7 @@ The React app at app.proofbound.com handles:
 
 ### Digital Ocean
 - **Marketing Site:** [To be deployed to new Digital Ocean App Platform static site]
-- **Fallback Site:** https://king-prawn-app-zmwl2.ondigitalocean.app/
+- **Fallback Site:** https://proofbound-main.ondigitalocean.app/
 
 ## Architecture
 
@@ -76,14 +76,14 @@ If app.proofbound.com is down (5xx error):
 ```
 A      proofbound.com           →  143.110.145.237 (Digital Ocean droplet)
 A      app.proofbound.com       →  143.110.145.237 (Digital Ocean droplet)
-CNAME  status.proofbound.com    →  king-prawn-app-zmwl2.ondigitalocean.app
+CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app
 ```
 
 **Target (after deployment):**
 ```
 CNAME  proofbound.com           →  [new-static-app].ondigitalocean.app
 A      app.proofbound.com       →  143.110.145.237 (unchanged)
-CNAME  status.proofbound.com    →  king-prawn-app-zmwl2.ondigitalocean.app (unchanged)
+CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app (unchanged)
 ```
 
 ## Cloudflare Worker

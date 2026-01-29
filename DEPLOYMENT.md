@@ -105,7 +105,7 @@ This document outlines the steps to deploy the static marketing site as the prim
 ```
 A      proofbound.com           →  143.110.145.237
 A      app.proofbound.com       →  143.110.145.237
-CNAME  status.proofbound.com    →  king-prawn-app-zmwl2.ondigitalocean.app
+CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app
 ```
 
 **Actions:**
