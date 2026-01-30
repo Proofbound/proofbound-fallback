@@ -1,20 +1,26 @@
-# Proofbound Marketing Site
+# Proofbound Static Site
 
-The static marketing website for proofbound.com featuring TextKeep download banner and comprehensive information about Proofbound's AI-powered book generation services.
+Static content for Proofbound infrastructure, including fallback page, TextKeep download, and marketing content.
 
 ## Purpose
 
-This repository contains the **primary marketing site** for proofbound.com. When users visit proofbound.com, they see this static site with:
-- Full marketing content about Proofbound services
-- Prominent TextKeep download banner
-- CTAs that route to app.proofbound.com for signup/login
-- High availability (static hosting, always accessible)
+This repository contains **static fallback and special content** for Proofbound:
+- **Fallback page**: Shown when droplet is down (status.proofbound.com)
+- **TextKeep download**: Always-available at `/textkeep/` with version metadata
+- **Marketing pages**: Full marketing content (how-it-works, pricing, FAQ, etc.)
+- **High availability**: Static hosting via Digital Ocean App Platform
 
-The React app at app.proofbound.com handles:
-- User authentication and accounts
-- AI book generation tool
-- User dashboards
-- Payment processing
+### Hybrid Routing Architecture
+
+**Primary Mode (Droplet UP):**
+- `proofbound.com` serves React app from droplet
+- `proofbound.com/textkeep/*` ALWAYS routes to this static site (via Cloudflare Worker)
+- React app handles authentication, book generation, user dashboards
+
+**Failover Mode (Droplet DOWN):**
+- `proofbound.com` falls back to this static site (via Cloudflare Worker)
+- Users see marketing content and can learn about Proofbound
+- TextKeep download remains accessible
 
 ## Site Pages
 
@@ -36,31 +42,52 @@ The React app at app.proofbound.com handles:
 ## URLs
 
 ### Production
-- **Marketing Site:** https://proofbound.com (this repo)
-- **Application:** https://app.proofbound.com (monorepo)
-- **Fallback:** https://status.proofbound.com (shown when app is down)
+- **React App:** https://proofbound.com (monorepo on droplet)
+- **React App:** https://app.proofbound.com (monorepo on droplet)
+- **Static Site:** https://status.proofbound.com (this repo)
+- **TextKeep Page:** https://proofbound.com/textkeep (proxied from this repo)
+- **TextKeep Direct:** https://status.proofbound.com/textkeep (direct to this repo)
 
 ### Digital Ocean
-- **Marketing Site:** [To be deployed to new Digital Ocean App Platform static site]
-- **Fallback Site:** https://proofbound-main.ondigitalocean.app/
+- **Static Site:** https://proofbound-main.ondigitalocean.app/ (this repo)
+- **Droplet:** 143.110.145.237 (monorepo)
 
 ## Architecture
 
+### Normal Operation (Droplet UP)
 ```
 User visits proofbound.com
   ↓
-DNS routes to Digital Ocean App Platform (static site)
+Cloudflare Worker intercepts
   ↓
-User sees marketing content with TextKeep banner
+If path is /textkeep/* → Proxy to status.proofbound.com (this repo)
+If other path → Pass through to droplet (React app)
   ↓
-User clicks "Try for Free" CTA
-  ↓
-Redirects to app.proofbound.com/signup
-  ↓
-React app handles signup/login/book generation
+User sees React app or TextKeep page
+```
 
-If app.proofbound.com is down (5xx error):
-  Cloudflare Worker → Redirects to status.proofbound.com
+### Failover (Droplet DOWN)
+```
+User visits proofbound.com
+  ↓
+Cloudflare Worker intercepts
+  ↓
+Droplet returns 5xx error
+  ↓
+Worker redirects to status.proofbound.com (this repo)
+  ↓
+User sees fallback marketing content
+```
+
+### TextKeep Access (ALWAYS)
+```
+User visits proofbound.com/textkeep
+  ↓
+Cloudflare Worker intercepts
+  ↓
+ALWAYS proxy to status.proofbound.com/textkeep (no health check)
+  ↓
+Serves textkeep/index.html and version.json from this repo
 ```
 
 ## Hosting
@@ -72,34 +99,56 @@ If app.proofbound.com is down (5xx error):
 
 ## DNS Setup (Cloudflare)
 
-**Current (to be updated):**
+**Production Configuration:**
 ```
-A      proofbound.com           →  143.110.145.237 (Digital Ocean droplet)
-A      app.proofbound.com       →  143.110.145.237 (Digital Ocean droplet)
-CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app
+A      proofbound.com           →  143.110.145.237 (droplet) - Proxied ✅
+A      app.proofbound.com       →  143.110.145.237 (droplet) - Proxied ✅
+CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app - Proxied ✅
 ```
 
-**Target (after deployment):**
-```
-CNAME  proofbound.com           →  [new-static-app].ondigitalocean.app
-A      app.proofbound.com       →  143.110.145.237 (unchanged)
-CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app (unchanged)
-```
+**Key Points:**
+- Both `proofbound.com` and `app.proofbound.com` point to the droplet (React app)
+- `status.proofbound.com` points to this static site (Digital Ocean App Platform)
+- All records are proxied through Cloudflare for Worker routing and DDoS protection
 
 ## Cloudflare Worker
 
-Monitors `app.proofbound.com` (not proofbound.com) and redirects to fallback on errors:
+**Routes:** `proofbound.com/*` and `app.proofbound.com/*`
 
+**Logic:**
 ```javascript
 const FALLBACK = "https://status.proofbound.com/";
-const TIMEOUT_MS = 5000;
+
+async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  // ALWAYS route /textkeep/* to static site (no health check)
+  if (url.pathname.startsWith('/textkeep')) {
+    return fetch(`https://status.proofbound.com${url.pathname}`, {
+      cf: { cacheEverything: false }
+    });
+  }
+
+  // Health check for other routes
+  try {
+    const res = await fetchWithTimeout(request, TIMEOUT_MS);
+    if (wantsHtml && res.status >= 500) {
+      return Response.redirect(FALLBACK, 302); // Failover
+    }
+    return res;
+  } catch (err) {
+    if (wantsHtml) {
+      return Response.redirect(FALLBACK, 302); // Failover
+    }
+    // ... error handling
+  }
+}
 ```
 
-The worker:
-- Only applies to `app.proofbound.com/*` routes
-- Redirects to fallback on 5xx errors or timeout
-- Returns JSON `{"error": "Origin unreachable"}` for API routes
-- Does NOT apply to proofbound.com (static site has no downtime)
+**Key Features:**
+- Special routing for `/textkeep/*` → ALWAYS serves from this static site
+- Failover for other paths → Redirects to this static site when droplet is down
+- API routes get JSON error response instead of redirect
 
 ## Local Development
 
@@ -173,37 +222,59 @@ Cycles through words: "ideas", "notes", "expertise", "knowledge"
 - **Primary CTA:** "Try for Free" → `https://app.proofbound.com/signup`
 - **Secondary CTA:** "Elite Service" → `elite-service.html`
 - **Navigation:** Consistent header/footer on all pages
-- **TextKeep Banner:** Links to `textkeep.html`
+- **TextKeep Banner:** Links to `/textkeep` (clean URL)
 
 ## Integration with Monorepo
 
-This static site replaces the React marketing pages in the monorepo:
-- React app will remove marketing routes (/, /how-it-works, /faq, etc.)
-- React app root route will redirect unauthenticated users to proofbound.com
-- Authenticated users go directly to /dashboard
-- All marketing links in React app become absolute URLs to proofbound.com
+### Nginx Configuration
+The monorepo's `nginx-fallback.conf` includes `proofbound.com` in server_name:
+```nginx
+server_name app.proofbound.com proofbound.com _;
+```
+This allows nginx to serve the React app for both the app subdomain and root domain.
 
-See monorepo changes required in deployment plan.
+### React App Components
+- **TextKeepBanner**: Links to `https://proofbound.com/textkeep`
+- **Marketing Links**: Can reference pages at `https://status.proofbound.com`
+- **Authentication**: Redirects to `https://proofbound.com` (React app on droplet)
 
-## Deployment Checklist
+### Routing Summary
+| URL | Destination | Notes |
+|-----|-------------|-------|
+| `proofbound.com` | React app (droplet) | Primary app access |
+| `proofbound.com/textkeep/*` | This static site | Always, via worker proxy |
+| `app.proofbound.com` | React app (droplet) | Alternative app access |
+| `status.proofbound.com` | This static site | Direct access, fallback |
 
-- [ ] Set up new Digital Ocean App Platform static site
-- [ ] Connect to GitHub repo
-- [ ] Configure custom domain: proofbound.com
-- [ ] Wait for SSL certificate provisioning
-- [ ] Test via Digital Ocean preview URL
-- [ ] Update DNS in Cloudflare (proofbound.com CNAME)
-- [ ] Update nginx.conf in monorepo (remove proofbound.com redirect)
-- [ ] Update React app routes (remove marketing pages)
-- [ ] Deploy monorepo changes
-- [ ] Verify production functionality
-- [ ] Monitor for 7 days
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete architecture documentation.
+
+## Deployment
+
+### Static Site Deployment (This Repo)
+- [ ] Make changes to HTML/CSS files
+- [ ] Test locally with `./test-local.sh`
+- [ ] Commit changes
+- [ ] Push to `master` branch
+- [ ] Digital Ocean auto-deploys in ~2 minutes
+- [ ] Verify at `https://status.proofbound.com`
+- [ ] Verify worker routing at `https://proofbound.com/textkeep`
+
+### Complete Architecture Documentation
+See [DEPLOYMENT.md](DEPLOYMENT.md) for:
+- DNS configuration details
+- Cloudflare Worker setup and routes
+- Traffic flow diagrams
+- Verification commands
+- Rollback procedures
 
 ## Testing
 
 ### Pre-Deploy Testing
 ```bash
-# Open all pages in browser
+# Use testing helper script
+./test-local.sh
+
+# Or open pages manually
 open index.html
 open how-it-works.html
 open service-tiers.html
@@ -211,7 +282,7 @@ open faq.html
 open elite-service.html
 open privacy.html
 open terms.html
-open textkeep.html
+open textkeep/index.html
 
 # Test on mobile (Chrome DevTools)
 # - Resize to 375px width
@@ -220,32 +291,48 @@ open textkeep.html
 # - Verify typing animation
 ```
 
-### Post-Deploy Validation
-- [ ] https://proofbound.com loads correctly
+### Validation Commands
+```bash
+# Test TextKeep routing (should serve from static site)
+curl -I https://proofbound.com/textkeep
+curl https://proofbound.com/textkeep/version.json
+
+# Test root domain (should serve React app when droplet is up)
+curl -I https://proofbound.com
+
+# Test direct static site access
+curl -I https://status.proofbound.com
+```
+
+### Browser Testing
+- [ ] https://proofbound.com loads React app
+- [ ] https://proofbound.com/textkeep loads TextKeep page
+- [ ] https://status.proofbound.com loads fallback/marketing site
 - [ ] All internal links work (navigation, footer)
 - [ ] CTAs redirect to app.proofbound.com correctly
-- [ ] TextKeep banner links to textkeep.html
 - [ ] FAQ accordion expands/collapses
-- [ ] Typing animation runs on landing page
+- [ ] Typing animation runs on index page
 - [ ] Mobile responsive on iPhone/Android
-- [ ] SSL certificate valid
-- [ ] Google Analytics tracking (if enabled)
 
 ## Files
 
 ```
-├── index.html                 # Landing page (21 KB)
+├── index.html                 # Landing page / fallback page (21 KB)
 ├── how-it-works.html         # 4-step process (18 KB)
 ├── service-tiers.html        # Pricing tiers (20 KB)
 ├── faq.html                  # FAQ with accordion (24 KB)
 ├── elite-service.html        # Premium service (18 KB)
 ├── privacy.html              # Privacy policy (8.8 KB)
 ├── terms.html                # Terms of service (9.8 KB)
-├── textkeep.html             # TextKeep product page
+├── textkeep/                 # TextKeep download directory
+│   ├── index.html            # TextKeep landing page
+│   └── version.json          # Version metadata (v1.3.4)
+├── downloads/                # Downloadable files
 ├── logo-562x675.png          # Proofbound logo
 ├── favicons/                 # Favicon assets
 ├── README.md                 # This file
-├── CLAUDE.md                 # Claude configuration & integration docs
+├── CLAUDE.md                 # Development context & integration docs
+├── DEPLOYMENT.md             # Hybrid routing architecture guide
 ├── .claude/                  # Claude settings
 └── .claudeignore             # Files to exclude from Claude context
 ```

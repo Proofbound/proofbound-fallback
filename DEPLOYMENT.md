@@ -1,261 +1,210 @@
-# Deployment Checklist
+# Deployment Documentation
 
-This document outlines the steps to deploy the static marketing site as the primary proofbound.com domain.
+**Last Updated:** January 29, 2026
 
-## Pre-Deployment Testing
+This document describes the deployed hybrid routing architecture for Proofbound.
 
-### Local Testing
-- [ ] Run `./test-local.sh` to open all pages
-- [ ] Verify TextKeep banner on all pages
-- [ ] Test navigation between pages (header/footer links)
-- [ ] Test typing animation on landing page
-- [ ] Test FAQ accordion functionality
-- [ ] Verify all CTAs point to correct URLs
-- [ ] Test mobile responsive design (resize to 375px)
-- [ ] Check browser console for errors
-- [ ] Verify all images load correctly
+## Current Architecture (As Deployed)
 
-### Content Review
-- [ ] Proofread all marketing copy
-- [ ] Verify pricing is current ($49, $500-$2000, $2000-$5000)
-- [ ] Check contact emails (legal@proofbound.com, privacy@proofbound.com)
-- [ ] Verify "Last updated" dates on Privacy and Terms pages
-- [ ] Confirm all external links work (TextKeep, app.proofbound.com)
+### Hybrid Routing Setup
 
-## Phase 1: Set Up Digital Ocean App Platform
+Proofbound uses a **hybrid routing architecture** where:
+1. `proofbound.com` serves the React app from the droplet (when up)
+2. `proofbound.com/textkeep/*` ALWAYS routes to the static site (via Cloudflare Worker)
+3. `proofbound.com` falls back to the static site when the droplet is down
 
-### Create New Static Site App
-1. [ ] Log in to Digital Ocean
-2. [ ] Go to App Platform → Create App
-3. [ ] Connect to GitHub repository
-   - Repository: `Proofbound/proofbound-fallback` or `Proofbound/proofbound-oof`
-   - Branch: `master`
-4. [ ] Configure build settings:
-   - Build command: (leave empty for static site)
-   - Output directory: `/` (root)
-   - Static site: Yes
-5. [ ] Choose plan: Basic (Static Site) - $5/month or free tier
-6. [ ] Review and create app
-7. [ ] Wait for initial deployment (~3-5 minutes)
-8. [ ] Note the preview URL (e.g., `new-app-xxxxx.ondigitalocean.app`)
+This provides:
+- **Primary function**: React app at root domain for authenticated users
+- **Special routes**: Static content for specific paths like `/textkeep`
+- **High availability**: Automatic failover to static site on errors
 
-### Test Preview URL
-- [ ] Visit preview URL in browser
-- [ ] Verify index.html loads
-- [ ] Test navigation to all pages
-- [ ] Check SSL certificate (should be auto-provisioned)
-- [ ] Test on mobile device
+### DNS Configuration (Cloudflare)
 
-### Add Custom Domain
-1. [ ] In App settings, go to Domains
-2. [ ] Click "Add Domain"
-3. [ ] Enter: `proofbound.com`
-4. [ ] Note the CNAME target (e.g., `new-app-xxxxx.ondigitalocean.app`)
-5. [ ] DO NOT update DNS yet - wait for confirmation
-6. [ ] SSL certificate will provision after DNS is updated
-
-## Phase 2: Prepare Monorepo Changes
-
-### Update nginx Configuration
-**File:** `/Users/sprague/dev/proofbound/proofbound-monorepo/nginx.conf`
-
-1. [ ] Open nginx.conf
-2. [ ] Remove lines 115-127 (proofbound.com → app.proofbound.com redirect)
-3. [ ] Verify other server blocks are intact
-4. [ ] Test nginx config: `nginx -t` (in container)
-5. [ ] Commit changes but DO NOT deploy yet
-
-### Update React App Routes
-**File:** `/Users/sprague/dev/proofbound/proofbound-monorepo/apps/main-app/frontend/src/App.tsx`
-
-1. [ ] Remove marketing page routes (lines ~289-302):
-   - `/how-it-works`
-   - `/service-tiers`
-   - `/faq`
-   - `/elite`
-   - `/privacy`
-   - `/terms`
-   - `/coming-soon`
-   - Other marketing routes
-2. [ ] Update root route `/` to redirect:
-   ```tsx
-   <Route path="/" element={
-     user ? <Navigate to="/dashboard" /> : <Navigate to="https://proofbound.com" />
-   } />
-   ```
-3. [ ] Update navigation components with absolute URLs
-4. [ ] Commit changes but DO NOT deploy yet
-
-### Verify Cloudflare Worker Routes
-1. [ ] Log in to Cloudflare
-2. [ ] Go to Workers & Pages
-3. [ ] Find the error handling worker
-4. [ ] Verify routes: Should ONLY apply to `app.proofbound.com/*`
-5. [ ] Confirm it does NOT apply to `proofbound.com/*`
-
-## Phase 3: DNS Cutover (Low Traffic Period)
-
-### Pre-Cutover Preparation (24 hours before)
-- [ ] Set DNS TTL to 300 seconds (5 minutes) for faster propagation
-- [ ] Notify team of upcoming cutover
-- [ ] Confirm rollback plan is ready
-
-### DNS Changes in Cloudflare
-**Current DNS:**
 ```
-A      proofbound.com           →  143.110.145.237
-A      app.proofbound.com       →  143.110.145.237
-CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app
+A      proofbound.com        → 143.110.145.237 (droplet) - Proxied ✅
+A      app.proofbound.com    → 143.110.145.237 (droplet) - Proxied ✅
+A      shop.proofbound.com   → 143.110.145.237 (droplet) - Proxied ✅
+CNAME  status.proofbound.com → king-prawn-app-zmwl... (static site) - Proxied ✅
 ```
 
-**Actions:**
-1. [ ] Change `proofbound.com` from A record to CNAME:
-   - Delete A record for proofbound.com
-   - Add CNAME: `proofbound.com` → `[new-app-xxxxx].ondigitalocean.app`
-   - Proxy status: DNS only (orange cloud OFF)
-2. [ ] Leave `app.proofbound.com` unchanged
-3. [ ] Leave `status.proofbound.com` unchanged
-4. [ ] Save changes
-5. [ ] Note exact time of cutover
+### Cloudflare Worker
 
-### Wait for DNS Propagation
-- [ ] Wait 5-10 minutes
-- [ ] Check DNS propagation: `dig proofbound.com`
-- [ ] Test from different networks (mobile data, VPN)
-- [ ] Clear browser cache before testing
+**Routes:**
+- `app.proofbound.com/*`
+- `proofbound.com/*`
+- `shop.proofbound.com/*` (optional)
 
-### Immediate Post-Cutover Verification
-- [ ] Visit `https://proofbound.com` → Should show static marketing site
-- [ ] Verify SSL certificate is valid
-- [ ] Test all navigation links
-- [ ] Click "Try for Free" → Should go to app.proofbound.com/signup
-- [ ] Visit `https://app.proofbound.com` → Should still work normally
+**Worker Logic:**
+```javascript
+async function handleRequest(request) {
+  const url = new URL(request.url);
 
-## Phase 4: Deploy Monorepo Changes
+  // ALWAYS route /textkeep/* to static site (no health check)
+  if (url.pathname.startsWith('/textkeep')) {
+    return fetch(`https://status.proofbound.com${url.pathname}`, {
+      cf: { cacheEverything: false }
+    });
+  }
 
-### Deploy nginx Configuration
-1. [ ] SSH into Digital Ocean droplet or use Docker dashboard
-2. [ ] Deploy updated nginx.conf
-3. [ ] Restart nginx container
-4. [ ] Verify nginx is running: `docker ps`
-5. [ ] Check logs: `docker logs nginx-container`
+  // Health check for other routes
+  const isGetLike = request.method === "GET" || request.method === "HEAD";
+  const wantsHtml = isGetLike && isHtmlRequest(request) && !isApiPath(url.pathname);
+  const isApi = isApiPath(url.pathname);
 
-### Deploy React App Updates
-1. [ ] Build and deploy updated React app
-2. [ ] Monitor deployment logs
-3. [ ] Wait for deployment to complete
+  try {
+    const res = await fetchWithTimeout(request, TIMEOUT_MS);
+    if (wantsHtml && res.status >= 500 && res.status < 600) {
+      return Response.redirect(FALLBACK, 302); // Redirect to static site
+    }
+    if (isApi && res.status >= 520) {
+      return new Response(JSON.stringify({ error: "Origin unreachable" }), {
+        status: 503,
+        headers: { "Content-Type": "application/json" }
+      });
+    }
+    return res;
+  } catch (err) {
+    if (wantsHtml) {
+      return Response.redirect(FALLBACK, 302); // Redirect to static site
+    }
+    return new Response(JSON.stringify({ error: "Origin unreachable" }), {
+      status: 503,
+      headers: { "Content-Type": "application/json" }
+    });
+  }
+}
+```
 
-### Verify App Behavior
-- [ ] Visit `https://app.proofbound.com/` (logged out)
-   - Should redirect to `https://proofbound.com`
-- [ ] Log in to app
-- [ ] Visit `https://app.proofbound.com/dashboard` (logged in)
-   - Should show dashboard, NOT redirect
-- [ ] Test navigation within app
-- [ ] Verify no broken links in app footer
+### Traffic Flow
 
-## Phase 5: Monitoring & Validation (First Week)
+**Normal Operation (Droplet UP):**
+```
+User visits proofbound.com
+  ↓
+Cloudflare Worker intercepts
+  ↓
+If path is /textkeep/* → Route to status.proofbound.com (static site)
+If other path → Pass through to droplet (React app)
+```
 
-### Day 1 (Deployment Day)
-- [ ] Monitor Cloudflare Analytics for traffic patterns
-- [ ] Check error rates on both sites (app and marketing)
-- [ ] Verify Cloudflare Worker is catching app.proofbound.com 5xx errors
-- [ ] Test all CTAs and forms
-- [ ] Monitor SSL certificate status
+**Failover (Droplet DOWN):**
+```
+User visits proofbound.com
+  ↓
+Cloudflare Worker intercepts
+  ↓
+If path is /textkeep/* → Route to status.proofbound.com (unchanged)
+If other path → Droplet returns 5xx → Worker redirects to status.proofbound.com
+```
 
-### Day 2-7
-- [ ] Check uptime daily (should be 99.9%+)
-- [ ] Review Google Analytics (if enabled)
-- [ ] Monitor search rankings (Google Search Console)
-- [ ] Check for any 404 errors or broken links
-- [ ] Review user feedback/support tickets
+### Nginx Configuration (Monorepo)
 
-### Performance Testing
-- [ ] Run Lighthouse audit: Target score >90
-- [ ] Test page load times: Target <1 second
-- [ ] Verify mobile responsiveness
-- [ ] Test on multiple browsers (Chrome, Safari, Firefox, Edge)
+**File:** `proofbound-monorepo/nginx-fallback.conf` (line 72)
 
-## Rollback Plan
+```nginx
+server_name app.proofbound.com proofbound.com _;
+```
 
-### If Critical Issues Arise
+This allows nginx on the droplet to handle both `app.proofbound.com` and `proofbound.com` requests with the same React app configuration.
 
-**Immediate Rollback (0-5 minutes):**
-1. [ ] Log in to Cloudflare
-2. [ ] Change DNS back:
-   - Delete CNAME: `proofbound.com`
-   - Add A record: `proofbound.com` → `143.110.145.237`
-3. [ ] Wait 5 minutes for propagation
-4. [ ] nginx redirect will restore old behavior
-5. [ ] Total downtime: ~2-3 minutes
+### Static Marketing Site
 
-**Partial Rollback (Keep static site, restore app routes):**
-1. [ ] Revert React app changes in monorepo
-2. [ ] Redeploy React app
-3. [ ] Both sites will work independently
+**Hosted at:** `status.proofbound.com`
+**Platform:** Digital Ocean App Platform (Static Site)
+**Repo:** `Proofbound/proofbound-fallback`
+**Auto-deploy:** Yes (pushes to `master`)
 
-**Note:** Keep marketing routes in React app for 30 days as a safety net
+**Content:**
+- Fallback/error page (shown when droplet is down)
+- TextKeep download page at `/textkeep/`
+- TextKeep version metadata at `/textkeep/version.json`
+- Marketing pages (future: could add more static content)
 
-## Post-Launch Cleanup (30 days after)
+### TextKeep Structure
 
-### Archive Old Code
-- [ ] Create git branch: `backup/react-marketing-pages`
-- [ ] Archive removed React components
-- [ ] Remove marketing page components from main branch
-- [ ] Clean up unused dependencies
-- [ ] Update monorepo documentation
+```
+/textkeep/
+├── index.html        # TextKeep landing page
+└── version.json      # Version metadata (v1.3.4)
+```
 
-### SEO Maintenance
-- [ ] Submit new sitemap to Google Search Console
-- [ ] Monitor search rankings for 30 days
-- [ ] Add schema.org markup if needed
-- [ ] Optimize meta tags based on performance
+**Access:**
+- Direct: `https://status.proofbound.com/textkeep`
+- Via proxy: `https://proofbound.com/textkeep` (worker routes to static site)
 
-### Documentation
-- [ ] Update CLAUDE.md in both repos
-- [ ] Document lessons learned
-- [ ] Update deployment runbook
-- [ ] Archive this checklist
+## Deployment Checklist
 
-## Success Metrics
+### Static Site Deployment (proofbound-oof repo)
 
-### Technical KPIs
-- [ ] proofbound.com loads in <1 second
-- [ ] Lighthouse score >90
-- [ ] 99.9%+ uptime
-- [ ] Zero 5xx errors on static site
-- [ ] SSL certificate auto-renews
+- [ ] Make changes to HTML/CSS files
+- [ ] Test locally with `./test-local.sh`
+- [ ] Commit changes
+- [ ] Push to `master` branch
+- [ ] Digital Ocean auto-deploys in ~2 minutes
+- [ ] Verify at `https://status.proofbound.com`
+- [ ] Verify worker routing at `https://proofbound.com/textkeep`
 
-### User Experience KPIs
-- [ ] No 404 errors
-- [ ] Mobile responsiveness excellent
-- [ ] All CTAs working
-- [ ] Navigation smooth between sites
+### Monorepo Deployment
 
-### Business KPIs
-- [ ] No drop in organic search traffic
-- [ ] Signup conversion rate maintained or improved
-- [ ] TextKeep banner generates clicks
-- [ ] User satisfaction maintained
+- [ ] Make changes to nginx, React app, or services
+- [ ] Commit changes
+- [ ] Push to repository
+- [ ] Deploy to droplet (manual or CI/CD)
+- [ ] Verify nginx reload successful
+- [ ] Test at `https://proofbound.com` and `https://app.proofbound.com`
+
+### Cloudflare Worker Updates
+
+- [ ] Edit worker code in Cloudflare dashboard
+- [ ] Test locally if possible
+- [ ] Save and deploy in dashboard
+- [ ] Monitor for errors in Cloudflare dashboard
+- [ ] Verify routing behavior
+
+## Verification Commands
+
+```bash
+# Test TextKeep routing (should serve from static site)
+curl -I https://proofbound.com/textkeep
+curl https://proofbound.com/textkeep/version.json
+
+# Test root domain (should serve React app when droplet is up)
+curl -I https://proofbound.com
+
+# Check DNS
+dig proofbound.com
+dig status.proofbound.com
+```
+
+## Rollback Procedures
+
+### If Worker Causes Issues
+1. Go to Cloudflare Workers dashboard
+2. Remove routes for `proofbound.com/*` temporarily
+3. Fix worker code
+4. Re-add routes
+
+### If Static Site Has Issues
+1. Revert commit in `proofbound-oof` repo
+2. Push to master
+3. Wait for auto-deploy (~2 minutes)
+
+### If Droplet/Nginx Has Issues
+1. SSH into droplet
+2. Check Docker logs: `docker logs <container>`
+3. Revert nginx config if needed
+4. Restart nginx: `docker restart <nginx-container>`
+
+## Monitoring
+
+- **Cloudflare Analytics**: Monitor traffic to all domains
+- **Worker Logs**: Check for errors in Cloudflare dashboard
+- **Digital Ocean**: Monitor static site uptime and deployments
+- **Droplet**: Monitor nginx logs and Docker container health
 
 ## Support Contacts
 
-- **Digital Ocean:** support.digitalocean.com
-- **Cloudflare:** support.cloudflare.com
-- **DNS Issues:** Check Cloudflare dashboard → DNS → proofbound.com
-- **App Issues:** SSH into droplet, check Docker logs
-- **SSL Issues:** Let's Encrypt auto-renewal (check Digital Ocean)
-
-## Notes & Issues
-
-_Use this section to document any issues encountered during deployment:_
-
----
-
-**Deployment Date:** _________________
-
-**Deployed By:** _________________
-
-**Rollback Tested:** [ ] Yes [ ] No
-
-**Final Status:** [ ] Success [ ] Rolled Back [ ] Partial Success
+- **Cloudflare**: support.cloudflare.com
+- **Digital Ocean**: support.digitalocean.com
+- **DNS Issues**: Cloudflare dashboard → DNS
+- **Worker Issues**: Cloudflare dashboard → Workers & Pages

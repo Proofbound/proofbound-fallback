@@ -4,64 +4,106 @@
 
 ## Purpose
 
-This repository contains the **primary marketing site** for proofbound.com. It serves as:
-- Main entry point for new visitors to discover Proofbound
-- Marketing content hub (How It Works, Pricing, FAQ, Elite Service)
-- TextKeep cross-promotion platform (banner on all pages)
-- High-availability static site (no downtime)
+This repository contains the **static fallback and special content** for Proofbound infrastructure:
+- **Fallback page**: Shown when droplet is down (status.proofbound.com)
+- **TextKeep download page**: Always-available download page at `/textkeep/`
+- **TextKeep version metadata**: Version info at `/textkeep/version.json`
+- **Future**: Can host additional static marketing content
 
 **Architecture**: Static HTML pages with inline CSS and vanilla JavaScript. No build process, frameworks, or dependencies.
 
 ## Integration with Proofbound Ecosystem
 
-This repository is **tightly integrated** with the [proofbound-monorepo](https://github.com/Proofbound/proofbound-monorepo):
+This repository uses a **hybrid routing architecture** with the [proofbound-monorepo](https://github.com/Proofbound/proofbound-monorepo):
 
 ### Repository Relationships
-- **Marketing Site** (`proofbound-oof`): Static marketing pages at proofbound.com
-- **Application** (`proofbound-monorepo`): React app at app.proofbound.com
-- **Fallback** (`status.proofbound.com`): Error page when app is down
+- **Static Site** (`proofbound-oof`): Hosted at status.proofbound.com, contains fallback + TextKeep
+- **Application** (`proofbound-monorepo`): React app at proofbound.com and app.proofbound.com (on droplet)
+
+### Hybrid Routing Architecture
+
+**DNS Configuration:**
+- `proofbound.com` → `143.110.145.237` (droplet) - Proxied via Cloudflare
+- `app.proofbound.com` → `143.110.145.237` (droplet) - Proxied via Cloudflare
+- `status.proofbound.com` → DO App Platform (this repo) - Proxied via Cloudflare
+
+**Cloudflare Worker Routes:**
+- Monitors: `proofbound.com/*` AND `app.proofbound.com/*`
+- Special routing: `/textkeep/*` → ALWAYS routes to this static site
+- Failover: Other paths → droplet (when up) OR static site (when down)
 
 ### Traffic Flow
+
+**When Droplet is UP:**
 ```
 User visits proofbound.com
   ↓
-DNS → Digital Ocean App Platform (this repo)
+Cloudflare Worker intercepts request
   ↓
-User sees marketing site
+If path is /textkeep/* → Proxy to status.proofbound.com (this repo)
+If other path → Pass through to droplet (React app)
+```
+
+**When Droplet is DOWN:**
+```
+User visits proofbound.com
   ↓
-User clicks "Try for Free"
+Cloudflare Worker intercepts request
   ↓
-Redirects to app.proofbound.com/signup
+Droplet returns 5xx error
   ↓
-React app handles signup/book generation
+Worker redirects to status.proofbound.com (fallback page from this repo)
 ```
 
 ### Cloudflare Worker Configuration
-The worker monitors `app.proofbound.com` (NOT proofbound.com) and redirects to fallback on errors:
 
 ```javascript
 const FALLBACK = "https://status.proofbound.com/";
 const TIMEOUT_MS = 5000;
 
-// Worker intercepts app.proofbound.com requests:
-// - Passes through to main origin
-// - Redirects HTML requests to fallback on 5xx/timeout
-// - Returns JSON error for API routes
-// - Does NOT apply to proofbound.com (static site)
+async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  // ALWAYS route /textkeep/* to static site (no health check)
+  if (url.pathname.startsWith('/textkeep')) {
+    return fetch(`https://status.proofbound.com${url.pathname}`, {
+      cf: { cacheEverything: false }
+    });
+  }
+
+  // Health check for other routes
+  try {
+    const res = await fetchWithTimeout(request, TIMEOUT_MS);
+    if (wantsHtml && res.status >= 500) {
+      return Response.redirect(FALLBACK, 302); // Failover to this repo
+    }
+    return res;
+  } catch (err) {
+    if (wantsHtml) {
+      return Response.redirect(FALLBACK, 302); // Failover to this repo
+    }
+    // ... error handling
+  }
+}
 ```
 
-**Important**: The static marketing site (proofbound.com) is NOT behind the Cloudflare Worker. It's always available via Digital Ocean's infrastructure.
+**Key Points:**
+- Worker applies to BOTH `proofbound.com/*` and `app.proofbound.com/*`
+- `/textkeep/*` paths ALWAYS serve from this static site
+- Other paths failover to this static site when droplet is down
 
 ## URLs
 
-### Production (After Deployment)
-- **Marketing Site**: [https://proofbound.com](https://proofbound.com) (this repo)
-- **Application**: [https://app.proofbound.com](https://app.proofbound.com) (monorepo)
-- **Fallback**: [https://status.proofbound.com](https://status.proofbound.com) (shown when app is down)
+### Production URLs
+- **React App**: [https://proofbound.com](https://proofbound.com) (monorepo on droplet)
+- **React App**: [https://app.proofbound.com](https://app.proofbound.com) (monorepo on droplet)
+- **Static Site**: [https://status.proofbound.com](https://status.proofbound.com) (this repo)
+- **TextKeep Page**: [https://proofbound.com/textkeep](https://proofbound.com/textkeep) (proxied from this repo)
+- **TextKeep Direct**: [https://status.proofbound.com/textkeep](https://status.proofbound.com/textkeep) (direct to this repo)
 
-### Current URLs
-- **Fallback Page**: [https://status.proofbound.com/](https://status.proofbound.com/)
-- **Digital Ocean**: [https://proofbound-main.ondigitalocean.app/](https://proofbound-main.ondigitalocean.app/)
+### Digital Ocean
+- **Static Site**: [https://proofbound-main.ondigitalocean.app/](https://proofbound-main.ondigitalocean.app/) (this repo)
+- **Droplet**: `143.110.145.237` (monorepo)
 
 ### Local Development
 ```bash
@@ -123,7 +165,8 @@ python3 -m http.server 8000
    - Contact: legal@proofbound.com
 
 ### Special Pages
-- **textkeep.html**: TextKeep product landing page (existing)
+- **textkeep/index.html**: TextKeep product landing page
+- **textkeep/version.json**: TextKeep version metadata (v1.3.4)
 
 ### Shared Components
 - **TextKeep Banner**: Featured at top of all marketing pages
@@ -134,20 +177,23 @@ python3 -m http.server 8000
 
 ```
 proofbound-oof/
-├── index.html               # Landing page
+├── index.html               # Landing page / fallback page
 ├── how-it-works.html       # Process explanation
 ├── service-tiers.html      # Pricing tiers
 ├── faq.html                # FAQ with accordion
 ├── elite-service.html      # Premium offering
 ├── privacy.html            # Privacy policy
 ├── terms.html              # Terms of service
-├── textkeep.html           # TextKeep product page
+├── textkeep/               # TextKeep download page directory
+│   ├── index.html          # TextKeep landing page
+│   └── version.json        # Version metadata (v1.3.4)
+├── downloads/              # Downloadable files (TextKeep app)
 ├── logo-562x675.png        # Proofbound logo
 ├── favicons/               # Favicon assets
 ├── test-local.sh           # Testing helper script
 ├── README.md               # Technical documentation
 ├── CLAUDE.md               # This file - development context
-├── DEPLOYMENT.md           # Deployment checklist & procedures
+├── DEPLOYMENT.md           # Hybrid routing deployment guide
 ├── .claude/                # Claude Code configuration
 │   └── settings.local.json # Permissions and settings
 └── .claudeignore           # Files to exclude from Claude context
@@ -248,39 +294,36 @@ proofbound-oof/
 
 ## Hosting & Deployment
 
-### Current Setup (Pre-Production)
+### Current Setup
 - **Platform**: Digital Ocean App Platform (Static Site)
 - **Tier**: Basic Static Site (~$5/month or free tier)
-- **Repository**: GitHub `Proofbound/proofbound-fallback` or `Proofbound/proofbound-oof`
-- **Auto-deploy**: Pushes to `master` trigger deployment
+- **Repository**: GitHub `Proofbound/proofbound-oof`
+- **Auto-deploy**: Pushes to `master` trigger deployment (~2 minutes)
+- **Hosted at**: `status.proofbound.com`
 
 ### DNS Configuration (Cloudflare)
 
-**Current:**
+**Production Configuration:**
 ```
-A      proofbound.com           →  143.110.145.237 (Digital Ocean droplet)
-A      app.proofbound.com       →  143.110.145.237 (Digital Ocean droplet)
-CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app
+A      proofbound.com           →  143.110.145.237 (droplet) - Proxied ✅
+A      app.proofbound.com       →  143.110.145.237 (droplet) - Proxied ✅
+CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app - Proxied ✅
 ```
 
-**Target (After Deployment):**
-```
-CNAME  proofbound.com           →  [new-static-app].ondigitalocean.app
-A      app.proofbound.com       →  143.110.145.237 (unchanged)
-CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app (unchanged)
-```
+**Key Points:**
+- `proofbound.com` and `app.proofbound.com` point to droplet (React app)
+- `status.proofbound.com` points to this static site
+- Cloudflare Worker handles routing for `/textkeep/*` and failover
 
 ### Deployment Process
-See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment checklist and procedures.
+See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment procedures.
 
-**Summary:**
-1. Set up new Digital Ocean App Platform static site
-2. Connect to GitHub repo, configure auto-deploy
-3. Add custom domain: proofbound.com
-4. Update DNS in Cloudflare (CNAME change)
-5. Update nginx.conf in monorepo (remove redirect)
-6. Update React app routes (remove marketing pages)
-7. Monitor and validate
+**Quick Deploy:**
+1. Make changes to HTML/CSS files
+2. Test locally with `./test-local.sh`
+3. Commit and push to `master` branch
+4. Digital Ocean auto-deploys in ~2 minutes
+5. Verify at `https://status.proofbound.com`
 
 ## Relationship to Monorepo Services
 
@@ -306,25 +349,29 @@ From `proofbound-monorepo`:
 
 ## Monorepo Integration Points
 
-### Changes Required in Monorepo
-See deployment plan for details. Summary:
+### Nginx Configuration
+The monorepo's `nginx-fallback.conf` includes `proofbound.com` in the server_name directive:
 
-1. **nginx.conf**
-   - Remove `proofbound.com` → `app.proofbound.com` redirect
-   - Keep `app.proofbound.com` configuration
+```nginx
+server_name app.proofbound.com proofbound.com _;
+```
 
-2. **React App (App.tsx)**
-   - Remove marketing page routes (/, /how-it-works, /faq, etc.)
-   - Update root route to redirect unauthenticated users to proofbound.com
-   - Keep authenticated users on /dashboard
+This allows nginx to serve the React app for both:
+- `app.proofbound.com` (subdomain)
+- `proofbound.com` (root domain)
 
-3. **Navigation Components**
-   - Update links to marketing pages (use absolute URLs)
-   - Example: `<a href="https://proofbound.com/how-it-works.html">`
+### React App Integration
+- **TextKeepBanner Component**: Links to `https://proofbound.com/textkeep`
+- **Marketing Links**: Can reference static marketing pages at `https://status.proofbound.com`
+- **Authentication Flow**: Redirects to `https://proofbound.com` (React app) for signup/login
 
-4. **Cloudflare Worker**
-   - Verify routes only apply to `app.proofbound.com/*`
-   - Ensure `proofbound.com/*` is NOT monitored by worker
+### Routing Summary
+```
+User visits proofbound.com              → React app (droplet)
+User visits proofbound.com/textkeep     → Static site (via worker proxy)
+User visits status.proofbound.com       → Static site (direct)
+Droplet down + user visits proofbound.com → Static site (via worker failover)
+```
 
 ## Contact & Support
 
@@ -359,6 +406,14 @@ Potential improvements to consider:
 ## Version History
 
 See git commit history for changes. Notable updates:
+- **Jan 29, 2026**: Implemented hybrid routing architecture
+  - Reorganized TextKeep from `textkeep.html` to `textkeep/` directory
+  - Added `textkeep/version.json` with version metadata (v1.3.4)
+  - Updated DNS: `proofbound.com` → A record to droplet (was CNAME to static site)
+  - Configured Cloudflare Worker for `/textkeep/*` routing and failover
+  - Updated nginx-fallback.conf to handle `proofbound.com` requests
+  - Rewrote DEPLOYMENT.md to document hybrid routing setup
+  - Updated all marketing pages to link to `/textkeep` (clean URLs)
 - **Jan 28, 2026**: Converted to full marketing site (7 pages)
   - Added: how-it-works, service-tiers, faq, elite-service, privacy, terms
   - Expanded index.html with typing animation, CTAs, Amazon KDP panel
@@ -370,6 +425,6 @@ See git commit history for changes. Notable updates:
 
 ---
 
-**Last Updated**: January 28, 2026
+**Last Updated**: January 29, 2026
 
 For main application development, see [proofbound-monorepo/CLAUDE.md](../proofbound-monorepo/CLAUDE.md).
