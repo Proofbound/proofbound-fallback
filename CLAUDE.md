@@ -8,6 +8,8 @@ This repository contains the **static fallback and special content** for Proofbo
 - **Fallback page**: Shown when droplet is down (status.proofbound.com)
 - **TextKeep download page**: Always-available download page at `/textkeep/`
 - **TextKeep version metadata**: Version info at `/textkeep/version.json`
+- **Privacy Policy**: Always-available legal page at `/privacy.html`
+- **Terms of Service**: Always-available legal page at `/terms.html`
 - **Future**: Can host additional static marketing content
 
 **Architecture**: Static HTML pages with inline CSS and vanilla JavaScript. No build process, frameworks, or dependencies.
@@ -29,7 +31,7 @@ This repository uses a **hybrid routing architecture** with the [proofbound-mono
 
 **Cloudflare Worker Routes:**
 - Monitors: `proofbound.com/*` AND `app.proofbound.com/*`
-- Special routing: `/textkeep/*` → ALWAYS routes to this static site
+- Special routing: `/textkeep/*`, `/privacy`, `/terms` → ALWAYS route to this static site
 - Failover: Other paths → droplet (when up) OR static site (when down)
 
 ### Traffic Flow
@@ -40,7 +42,7 @@ User visits proofbound.com
   ↓
 Cloudflare Worker intercepts request
   ↓
-If path is /textkeep/* → Proxy to status.proofbound.com (this repo)
+If path is /textkeep/*, /privacy, or /terms → Proxy to status.proofbound.com (this repo)
 If other path → Pass through to droplet (React app)
 ```
 
@@ -50,9 +52,8 @@ User visits proofbound.com
   ↓
 Cloudflare Worker intercepts request
   ↓
-Droplet returns 5xx error
-  ↓
-Worker redirects to status.proofbound.com (fallback page from this repo)
+If path is /textkeep/*, /privacy, or /terms → Proxy to status.proofbound.com (this repo)
+If other path → Droplet returns 5xx error → Redirect to status.proofbound.com (fallback page)
 ```
 
 ### Cloudflare Worker Configuration
@@ -64,9 +65,28 @@ const TIMEOUT_MS = 5000;
 async function handleRequest(request) {
   const url = new URL(request.url);
 
-  // ALWAYS route /textkeep/* to static site (no health check)
-  if (url.pathname.startsWith('/textkeep')) {
-    return fetch(`https://status.proofbound.com${url.pathname}`, {
+  // Normalize pathname (remove trailing slashes, lowercase)
+  const pathname = url.pathname.toLowerCase().replace(/\/$/, '');
+
+  // ALWAYS route these paths to static site (no health check)
+  // - /textkeep: Product landing page (always available)
+  // - /privacy, /terms: Legal pages (must be always accessible)
+  if (pathname.startsWith('/textkeep') ||
+      pathname === '/privacy' ||
+      pathname === '/privacy.html' ||
+      pathname === '/terms' ||
+      pathname === '/terms.html') {
+
+    // Convert clean URLs to .html extension for static site
+    let staticPath = url.pathname;
+    if (pathname === '/privacy') {
+      staticPath = '/privacy.html';
+    } else if (pathname === '/terms') {
+      staticPath = '/terms.html';
+    }
+
+    // Preserve query parameters
+    return fetch(`https://status.proofbound.com${staticPath}${url.search}`, {
       cf: { cacheEverything: false }
     });
   }
@@ -89,7 +109,8 @@ async function handleRequest(request) {
 
 **Key Points:**
 - Worker applies to BOTH `proofbound.com/*` and `app.proofbound.com/*`
-- `/textkeep/*` paths ALWAYS serve from this static site
+- `/textkeep/*`, `/privacy`, `/terms` paths ALWAYS serve from this static site
+- Handles both clean URLs (`/privacy`) and `.html` extensions (`/privacy.html`)
 - Other paths failover to this static site when droplet is down
 
 ## URLs
@@ -100,6 +121,8 @@ async function handleRequest(request) {
 - **Static Site**: [https://status.proofbound.com](https://status.proofbound.com) (this repo)
 - **TextKeep Page**: [https://proofbound.com/textkeep](https://proofbound.com/textkeep) (proxied from this repo)
 - **TextKeep Direct**: [https://status.proofbound.com/textkeep](https://status.proofbound.com/textkeep) (direct to this repo)
+- **Privacy Policy**: [https://proofbound.com/privacy](https://proofbound.com/privacy) (proxied from this repo)
+- **Terms of Service**: [https://proofbound.com/terms](https://proofbound.com/terms) (proxied from this repo)
 
 ### Digital Ocean
 - **Static Site**: [https://proofbound-main.ondigitalocean.app/](https://proofbound-main.ondigitalocean.app/) (this repo)
@@ -425,6 +448,6 @@ See git commit history for changes. Notable updates:
 
 ---
 
-**Last Updated**: January 29, 2026
+**Last Updated**: January 30, 2026
 
 For main application development, see [proofbound-monorepo/CLAUDE.md](../proofbound-monorepo/CLAUDE.md).

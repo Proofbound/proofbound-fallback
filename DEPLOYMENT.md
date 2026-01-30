@@ -1,6 +1,6 @@
 # Deployment Documentation
 
-**Last Updated:** January 29, 2026
+**Last Updated:** January 30, 2026
 
 This document describes the deployed hybrid routing architecture for Proofbound.
 
@@ -10,12 +10,12 @@ This document describes the deployed hybrid routing architecture for Proofbound.
 
 Proofbound uses a **hybrid routing architecture** where:
 1. `proofbound.com` serves the React app from the droplet (when up)
-2. `proofbound.com/textkeep/*` ALWAYS routes to the static site (via Cloudflare Worker)
+2. `proofbound.com/textkeep/*`, `/privacy`, `/terms` ALWAYS route to the static site (via Cloudflare Worker)
 3. `proofbound.com` falls back to the static site when the droplet is down
 
 This provides:
 - **Primary function**: React app at root domain for authenticated users
-- **Special routes**: Static content for specific paths like `/textkeep`
+- **Special routes**: Always-available static content for critical paths like `/textkeep`, `/privacy`, `/terms`
 - **High availability**: Automatic failover to static site on errors
 
 ### DNS Configuration (Cloudflare)
@@ -39,17 +39,36 @@ CNAME  status.proofbound.com → king-prawn-app-zmwl... (static site) - Proxied 
 async function handleRequest(request) {
   const url = new URL(request.url);
 
-  // ALWAYS route /textkeep/* to static site (no health check)
-  if (url.pathname.startsWith('/textkeep')) {
-    return fetch(`https://status.proofbound.com${url.pathname}`, {
+  // Normalize pathname (remove trailing slashes, lowercase)
+  const pathname = url.pathname.toLowerCase().replace(/\/$/, '');
+
+  // ALWAYS route these paths to static site (no health check)
+  // - /textkeep: Product landing page (always available)
+  // - /privacy, /terms: Legal pages (must be always accessible)
+  if (pathname.startsWith('/textkeep') ||
+      pathname === '/privacy' ||
+      pathname === '/privacy.html' ||
+      pathname === '/terms' ||
+      pathname === '/terms.html') {
+
+    // Convert clean URLs to .html extension for static site
+    let staticPath = url.pathname;
+    if (pathname === '/privacy') {
+      staticPath = '/privacy.html';
+    } else if (pathname === '/terms') {
+      staticPath = '/terms.html';
+    }
+
+    // Preserve query parameters
+    return fetch(`https://status.proofbound.com${staticPath}${url.search}`, {
       cf: { cacheEverything: false }
     });
   }
 
   // Health check for other routes
   const isGetLike = request.method === "GET" || request.method === "HEAD";
-  const wantsHtml = isGetLike && isHtmlRequest(request) && !isApiPath(url.pathname);
-  const isApi = isApiPath(url.pathname);
+  const wantsHtml = isGetLike && isHtmlRequest(request) && !isApiPath(pathname);
+  const isApi = isApiPath(pathname);
 
   try {
     const res = await fetchWithTimeout(request, TIMEOUT_MS);
@@ -83,7 +102,7 @@ User visits proofbound.com
   ↓
 Cloudflare Worker intercepts
   ↓
-If path is /textkeep/* → Route to status.proofbound.com (static site)
+If path is /textkeep/* or /privacy or /terms → Route to status.proofbound.com (static site)
 If other path → Pass through to droplet (React app)
 ```
 
@@ -93,7 +112,7 @@ User visits proofbound.com
   ↓
 Cloudflare Worker intercepts
   ↓
-If path is /textkeep/* → Route to status.proofbound.com (unchanged)
+If path is /textkeep/* or /privacy or /terms → Route to status.proofbound.com (unchanged)
 If other path → Droplet returns 5xx → Worker redirects to status.proofbound.com
 ```
 
@@ -118,6 +137,8 @@ This allows nginx on the droplet to handle both `app.proofbound.com` and `proofb
 - Fallback/error page (shown when droplet is down)
 - TextKeep download page at `/textkeep/`
 - TextKeep version metadata at `/textkeep/version.json`
+- Privacy Policy at `/privacy.html` (always available)
+- Terms of Service at `/terms.html` (always available)
 - Marketing pages (future: could add more static content)
 
 ### TextKeep Structure
@@ -164,9 +185,11 @@ This allows nginx on the droplet to handle both `app.proofbound.com` and `proofb
 ## Verification Commands
 
 ```bash
-# Test TextKeep routing (should serve from static site)
+# Test always-available routes (should serve from static site)
 curl -I https://proofbound.com/textkeep
 curl https://proofbound.com/textkeep/version.json
+curl -I https://proofbound.com/privacy
+curl -I https://proofbound.com/terms
 
 # Test root domain (should serve React app when droplet is up)
 curl -I https://proofbound.com

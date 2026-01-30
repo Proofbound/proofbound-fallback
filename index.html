@@ -765,19 +765,105 @@
     <!-- Typing Animation Script -->
     <script>
         const words = ["ideas", "notes", "expertise", "knowledge"];
-        let currentWord = 0;
+        let currentWordIndex = 0;
         const typingElement = document.getElementById('typing');
+        const h1Element = document.querySelector('.hero h1');
 
-        function typeWord() {
-            typingElement.textContent = words[currentWord];
-            currentWord = (currentWord + 1) % words.length;
+        // Store the original HTML structure
+        const fullTextBefore = "Turn your ";
+        const fullTextAfter = " into a";
+
+        // Hide text initially and prepare for typing
+        h1Element.style.opacity = '0';
+
+        // Wait a moment after page load before starting animation
+        setTimeout(() => {
+            h1Element.style.opacity = '1';
+            startFullAnimation();
+        }, 300);
+
+        function startFullAnimation() {
+            // Reset the h1 content
+            h1Element.innerHTML = '<span id="typed-text"></span><span class="typing-cursor">|</span><br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
+
+            const typedTextElement = document.getElementById('typed-text');
+            const fullInitialText = fullTextBefore + words[0] + fullTextAfter;
+            let charIndex = 0;
+
+            // Type out the full sentence character by character
+            function typeCharacter() {
+                if (charIndex < fullInitialText.length) {
+                    typedTextElement.textContent = fullInitialText.substring(0, charIndex + 1);
+                    charIndex++;
+                    setTimeout(typeCharacter, 50); // 50ms per character
+                } else {
+                    // Remove cursor and restructure HTML for word cycling
+                    setTimeout(() => {
+                        h1Element.innerHTML = fullTextBefore + '<span class="typing-container" id="typing">' + words[0] + '</span>' + fullTextAfter + '<br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
+
+                        // Start cycling through words
+                        currentWordIndex = 1; // Start with second word
+                        setTimeout(cycleWords, 2000); // Wait 2 seconds before first word change
+                    }, 1000);
+                }
+            }
+
+            typeCharacter();
         }
 
-        // Initial word
-        typeWord();
+        function cycleWords() {
+            const typingContainer = document.getElementById('typing');
+            if (!typingContainer) return;
 
-        // Change word every 3 seconds
-        setInterval(typeWord, 3000);
+            const currentWord = words[currentWordIndex];
+            const previousWord = words[(currentWordIndex - 1 + words.length) % words.length];
+
+            // Erase previous word character by character
+            let eraseIndex = previousWord.length;
+            function eraseCharacter() {
+                if (eraseIndex > 0) {
+                    typingContainer.textContent = previousWord.substring(0, eraseIndex);
+                    eraseIndex--;
+                    setTimeout(eraseCharacter, 30); // 30ms per character when erasing
+                } else {
+                    // Type new word character by character
+                    let typeIndex = 0;
+                    function typeNewWord() {
+                        if (typeIndex <= currentWord.length) {
+                            typingContainer.textContent = currentWord.substring(0, typeIndex);
+                            typeIndex++;
+                            setTimeout(typeNewWord, 50); // 50ms per character when typing
+                        } else {
+                            // Move to next word or restart animation
+                            currentWordIndex++;
+                            if (currentWordIndex < words.length) {
+                                setTimeout(cycleWords, 2000); // Wait 2 seconds before next word
+                            } else {
+                                // All words cycled, restart entire animation
+                                setTimeout(() => {
+                                    currentWordIndex = 0;
+                                    startFullAnimation();
+                                }, 3000); // Wait 3 seconds before restarting
+                            }
+                        }
+                    }
+                    typeNewWord();
+                }
+            }
+            eraseCharacter();
+        }
     </script>
+
+    <style>
+        .typing-cursor {
+            animation: blink 1s infinite;
+            font-weight: 400;
+        }
+
+        @keyframes blink {
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
+        }
+    </style>
 </body>
 </html>
