@@ -7,7 +7,7 @@
 This repository contains the **static fallback and special content** for Proofbound infrastructure:
 - **Fallback page**: Shown when droplet is down (status.proofbound.com)
 - **TextKeep download page**: Always-available download page at `/textkeep/`
-- **TextKeep version metadata**: Version info at `/textkeep/version.json`
+- **TextKeep version metadata**: Version info at `/textkeep/version.json` (v1.3.5)
 - **Privacy Policy**: Always-available legal page at `/privacy.html`
 - **Terms of Service**: Always-available legal page at `/terms.html`
 - **Future**: Can host additional static marketing content
@@ -209,7 +209,7 @@ proofbound-oof/
 ├── terms.html              # Terms of service
 ├── textkeep/               # TextKeep download page directory
 │   ├── index.html          # TextKeep landing page
-│   └── version.json        # Version metadata (v1.3.4)
+│   └── version.json        # Version metadata (v1.3.5)
 ├── downloads/              # Downloadable files (TextKeep app)
 ├── logo-562x675.png        # Proofbound logo
 ├── favicons/               # Favicon assets
@@ -431,7 +431,7 @@ Potential improvements to consider:
 See git commit history for changes. Notable updates:
 - **Jan 29, 2026**: Implemented hybrid routing architecture
   - Reorganized TextKeep from `textkeep.html` to `textkeep/` directory
-  - Added `textkeep/version.json` with version metadata (v1.3.4)
+  - Added `textkeep/version.json` with version metadata (v1.3.5)
   - Updated DNS: `proofbound.com` → A record to droplet (was CNAME to static site)
   - Configured Cloudflare Worker for `/textkeep/*` routing and failover
   - Updated nginx-fallback.conf to handle `proofbound.com` requests

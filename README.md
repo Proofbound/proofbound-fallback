@@ -326,7 +326,7 @@ curl -I https://status.proofbound.com
 ├── terms.html                # Terms of service (9.8 KB)
 ├── textkeep/                 # TextKeep download directory
 │   ├── index.html            # TextKeep landing page
-│   └── version.json          # Version metadata (v1.3.4)
+│   └── version.json          # Version metadata (v1.3.5)
 ├── downloads/                # Downloadable files
 ├── logo-562x675.png          # Proofbound logo
 ├── favicons/                 # Favicon assets
