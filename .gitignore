@@ -1,0 +1,5 @@
+# macOS files
+.DS_Store
+
+# Unzipped app bundles (keep only .zip files)
+downloads/*.app/
