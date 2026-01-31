@@ -29,7 +29,7 @@ Allow: /
 User-agent: Applebot
 Allow: /
 
-# Sitemap location
+# Sitemap location (always use proofbound.com for SEO)
 Sitemap: https://proofbound.com/sitemap.xml
 
 # Crawl-delay to be respectful

@@ -146,7 +146,7 @@ This allows nginx on the droplet to handle both `app.proofbound.com` and `proofb
 ```
 /textkeep/
 ├── index.html        # TextKeep landing page
-└── version.json      # Version metadata (v1.3.5)
+└── version.json      # Version metadata (v1.3.6)
 ```
 
 **Access:**

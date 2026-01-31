@@ -7,7 +7,7 @@
 This repository contains the **static fallback and special content** for Proofbound infrastructure:
 - **Fallback page**: Shown when droplet is down (status.proofbound.com)
 - **TextKeep download page**: Always-available download page at `/textkeep/`
-- **TextKeep version metadata**: Version info at `/textkeep/version.json` (v1.3.5)
+- **TextKeep version metadata**: Version info at `/textkeep/version.json` (v1.3.6)
 - **Privacy Policy**: Always-available legal page at `/privacy.html`
 - **Terms of Service**: Always-available legal page at `/terms.html`
 - **Future**: Can host additional static marketing content
@@ -209,7 +209,7 @@ proofbound-oof/
 ├── terms.html              # Terms of service
 ├── textkeep/               # TextKeep download page directory
 │   ├── index.html          # TextKeep landing page
-│   └── version.json        # Version metadata (v1.3.5)
+│   └── version.json        # Version metadata (v1.3.6)
 ├── downloads/              # Downloadable files (TextKeep app)
 ├── logo-562x675.png        # Proofbound logo
 ├── favicons/               # Favicon assets
@@ -314,6 +314,78 @@ proofbound-oof/
 # [ ] No console errors
 # [ ] All images load
 ```
+
+### Updating TextKeep Version
+
+When a new TextKeep version is released, follow this checklist to update all references:
+
+**1. Prepare Files**
+- Place new version zip in `downloads/` with naming: `TextKeep-{VERSION}.zip` (e.g., `TextKeep-1.3.6.zip`)
+  - **IMPORTANT**: Use format `TextKeep-1.3.6.zip` NOT `TextKeep-v1.3.6.zip`
+- Add any new screenshots/assets to `favicons/assets/` if needed
+
+**2. Update Version References**
+Edit these files to update version numbers:
+
+- `textkeep/version.json` - Update `version` field
+- `textkeep/index.html` - Update in 3 places:
+  - Line ~63: `"downloadUrl"` in schema.org metadata
+  - Line ~64: `"softwareVersion"` in schema.org metadata
+  - Line ~401: Download button href and text
+- `CLAUDE.md` - Update version references (search for old version)
+- `README.md` - Update version references (search for old version)
+- `DEPLOYMENT.md` - Update version references (search for old version)
+
+**3. Git Workflow**
+```bash
+# Stage all changes
+git add textkeep/version.json textkeep/index.html \
+  downloads/TextKeep-{VERSION}.zip \
+  CLAUDE.md README.md DEPLOYMENT.md \
+  favicons/assets/  # if new assets added
+
+# Commit with clear message
+git commit -m "Update TextKeep to v{VERSION}
+
+- Update version in textkeep/version.json
+- Update download links and version display in textkeep/index.html
+- Update documentation references in CLAUDE.md, README.md, DEPLOYMENT.md
+- Add TextKeep-{VERSION}.zip release file
+
+Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
+
+# Push to GitHub
+git push
+```
+
+**4. Verify Deployment**
+```bash
+# Wait ~2 minutes for Digital Ocean to deploy
+
+# Check version.json
+curl -s "https://status.proofbound.com/textkeep/version.json"
+
+# Check HTML source
+curl -s "https://status.proofbound.com/textkeep/" | grep -E "(Download for macOS|softwareVersion)"
+
+# Test download link
+curl -I "https://status.proofbound.com/downloads/TextKeep-{VERSION}.zip"
+```
+
+**5. Test Live Site**
+- Visit https://status.proofbound.com/textkeep
+- Verify version shown in download button
+- Click download button to test file downloads
+- Check screenshot displays correctly
+
+**Files Modified (Typical Update):**
+- `textkeep/version.json`
+- `textkeep/index.html`
+- `downloads/TextKeep-{VERSION}.zip` (new file)
+- `CLAUDE.md` (documentation)
+- `README.md` (documentation)
+- `DEPLOYMENT.md` (documentation)
+- `favicons/assets/` (if new screenshots)
 
 ## Hosting & Deployment
 
@@ -431,7 +503,7 @@ Potential improvements to consider:
 See git commit history for changes. Notable updates:
 - **Jan 29, 2026**: Implemented hybrid routing architecture
   - Reorganized TextKeep from `textkeep.html` to `textkeep/` directory
-  - Added `textkeep/version.json` with version metadata (v1.3.5)
+  - Added `textkeep/version.json` with version metadata (v1.3.6)
   - Updated DNS: `proofbound.com` → A record to droplet (was CNAME to static site)
   - Configured Cloudflare Worker for `/textkeep/*` routing and failover
   - Updated nginx-fallback.conf to handle `proofbound.com` requests
