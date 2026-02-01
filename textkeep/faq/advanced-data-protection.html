@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL', {
+        'linker': {
+          'domains': ['proofbound.com', 'app.proofbound.com', 'shop.proofbound.com']
+        }
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is Advanced Data Protection and Should I Enable It? | TextKeep FAQ</title>
+    <meta name="description" content="Advanced Data Protection extends end-to-end encryption to iCloud Backups and message storage. Learn how it works and the trade-offs of enabling this optional security feature.">
+    <link rel="canonical" href="https://proofbound.com/textkeep/faq/advanced-data-protection">
+    <link rel="icon" type="image/svg+xml" href="../../favicons/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #007bff;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0 1.5rem;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 1.5rem 0;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+        article {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+        }
+        p { margin-bottom: 1rem; color: var(--text-secondary); }
+        ul { margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .download-cta {
+            display: inline-block;
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease;
+        }
+        .download-cta:hover {
+            background: #000;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            article { padding: 2rem 1.5rem; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../faq.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"/>
+            </svg>
+            Back to FAQ
+        </a>
+
+        <article>
+            <h1>What is Advanced Data Protection and should I enable it?</h1>
+
+            <p>Advanced Data Protection (ADP) is an optional security feature Apple introduced in December 2022 that extends full end-to-end encryption to iCloud Backups and several other data categories. Understanding ADP helps you make informed decisions about your message security and backup strategy.</p>
+
+            <h2>What ADP Protects</h2>
+            <p>With Advanced Data Protection enabled, Apple extends end-to-end encryption to categories previously encrypted only with keys Apple could access. Protected categories include iCloud Backup, iCloud Drive, Photos, Notes, Reminders, Voice Memos, Safari Bookmarks, and Wallet passes. Notably, messages are already end-to-end encrypted by default, but ADP protects the backup of those messages that would otherwise be included in iCloud Backups.</p>
+
+            <h2>The Key Difference</h2>
+            <p>Without ADP, iCloud Backups are encrypted but Apple holds the decryption keys. This means Apple can decrypt backups when served with legal requests from law enforcement. With ADP enabled, only your devices hold the decryption keys—Apple genuinely cannot access your backup data even when served with court orders or legal demands. This provides maximum privacy protection against government surveillance, hacking of Apple's infrastructure, or unauthorized Apple employee access.</p>
+
+            <h2>The Critical Trade-Off</h2>
+            <p>The trade-off for this enhanced security is significant: if you lose access to all trusted devices and forget your recovery key, you permanently lose access to your data. Apple cannot help you recover it because they genuinely don't have the decryption keys. This risk is real—if you break or lose your only iPhone, forget your recovery key, and have no other trusted devices, years of photos, messages, and documents become permanently inaccessible.</p>
+
+            <h2>Recovery Mechanisms</h2>
+            <p>To mitigate this risk, ADP requires you to set up recovery mechanisms during enablement. You must designate a recovery contact (a trusted person who can help you regain access) or create a recovery key (a 28-character code you must store securely offline). You need at least one of these recovery mechanisms to enable ADP. However, both mechanisms require careful management—losing both your recovery key and access to your recovery contact creates unrecoverable data loss.</p>
+
+            <h2>Should You Enable ADP?</h2>
+            <p>Consider enabling ADP if you prioritize maximum privacy protection, trust yourself to securely manage recovery keys, have multiple Apple devices that reduce the risk of losing all trusted devices simultaneously, or face elevated privacy threats (journalists, activists, high-net-worth individuals). Consider not enabling ADP if you have only one Apple device with no backups, tend to lose passwords or security codes, prioritize data recovery capability over maximum privacy, or don't face specific threats requiring government-proof encryption.</p>
+
+            <h2>ADP and Message Export</h2>
+            <p>Advanced Data Protection doesn't affect local message export. Tools like TextKeep still access the local chat.db database normally whether or not ADP is enabled. ADP only affects cloud storage and backups—local data remains accessible as before.</p>
+
+            <a href="/textkeep" class="download-cta">Download TextKeep for Mac</a>
+        </article>
+    </div>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL', {
+        'linker': {
+          'domains': ['proofbound.com', 'app.proofbound.com', 'shop.proofbound.com']
+        }
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Happens to Attachments Stored in iCloud? | TextKeep FAQ</title>
+    <meta name="description" content="Messages in iCloud offloads attachments to cloud storage to save local space. Learn how to download them before export and why some attachments show as placeholders.">
+    <link rel="canonical" href="https://proofbound.com/textkeep/faq/icloud-attachments">
+    <link rel="icon" type="image/svg+xml" href="../../favicons/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #007bff;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0 1.5rem;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 1.5rem 0;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+        article {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+        }
+        p { margin-bottom: 1rem; color: var(--text-secondary); }
+        ul { margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .download-cta {
+            display: inline-block;
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease;
+        }
+        .download-cta:hover {
+            background: #000;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            article { padding: 2rem 1.5rem; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../faq.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"/>
+            </svg>
+            Back to FAQ
+        </a>
+
+        <article>
+            <h1>What happens to attachments stored in iCloud?</h1>
+
+            <p>When "Messages in iCloud" is enabled, macOS automatically manages attachment storage to optimize local disk space. This storage optimization can create challenges for message export because attachments may not be available locally when you run export tools.</p>
+
+            <h2>Storage Optimization Mechanism</h2>
+            <p>When local device storage fills, macOS automatically offloads older attachments to iCloud storage. The system retains metadata (file names, types, sizes, timestamps) and low-resolution previews locally, but moves full-resolution files to cloud storage. This happens transparently without user intervention. The Messages app downloads attachments on-demand when you scroll back and view older conversations.</p>
+
+            <h2>Impact on Export Tools</h2>
+            <p>Export tools like TextKeep access the local message database and file system. When an attachment has been offloaded to iCloud, the export tool encounters a placeholder instead of the actual file. The export will note "Attachment stored in iCloud" or similar, indicating that the attachment exists but isn't available locally. The metadata about the attachment is preserved in the export, but the actual image, video, or document is missing.</p>
+
+            <h2>Downloading Attachments Before Export</h2>
+            <p>To ensure complete export with all attachments, you need to force download of offloaded files before running the export. Open the Messages app and manually scroll through all conversations you plan to export. Click on or hover over photos and videos to trigger download from iCloud. For long conversations spanning years, this process can be time-consuming. Wait for downloads to complete—you'll see progress indicators when files are being retrieved from iCloud.</p>
+
+            <h2>Disabling Storage Optimization</h2>
+            <p>For users with sufficient local storage, you can disable storage optimization to keep all attachments stored locally. Open Messages preferences, go to Settings > Messages in iCloud, and look for options related to "Optimize Mac Storage" or similar. Disabling this keeps all message content and attachments stored on your Mac, ensuring they're always available for export. However, this requires adequate free disk space—message histories with many photos and videos can consume tens or hundreds of gigabytes.</p>
+
+            <h2>The 30-Day Window</h2>
+            <p>Some users report that attachments remain accessible in iCloud for approximately 30 days after deletion before permanent removal. This appears related to giving offline devices time to process deletion instructions before final cleanup. However, this window is not officially documented by Apple and should not be relied upon for archival purposes. If you need to preserve attachments, export them while they're definitely still available.</p>
+
+            <a href="/textkeep" class="download-cta">Download TextKeep for Mac</a>
+        </article>
+    </div>
+</body>
+</html>

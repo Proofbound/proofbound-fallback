@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL', {
+        'linker': {
+          'domains': ['proofbound.com', 'app.proofbound.com', 'shop.proofbound.com']
+        }
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Does GDPR Give Me the Right to Export My iMessages? | TextKeep FAQ</title>
+    <meta name="description" content="GDPR Article 20 grants data portability rights, but Apple argues iMessage's encryption means they don't process content. Learn about this controversy and your practical export options.">
+    <link rel="canonical" href="https://proofbound.com/textkeep/faq/gdpr-data-portability">
+    <link rel="icon" type="image/svg+xml" href="../../favicons/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #007bff;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0 1.5rem;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 1.5rem 0;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+        article {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+        }
+        p { margin-bottom: 1rem; color: var(--text-secondary); }
+        ul { margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .download-cta {
+            display: inline-block;
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease;
+        }
+        .download-cta:hover {
+            background: #000;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            article { padding: 2rem 1.5rem; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../faq.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"/>
+            </svg>
+            Back to FAQ
+        </a>
+
+        <article>
+            <h1>Does GDPR give me the right to export my iMessages?</h1>
+
+            <p>The European Union's General Data Protection Regulation (GDPR), effective May 2018, grants users extensive rights over their personal data. However, Apple's compliance with GDPR data portability for iMessages remains controversial and incomplete.</p>
+
+            <h2>GDPR Data Portability Rights</h2>
+            <p>Article 15 of GDPR gives users the right to request copies of all personal data an organization holds about them. Article 20 provides the right to data portability—users can request data in "structured, commonly used and machine-readable format" and have it transmitted directly to another service provider. These provisions theoretically require Apple to provide message export functionality for EU users.</p>
+
+            <h2>Apple's End-to-End Encryption Defense</h2>
+            <p>Apple argues that iMessage's end-to-end encryption architecture means Apple doesn't "process" message content—only metadata like routing information. Since Apple (in their framing) doesn't have access to message content due to encryption, they claim no obligation to provide export of that content. This position is technically accurate in the narrow sense that Apple's servers cannot decrypt message content in transit, but privacy advocates find it insufficient.</p>
+
+            <h2>The Counterarguments</h2>
+            <p>Critics argue that Apple's position violates both the letter and spirit of GDPR for several reasons. First, Apple controls the entire iMessage infrastructure and could implement export functionality on-device where decryption keys reside—the technical capability exists. Second, requiring an Apple device running Apple software to access one's own message data creates proprietary lock-in that contradicts data portability principles. Third, even if message content is end-to-end encrypted, Apple processes extensive metadata (sender/recipient identifiers, timestamps, device registrations, push notification routing) that should be exportable under GDPR.</p>
+
+            <h2>The Account Data Transfer API</h2>
+            <p>In response to EU Digital Markets Act (DMA) requirements, Apple created the Account Data Transfer API in late 2022. This API theoretically enables third-party services to request portability of user data on behalf of users. However, access requires formal application with business verification, detailed justification of intended data use, and additional review if the applicant has faced regulatory investigations. Notably, the Account Data Transfer API documentation does not list iMessage content as an available data category, suggesting Apple continues to exclude message content from portability obligations based on the encryption argument.</p>
+
+            <h2>Practical Export Options</h2>
+            <p>Despite these legal ambiguities, EU users have the same practical export options as users elsewhere—third-party tools like TextKeep that access the local message database directly on your Mac. While this doesn't address the broader policy question of whether Apple should provide native export, it does give you functional control over your message data.</p>
+
+            <a href="/textkeep" class="download-cta">Download TextKeep for Mac</a>
+        </article>
+    </div>
+</body>
+</html>

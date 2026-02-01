@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL', {
+        'linker': {
+          'domains': ['proofbound.com', 'app.proofbound.com', 'shop.proofbound.com']
+        }
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Can Apple Read My iMessages? | TextKeep FAQ</title>
+    <meta name="description" content="iMessages use end-to-end encryption where Apple cannot read content in transit. However, Apple can access messages through iCloud Backups unless Advanced Data Protection is enabled.">
+    <link rel="canonical" href="https://proofbound.com/textkeep/faq/can-apple-read-messages">
+    <link rel="icon" type="image/svg+xml" href="../../favicons/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #007bff;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0 1.5rem;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 1.5rem 0;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+        article {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+        }
+        p { margin-bottom: 1rem; color: var(--text-secondary); }
+        ul { margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .download-cta {
+            display: inline-block;
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease;
+        }
+        .download-cta:hover {
+            background: #000;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            article { padding: 2rem 1.5rem; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../faq.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"/>
+            </svg>
+            Back to FAQ
+        </a>
+
+        <article>
+            <h1>Can Apple read my iMessages?</h1>
+
+            <p>The answer depends on where the messages are: in transit, stored locally, backed up to iCloud, or synced with Messages in iCloud. Each storage location has different encryption properties and access implications.</p>
+
+            <h2>Messages in Transit: Cannot Read</h2>
+            <p>When iMessages are in transit between devices, Apple genuinely cannot read the content. iMessage uses end-to-end encryption where each device generates its own encryption keys, and only the recipient devices can decrypt incoming messages. Apple's servers route encrypted messages but cannot decrypt them because they don't have access to the private keys, which never leave your devices. This architecture means Apple cannot comply with law enforcement requests to intercept iMessage content in real-time.</p>
+
+            <h2>Messages in iCloud: Complex</h2>
+            <p>Messages in iCloud maintains end-to-end encryption through CloudKit Service Keys protected by iCloud Keychain syncing. In theory, Apple cannot decrypt Messages in iCloud content because the service keys are themselves encrypted. However, there's a critical caveat: if iCloud Backup is enabled, the CloudKit Service Key is included in the backup, which Apple can decrypt. This means Apple can potentially access messages for users who have both Messages in iCloud and iCloud Backup enabled—the majority of users.</p>
+
+            <h2>iCloud Backups: Can Read (Unless ADP Enabled)</h2>
+            <p>Standard iCloud Backups are encrypted, but Apple holds the decryption keys. This allows Apple to help users recover their data if they lose access to all devices and forget passwords, but it also means Apple can decrypt backups when served with valid legal requests. If you have iCloud Backup enabled without Advanced Data Protection, Apple can technically access your message history through the backup, even though they cannot read messages in transit.</p>
+
+            <h2>Advanced Data Protection Changes Everything</h2>
+            <p>When Advanced Data Protection is enabled, Apple genuinely cannot read your messages in any form—not in iCloud Backups, not in Messages in iCloud sync, nowhere. With ADP, only your devices hold the decryption keys, and Apple has no technical capability to access the encrypted data. This provides maximum privacy but comes with the risk that if you lose all devices and your recovery key, your data is permanently inaccessible.</p>
+
+            <h2>Metadata Collection</h2>
+            <p>Even with end-to-end encryption, Apple processes metadata for iMessages including sender and recipient phone numbers and email addresses, timestamps of when messages are sent, device identifiers and APNs tokens for routing, and information about when encryption keys are exchanged. This metadata can reveal communication patterns, social networks, and behavioral information even without message content access. Law enforcement can and does request this metadata through legal process.</p>
+
+            <h2>The Bottom Line</h2>
+            <p>For most users (those with standard iCloud Backup enabled), Apple could theoretically access message content through backup decryption if compelled by valid legal process. For users with Advanced Data Protection enabled, Apple genuinely cannot access message content in any form. However, all users' metadata is visible to Apple regardless of encryption settings.</p>
+
+            <a href="/textkeep" class="download-cta">Download TextKeep for Mac</a>
+        </article>
+    </div>
+</body>
+</html>

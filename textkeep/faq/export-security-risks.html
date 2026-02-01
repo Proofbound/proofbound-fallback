@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-08CE0H3LRL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-08CE0H3LRL', {
+        'linker': {
+          'domains': ['proofbound.com', 'app.proofbound.com', 'shop.proofbound.com']
+        }
+      });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Are There Security Risks with Exporting Messages? | TextKeep FAQ</title>
+    <meta name="description" content="Exported messages are unencrypted files that require secure storage. Learn about security considerations, encrypted storage options, and best practices for protecting exported archives.">
+    <link rel="canonical" href="https://proofbound.com/textkeep/faq/export-security-risks">
+    <link rel="icon" type="image/svg+xml" href="../../favicons/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary: #007bff;
+            --text-dark: #212529;
+            --text-secondary: #495057;
+            --text-muted: #6c757d;
+            --bg-light: #f8f9fa;
+            --bg-mid: #e9ecef;
+            --bg-dark: #dee2e6;
+            --white: #ffffff;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.3);
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--bg-mid) 50%, var(--bg-dark) 100%);
+            min-height: 100vh;
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0 1.5rem;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.875rem;
+            padding: 1.5rem 0;
+            transition: color 0.2s ease;
+        }
+        .back-link:hover { color: var(--primary); }
+        article {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 3rem 2.5rem;
+            margin: 2rem 0;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+        }
+        h1 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+        h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin: 2rem 0 1rem;
+        }
+        p { margin-bottom: 1rem; color: var(--text-secondary); }
+        ul { margin: 1rem 0 1rem 1.5rem; color: var(--text-secondary); }
+        li { margin-bottom: 0.5rem; }
+        a { color: var(--primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .download-cta {
+            display: inline-block;
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 0.875rem 1.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            transition: background 0.3s ease;
+        }
+        .download-cta:hover {
+            background: #000;
+            text-decoration: none;
+        }
+        @media (max-width: 768px) {
+            article { padding: 2rem 1.5rem; }
+            h1 { font-size: 1.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../faq.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="15,18 9,12 15,6"/>
+            </svg>
+            Back to FAQ
+        </a>
+
+        <article>
+            <h1>Are there security risks with exporting messages?</h1>
+
+            <p>Yes, exported messages introduce security considerations that don't exist when messages remain exclusively within Apple's encrypted ecosystem. Understanding these risks helps you make informed decisions about export and storage strategies.</p>
+
+            <h2>Loss of Encryption Protection</h2>
+            <p>While iMessages are end-to-end encrypted in transit and optionally encrypted in iCloud, exported files are typically stored as unencrypted PDFs, HTML, CSV, or text files. Anyone with access to these files can read their contents without authentication or decryption. This is fundamentally different from messages stored in the Messages app, which remain encrypted and require device access with authentication to view.</p>
+
+            <h2>File Storage Risks</h2>
+            <p>Exported message files face the same security risks as any sensitive document on your computer. They can be accidentally uploaded to cloud services, discovered by other users with access to your computer, accessed by malware or unauthorized software, included in unencrypted backups, or accidentally shared via email or messaging. Each of these scenarios could expose private conversations to unintended parties.</p>
+
+            <h2>Secure Storage Best Practices</h2>
+            <p>To mitigate these risks, consider implementing secure storage practices. Store exported files in encrypted disk images (macOS Disk Utility can create encrypted DMGs that require passwords to mount). Use encrypted external drives rather than storing exports on your main system drive. Consider cloud storage with encryption like iCloud Drive with Advanced Data Protection or services like ProtonDrive that offer zero-knowledge encryption. Implement strict file permissions limiting access to only your user account. Regularly audit where exported files are stored and delete copies you no longer need.</p>
+
+            <h2>Legal and Compliance Considerations</h2>
+            <p>If you're exporting messages for legal discovery or compliance purposes, consult with legal counsel about appropriate chain-of-custody procedures and storage requirements. Some jurisdictions may require specific security measures for electronically stored information (ESI). Compliance frameworks like SEC Rule 17a-4 mandate "non-rewriteable, non-erasable" storage, which typically means write-once media or specialized compliance archiving systems.</p>
+
+            <h2>Balancing Security and Accessibility</h2>
+            <p>The fundamental trade-off with message export is between accessibility and security. Exported files are more accessible—they're portable, platform-independent, and don't require Apple devices to view. However, this accessibility comes at the cost of reduced security compared to messages remaining in Apple's encrypted ecosystem. For sensitive conversations, consider whether export is truly necessary or whether leaving messages in the Messages app provides adequate access while maintaining stronger security protections.</p>
+
+            <h2>Safe Export Practices</h2>
+            <p>When you do need to export messages, minimize risk by exporting only the specific conversations you need rather than your entire message history, deleting exported files securely when they're no longer needed, using temporary exports for one-time needs like legal proceedings, and storing long-term archives in encrypted containers with strong passwords. Remember that exported files are no longer protected by iMessage's end-to-end encryption—treat them with the same security consciousness you would apply to any sensitive personal document.</p>
+
+            <a href="/textkeep" class="download-cta">Download TextKeep for Mac</a>
+        </article>
+    </div>
+</body>
+</html>
