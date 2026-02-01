@@ -3,7 +3,7 @@
   <!-- Landing Page / Fallback -->
   <url>
     <loc>https://proofbound.com/</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,28 +11,28 @@
   <!-- Marketing Pages -->
   <url>
     <loc>https://proofbound.com/how-it-works.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://proofbound.com/service-tiers.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
     <loc>https://proofbound.com/faq.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
     <loc>https://proofbound.com/elite-service.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -40,14 +40,14 @@
   <!-- Legal Pages -->
   <url>
     <loc>https://proofbound.com/privacy</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://proofbound.com/terms</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -55,8 +55,197 @@
   <!-- TextKeep Product Page -->
   <url>
     <loc>https://proofbound.com/textkeep</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+
+  <!-- TextKeep FAQ System -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TextKeep FAQ - Why Apple Doesn't Offer Export -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/why-no-native-export.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/ecosystem-lock-in.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/green-bubble-problem.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/switching-costs.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TextKeep FAQ - Technical Architecture -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/end-to-end-encryption.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/what-is-pq3.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/imessage-vs-sms.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/imessage-vs-rcs.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/messages-in-icloud.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/chat-db-database.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TextKeep FAQ - Using TextKeep -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/how-textkeep-works.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/is-textkeep-safe.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/what-format-export.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/export-attachments.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/group-messages.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TextKeep FAQ - Legal & Compliance -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/legal-discovery.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/financial-compliance.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/gdpr-data-portability.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TextKeep FAQ - Alternatives -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/other-export-tools.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/mac-print-to-pdf.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/icloud-attachments.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/deleted-messages.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TextKeep FAQ - Privacy & Security -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/advanced-data-protection.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/can-apple-read-messages.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/export-security-risks.html</loc>
+    <lastmod>2026-02-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
