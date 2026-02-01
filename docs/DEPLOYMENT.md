@@ -1,6 +1,6 @@
 # Deployment Documentation
 
-**Last Updated:** January 30, 2026
+**Last Updated:** February 1, 2026
 
 This document describes the deployed hybrid routing architecture for Proofbound.
 
@@ -43,7 +43,7 @@ async function handleRequest(request) {
   const pathname = url.pathname.toLowerCase().replace(/\/$/, '');
 
   // ALWAYS route these paths to static site (no health check)
-  // - /textkeep: Product landing page (always available)
+  // - /textkeep: Product landing page and FAQ (always available)
   // - /privacy, /terms: Legal pages (must be always accessible)
   if (pathname.startsWith('/textkeep') ||
       pathname === '/privacy' ||
@@ -130,13 +130,14 @@ This allows nginx on the droplet to handle both `app.proofbound.com` and `proofb
 
 **Hosted at:** `status.proofbound.com`
 **Platform:** Digital Ocean App Platform (Static Site)
-**Repo:** `Proofbound/proofbound-fallback`
+**Repo:** `Proofbound/proofbound-oof`
 **Auto-deploy:** Yes (pushes to `master`)
 
 **Content:**
 - Fallback/error page (shown when droplet is down)
 - TextKeep download page at `/textkeep/`
-- TextKeep version metadata at `/textkeep/version.json`
+- TextKeep FAQ system at `/textkeep/faq.html` (25 Q&A pages)
+- TextKeep version metadata at `/textkeep/version.json` (v1.3.6)
 - Privacy Policy at `/privacy.html` (always available)
 - Terms of Service at `/terms.html` (always available)
 - Marketing pages (future: could add more static content)
@@ -145,20 +146,49 @@ This allows nginx on the droplet to handle both `app.proofbound.com` and `proofb
 
 ```
 /textkeep/
-├── index.html        # TextKeep landing page
-└── version.json      # Version metadata (v1.3.6)
+├── index.html           # TextKeep landing page
+├── faq.html             # FAQ index with 25 questions
+├── faq/                 # Individual FAQ answer pages
+│   ├── why-no-native-export.html
+│   ├── ecosystem-lock-in.html
+│   ├── green-bubble-problem.html
+│   ├── switching-costs.html
+│   ├── end-to-end-encryption.html
+│   ├── what-is-pq3.html
+│   ├── imessage-vs-sms.html
+│   ├── imessage-vs-rcs.html
+│   ├── messages-in-icloud.html
+│   ├── chat-db-database.html
+│   ├── how-textkeep-works.html
+│   ├── is-textkeep-safe.html
+│   ├── what-format-export.html
+│   ├── export-attachments.html
+│   ├── group-messages.html
+│   ├── legal-discovery.html
+│   ├── financial-compliance.html
+│   ├── gdpr-data-portability.html
+│   ├── other-export-tools.html
+│   ├── mac-print-to-pdf.html
+│   ├── icloud-attachments.html
+│   ├── deleted-messages.html
+│   ├── advanced-data-protection.html
+│   ├── can-apple-read-messages.html
+│   └── export-security-risks.html
+├── version.json         # Version metadata (v1.3.6)
+└── iMessageExport.md    # Research document (source material)
 ```
 
 **Access:**
 - Direct: `https://status.proofbound.com/textkeep`
 - Via proxy: `https://proofbound.com/textkeep` (worker routes to static site)
+- FAQ: `https://proofbound.com/textkeep/faq.html`
 
 ## Deployment Checklist
 
 ### Static Site Deployment (proofbound-oof repo)
 
 - [ ] Make changes to HTML/CSS files
-- [ ] Test locally with `./test-local.sh`
+- [ ] Test locally with `./test-local.sh` or `python3 -m http.server 8000`
 - [ ] Commit changes
 - [ ] Push to `master` branch
 - [ ] Digital Ocean auto-deploys in ~2 minutes
@@ -187,6 +217,7 @@ This allows nginx on the droplet to handle both `app.proofbound.com` and `proofb
 ```bash
 # Test always-available routes (should serve from static site)
 curl -I https://proofbound.com/textkeep
+curl -I https://proofbound.com/textkeep/faq.html
 curl https://proofbound.com/textkeep/version.json
 curl -I https://proofbound.com/privacy
 curl -I https://proofbound.com/terms
@@ -197,7 +228,40 @@ curl -I https://proofbound.com
 # Check DNS
 dig proofbound.com
 dig status.proofbound.com
+
+# Test FAQ pages
+curl -I https://proofbound.com/textkeep/faq/why-no-native-export.html
+curl -I https://proofbound.com/textkeep/faq/how-textkeep-works.html
 ```
+
+## SEO Considerations
+
+### FAQ System SEO Features
+
+All 25 FAQ answer pages include:
+- Descriptive, keyword-rich title tags
+- Meta descriptions optimized for search snippets
+- Canonical URLs to prevent duplicate content issues
+- Google Analytics 4 tracking with cross-domain linker
+- Structured content with proper H1/H2 hierarchy
+- Internal linking back to TextKeep download page
+- Educational, non-promotional content
+
+### Analytics Configuration
+
+**Property ID:** `G-08CE0H3LRL`
+
+**Cross-Domain Tracking:** Enabled for:
+- `proofbound.com`
+- `app.proofbound.com`
+- `shop.proofbound.com`
+
+**Event Tracking:**
+- `download` - TextKeep app downloads
+- `textkeep_click` - Banner engagement
+- `cta_click` - Call-to-action interactions
+
+See [docs/ANALYTICS.md](ANALYTICS.md) for comprehensive analytics documentation.
 
 ## Rollback Procedures
 
@@ -213,7 +277,7 @@ dig status.proofbound.com
 3. Wait for auto-deploy (~2 minutes)
 
 ### If Droplet/Nginx Has Issues
-1. SSH into droplet
+1. SSH into droplet: `ssh root@143.110.145.237`
 2. Check Docker logs: `docker logs <container>`
 3. Revert nginx config if needed
 4. Restart nginx: `docker restart <nginx-container>`
@@ -224,6 +288,34 @@ dig status.proofbound.com
 - **Worker Logs**: Check for errors in Cloudflare dashboard
 - **Digital Ocean**: Monitor static site uptime and deployments
 - **Droplet**: Monitor nginx logs and Docker container health
+- **Google Analytics**: Track user engagement and conversions
+- **Search Console**: Monitor indexing and search performance
+
+## Common Issues and Solutions
+
+### FAQ Pages Not Loading
+**Symptoms:** 404 errors on FAQ pages
+**Solution:**
+1. Verify files exist in `textkeep/faq/` directory
+2. Check git status - ensure all files committed and pushed
+3. Wait for Digital Ocean deployment (~2 minutes)
+4. Clear Cloudflare cache if needed
+
+### Worker Not Routing /textkeep Correctly
+**Symptoms:** /textkeep shows React app instead of static site
+**Solution:**
+1. Check worker is deployed and active
+2. Verify routes include `proofbound.com/*`
+3. Check worker logs for errors
+4. Test pathname matching logic in worker code
+
+### Analytics Not Tracking
+**Symptoms:** No events in GA4 DebugView
+**Solution:**
+1. Verify GA4 tracking code in all HTML files
+2. Check GA4 property ID is correct (G-08CE0H3LRL)
+3. Test with `?debug_mode=true` query parameter
+4. Verify cross-domain linker configuration
 
 ## Support Contacts
 
@@ -231,3 +323,11 @@ dig status.proofbound.com
 - **Digital Ocean**: support.digitalocean.com
 - **DNS Issues**: Cloudflare dashboard → DNS
 - **Worker Issues**: Cloudflare dashboard → Workers & Pages
+- **Static Site**: Digital Ocean dashboard → Apps
+
+## Version History
+
+- **February 1, 2026**: Added comprehensive FAQ system (25 pages) with SEO optimization
+- **January 30, 2026**: Deployed hybrid routing architecture with Cloudflare Worker
+- **January 29, 2026**: Reorganized TextKeep from single file to directory structure
+- **January 26, 2026**: Added TextKeep landing page and version metadata

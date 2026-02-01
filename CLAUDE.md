@@ -209,18 +209,105 @@ proofbound-oof/
 ├── terms.html              # Terms of service
 ├── textkeep/               # TextKeep download page directory
 │   ├── index.html          # TextKeep landing page
-│   └── version.json        # Version metadata (v1.3.6)
+│   ├── faq.html            # FAQ index with 25 questions
+│   ├── faq/                # Individual FAQ answer pages (25 files)
+│   ├── version.json        # Version metadata (v1.3.6)
+│   └── iMessageExport.md   # Research document (source for FAQ content)
 ├── downloads/              # Downloadable files (TextKeep app)
 ├── logo-562x675.png        # Proofbound logo
 ├── favicons/               # Favicon assets
+├── docs/                   # Documentation
+│   ├── ANALYTICS.md        # Analytics implementation guide
+│   └── DEPLOYMENT.md       # Hybrid routing deployment guide
 ├── test-local.sh           # Testing helper script
 ├── README.md               # Technical documentation
 ├── CLAUDE.md               # This file - development context
-├── DEPLOYMENT.md           # Hybrid routing deployment guide
+├── DEPLOYMENT_PLAN.md      # Historical deployment planning (pre-hybrid routing)
+├── GA4-CONFIGURATION-CHECKLIST.md  # GA4 cross-domain setup
 ├── .claude/                # Claude Code configuration
 │   └── settings.local.json # Permissions and settings
 └── .claudeignore           # Files to exclude from Claude context
 ```
+
+## Analytics & Tracking
+
+### Overview
+
+All pages use **Google Analytics 4 (GA4)** for web analytics with cross-domain tracking enabled across `proofbound.com`, `app.proofbound.com`, and `shop.proofbound.com`.
+
+**Property ID:** `G-08CE0H3LRL`
+
+**Full Documentation:** See [docs/ANALYTICS.md](docs/ANALYTICS.md) for comprehensive analytics implementation guide.
+
+### Key Features
+
+1. **Cross-Domain Tracking**: User sessions persist when navigating between domains via linker parameter
+2. **Event Tracking**: Custom events for downloads, CTA clicks, and engagement actions
+3. **Cloudflare Worker Compatible**: Analytics work correctly with proxied /textkeep path
+4. **Privacy Compliant**: Follows privacy policy disclosures
+
+### Event Tracking Summary
+
+**TextKeep Analytics:**
+- **Banner Clicks** (`textkeep_click`): Tracks engagement with TextKeep banner on all pages
+- **Download Conversions** (`download`): Tracks TextKeep app downloads from /textkeep page
+
+**Proofbound Conversions:**
+- **CTA Clicks** (`cta_click`): Tracks "Try for Free", "Elite Service", pricing tier clicks
+- **Engagement** (`cta_click`): Tracks secondary actions like KDP guide views
+
+### Implementation Details
+
+**GA4 Code (in `<head>` of all HTML files):**
+```javascript
+gtag('config', 'G-08CE0H3LRL', {
+  'linker': {
+    'domains': ['proofbound.com', 'app.proofbound.com', 'shop.proofbound.com']
+  }
+});
+```
+
+**Event Tracking (inline onclick):**
+```javascript
+onclick="gtag('event', 'download', {
+  'event_category': 'conversion',
+  'event_label': 'textkeep_macos'
+});"
+```
+
+### Cloudflare Worker & Analytics
+
+The Cloudflare Worker proxies `/textkeep/*` from `status.proofbound.com` to `proofbound.com` without redirecting. This means:
+- ✅ Analytics records hostname as `proofbound.com` (desired)
+- ✅ Page path recorded as `/textkeep`
+- ✅ No session breaks or cross-domain issues
+- ✅ Download events fire normally
+
+**Key Insight:** The worker **proxies** content (not redirects), so GA4 sees the user as staying on `proofbound.com`. This is the desired behavior for consistent analytics.
+
+### Testing Analytics
+
+**Local Testing:**
+```bash
+# Start local server
+python3 -m http.server 8000
+
+# Open browser console and verify
+typeof gtag === 'function'  # Should return true
+window.dataLayer  # Should show array of events
+```
+
+**Production Testing:**
+1. Visit `https://proofbound.com/textkeep?debug_mode=true`
+2. Open GA4 Admin → DebugView
+3. Click download button and verify event fires in real-time
+4. Check cross-domain tracking by clicking CTAs to app.proofbound.com
+
+**See Also:**
+- [docs/ANALYTICS.md](docs/ANALYTICS.md) - Complete analytics documentation
+- [GA4-CONFIGURATION-CHECKLIST.md](GA4-CONFIGURATION-CHECKLIST.md) - Cross-domain setup checklist
+
+---
 
 ## Design System
 
@@ -334,14 +421,14 @@ Edit these files to update version numbers:
   - Line ~401: Download button href and text
 - `CLAUDE.md` - Update version references (search for old version)
 - `README.md` - Update version references (search for old version)
-- `DEPLOYMENT.md` - Update version references (search for old version)
+- `docs/DEPLOYMENT.md` - Update version references (search for old version)
 
 **3. Git Workflow**
 ```bash
 # Stage all changes
 git add textkeep/version.json textkeep/index.html \
   downloads/TextKeep-{VERSION}.zip \
-  CLAUDE.md README.md DEPLOYMENT.md \
+  CLAUDE.md README.md docs/DEPLOYMENT.md \
   favicons/assets/  # if new assets added
 
 # Commit with clear message
@@ -349,7 +436,7 @@ git commit -m "Update TextKeep to v{VERSION}
 
 - Update version in textkeep/version.json
 - Update download links and version display in textkeep/index.html
-- Update documentation references in CLAUDE.md, README.md, DEPLOYMENT.md
+- Update documentation references in CLAUDE.md, README.md, docs/DEPLOYMENT.md
 - Add TextKeep-{VERSION}.zip release file
 
 Co-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>"
@@ -384,7 +471,7 @@ curl -I "https://status.proofbound.com/downloads/TextKeep-{VERSION}.zip"
 - `downloads/TextKeep-{VERSION}.zip` (new file)
 - `CLAUDE.md` (documentation)
 - `README.md` (documentation)
-- `DEPLOYMENT.md` (documentation)
+- `docs/DEPLOYMENT.md` (documentation)
 - `favicons/assets/` (if new screenshots)
 
 ## Hosting & Deployment
@@ -411,7 +498,7 @@ CNAME  status.proofbound.com    →  proofbound-main.ondigitalocean.app - Proxie
 - Cloudflare Worker handles routing for `/textkeep/*` and failover
 
 ### Deployment Process
-See [DEPLOYMENT.md](DEPLOYMENT.md) for complete deployment procedures.
+See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete deployment procedures.
 
 **Quick Deploy:**
 1. Make changes to HTML/CSS files
@@ -491,28 +578,37 @@ Potential improvements to consider:
 - [ ] Create case studies page
 - [ ] Add testimonials/reviews section
 - [ ] Implement A/B testing for CTAs
-- [ ] Add Google Analytics 4 tracking
-- [ ] Create sitemap.xml for SEO
-- [ ] Add schema.org markup
+- [x] Add Google Analytics 4 tracking
+- [x] Create sitemap.xml for SEO
+- [x] Add schema.org markup
 - [ ] Implement contact form (instead of mailto links)
 - [ ] Add newsletter signup
 - [ ] Create press/media page
+- [ ] Enhanced analytics (heatmaps, session recording)
+- [ ] Cookie consent banner for GDPR compliance
 
 ## Version History
 
 See git commit history for changes. Notable updates:
+- **Feb 1, 2026**: Added comprehensive FAQ system for TextKeep
+  - Created main FAQ index (textkeep/faq.html) with 25 questions in 5 categories
+  - Added 25 individual SEO-optimized FAQ answer pages
+  - Categories: Apple export strategy, technical architecture, TextKeep usage, legal compliance, alternatives, privacy
+  - Updated textkeep/index.html with prominent FAQ links
+  - Added iMessageExport.md research document
+  - Moved DEPLOYMENT.md to docs/ directory and updated to reflect FAQ system
 - **Jan 29, 2026**: Implemented hybrid routing architecture
   - Reorganized TextKeep from `textkeep.html` to `textkeep/` directory
   - Added `textkeep/version.json` with version metadata (v1.3.6)
   - Updated DNS: `proofbound.com` → A record to droplet (was CNAME to static site)
   - Configured Cloudflare Worker for `/textkeep/*` routing and failover
   - Updated nginx-fallback.conf to handle `proofbound.com` requests
-  - Rewrote DEPLOYMENT.md to document hybrid routing setup
+  - Created docs/DEPLOYMENT.md to document hybrid routing setup
   - Updated all marketing pages to link to `/textkeep` (clean URLs)
 - **Jan 28, 2026**: Converted to full marketing site (7 pages)
   - Added: how-it-works, service-tiers, faq, elite-service, privacy, terms
   - Expanded index.html with typing animation, CTAs, Amazon KDP panel
-  - Created DEPLOYMENT.md with comprehensive deployment plan
+  - Created DEPLOYMENT_PLAN.md with comprehensive deployment plan
   - Updated README and CLAUDE.md to reflect new purpose
 - **Jan 26, 2026**: Added TextKeep banner and landing page
 - **Jan 23, 2026**: Updated to light theme with Crimson Text font
@@ -520,6 +616,6 @@ See git commit history for changes. Notable updates:
 
 ---
 
-**Last Updated**: January 30, 2026
+**Last Updated**: February 1, 2026
 
 For main application development, see [proofbound-monorepo/CLAUDE.md](../proofbound-monorepo/CLAUDE.md).
