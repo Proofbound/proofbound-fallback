@@ -76,10 +76,18 @@ All HTML pages in this repository include the GA4 tracking code in the `<head>` 
 - `privacy.html` - Privacy policy
 - `terms.html` - Terms of service
 
-**Special Pages (1 file):**
+**TextKeep Pages (27 files):**
 - `textkeep/index.html` - TextKeep product landing page
+- `textkeep/faq.html` - FAQ index with 25 questions
+- `textkeep/faq/*.html` - 25 individual FAQ answer pages covering:
+  - Why Apple doesn't offer native export (4 pages)
+  - iMessage technical architecture (6 pages)
+  - Using TextKeep (5 pages)
+  - Legal & compliance (3 pages)
+  - Alternative export solutions (4 pages)
+  - Privacy & security (3 pages)
 
-**Total:** 8 HTML files with GA4 tracking
+**Total:** 34 HTML files with GA4 tracking
 
 ### Configuration Details
 
@@ -224,9 +232,11 @@ onclick="gtag('event', 'textkeep_click', {
 - ✅ `faq.html` - 1 event (Elite CTA)
 - ✅ `elite-service.html` - Multiple events (Elite CTAs)
 
-**Pages without Event Tracking (2 files):**
+**Pages without Event Tracking (28 files):**
 - ❌ `privacy.html` - Legal page (no CTAs)
 - ❌ `terms.html` - Legal page (no CTAs)
+- ℹ️ `textkeep/faq.html` - FAQ index (navigation only, no conversion CTAs)
+- ℹ️ `textkeep/faq/*.html` (25 pages) - FAQ answers (navigation to textkeep/index.html, conversion tracked there)
 
 ---
 
@@ -385,13 +395,20 @@ TextKeep is a free macOS app featured prominently on the Proofbound marketing si
 
 ### TextKeep Funnel Analysis
 
-**User Journey:**
+**Primary User Journey:**
 1. **Awareness:** User sees TextKeep banner on marketing page
 2. **Interest:** User clicks banner → navigates to `/textkeep`
 3. **Consideration:** User reads TextKeep landing page
 4. **Conversion:** User clicks download button → downloads app
 
-**GA4 Funnel Steps:**
+**Alternative Journey (SEO/FAQ):**
+1. **Awareness:** User discovers FAQ via search (e.g., "why can't I export iMessages")
+2. **Education:** User reads FAQ answer page(s)
+3. **Interest:** User clicks "Download TextKeep for Mac" CTA → navigates to `/textkeep`
+4. **Consideration:** User reads TextKeep landing page
+5. **Conversion:** User clicks download button → downloads app
+
+**GA4 Funnel Steps (Primary):**
 ```
 Step 1: Page view (any marketing page)
 Step 2: textkeep_click event (banner)
@@ -415,6 +432,10 @@ Step 4: download event (conversion)
 | **Downloads** | download events | Events > download |
 | **Download Conversion Rate** | (Downloads / /textkeep page views) × 100% | Custom exploration |
 | **Download Funnel** | Banner → Page → Download | Funnel exploration |
+| **FAQ Index Views** | Page views of /textkeep/faq.html | Pages and screens > filter /textkeep/faq.html |
+| **FAQ Answer Views** | Page views of /textkeep/faq/*.html | Pages and screens > filter /textkeep/faq/ |
+| **FAQ → Download Rate** | Users who viewed FAQ then downloaded | Custom exploration (path exploration) |
+| **Organic Search to FAQ** | FAQ page views from organic search | Acquisition > filter page path contains /textkeep/faq/ |
 
 ### TextKeep vs Proofbound Conversions
 
@@ -431,6 +452,50 @@ Step 4: download event (conversion)
 - Create audience: "TextKeep Engaged Users"
 - Apply to Proofbound conversion funnels
 - Measure lift in conversion rate
+
+### FAQ System SEO Analytics
+
+**Purpose:** The 25 FAQ answer pages serve as SEO content to capture organic search traffic for iMessage export-related queries.
+
+**Target Keywords:**
+- "why can't I export iMessages"
+- "how to backup text messages on Mac"
+- "iMessage end-to-end encryption"
+- "Apple walled garden strategy"
+- "GDPR iMessage export"
+- "legal discovery iMessage"
+- And 20+ other long-tail keywords
+
+**Key Analytics Metrics:**
+
+| Metric | Description | How to Track |
+|--------|-------------|--------------|
+| **Organic FAQ Traffic** | Visitors from search engines to FAQ pages | Acquisition > Organic search > filter /textkeep/faq/ |
+| **FAQ Engagement** | Average pages per FAQ visitor | Engagement > Pages and screens > filter by FAQ paths |
+| **FAQ → Product Interest** | % of FAQ visitors who navigate to /textkeep | Exploration > Path exploration |
+| **FAQ → Download** | FAQ visitors who eventually download | Exploration > Segment overlap (FAQ viewers + downloaders) |
+| **Top Performing FAQs** | Which FAQ pages drive most traffic/conversions | Pages and screens > sort by views/conversions |
+| **Bounce Rate by FAQ** | Single-page sessions per FAQ answer | Engagement > Landing pages > filter FAQ |
+
+**Recommended GA4 Setup:**
+1. Create custom segment: "FAQ Visitors" (page path contains /textkeep/faq/)
+2. Create exploration: "FAQ to Conversion Path"
+   - Starting point: Any FAQ page view
+   - Ending point: download event
+3. Monitor organic search queries driving FAQ traffic
+4. Track which FAQ topics lead to highest download conversion
+
+**Expected Performance:**
+- **Weeks 1-4:** Pages indexed by Google, minimal traffic
+- **Months 2-3:** Organic traffic increases as rankings improve
+- **Months 4-6:** 100-500 organic visits/month to FAQ pages
+- **Month 6+:** FAQ pages become significant traffic source (10-20% of total)
+
+**Success Indicators:**
+- ✅ FAQ pages rank in top 10 for target keywords
+- ✅ Organic search becomes primary traffic source for FAQ pages (>80%)
+- ✅ FAQ visitors have higher engagement than average (2+ pages/session)
+- ✅ 5-10% of FAQ visitors eventually download TextKeep
 
 ---
 
