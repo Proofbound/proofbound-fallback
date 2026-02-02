@@ -32,5 +32,10 @@ Allow: /
 # Sitemap location (always use proofbound.com for SEO)
 Sitemap: https://proofbound.com/sitemap.xml
 
+# LLM-friendly documentation (comprehensive TextKeep info for AI assistants)
+# See https://llmstxt.org/ for the llms.txt standard
+# TextKeep-specific LLM documentation
+LLMs: https://proofbound.com/llms.txt
+
 # Crawl-delay to be respectful
 Crawl-delay: 1

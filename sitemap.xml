@@ -248,4 +248,12 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- LLM-Friendly Documentation -->
+  <url>
+    <loc>https://proofbound.com/llms.txt</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>

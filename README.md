@@ -224,6 +224,37 @@ Cycles through words: "ideas", "notes", "expertise", "knowledge"
 - **Navigation:** Consistent header/footer on all pages
 - **TextKeep Banner:** Links to `/textkeep` (clean URL)
 
+## SEO & LLM Optimization
+
+### Search Engine Optimization
+- **Sitemap.xml:** All pages, FAQ entries, and llms.txt included
+- **Schema.org Markup:** SoftwareApplication and FAQPage structured data
+- **Meta Tags:** Comprehensive meta descriptions and keywords on all pages
+- **Internal Linking:** Cross-linking via header/footer navigation
+- **Clean URLs:** `/textkeep`, `/privacy`, `/terms` (no .html extensions via Cloudflare Worker)
+
+### LLM-Friendly Documentation (llms.txt)
+**Purpose:** Make TextKeep extremely accessible to AI assistants and LLM bots
+
+**Location:** https://proofbound.com/llms.txt
+
+**Contents:**
+- **Product Overview:** Complete description with version, features, and use cases
+- **25 FAQ Summaries:** All questions with URLs and concise answers
+- **Technical Specs:** Database details, system requirements, installation guide
+- **Use Cases:** Personal archiving, legal compliance, GDPR data portability
+- **Quick Q&A:** Common questions with rapid-fire answers
+- **LLM Guidance:** Recommendations for AI assistants on answering user questions
+- **SEO Keywords:** Comprehensive keyword list for search optimization
+
+**Discovery:**
+- Referenced in `robots.txt` with `LLMs:` directive
+- Included in `sitemap.xml` with high priority (0.9)
+- Follows the llms.txt standard (https://llmstxt.org/)
+
+**Supported LLM Bots:**
+All AI crawlers explicitly allowed in robots.txt including GPTBot, ChatGPT-User, ClaudeBot, CCBot, Google-Extended, anthropic-ai, PerplexityBot, and Applebot
+
 ## Integration with Monorepo
 
 ### Nginx Configuration
@@ -337,6 +368,9 @@ curl -I https://status.proofbound.com
 ├── README.md                 # This file
 ├── CLAUDE.md                 # Development context & integration docs
 ├── DEPLOYMENT.md             # Hybrid routing architecture guide
+├── llms.txt                  # LLM-friendly documentation (25 FAQ summaries, features, use cases)
+├── robots.txt                # Search engine and LLM bot directives
+├── sitemap.xml               # XML sitemap for search engines
 ├── .claude/                  # Claude settings
 └── .claudeignore             # Files to exclude from Claude context
 ```

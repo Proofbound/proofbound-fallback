@@ -191,7 +191,8 @@ python3 -m http.server 8000
 
 ### Special Pages
 - **textkeep/index.html**: TextKeep product landing page
-- **textkeep/version.json**: TextKeep version metadata (v1.3.4)
+- **textkeep/version.json**: TextKeep version metadata (v1.3.6)
+- **llms.txt**: LLM-friendly documentation for AI assistants (25 FAQ summaries, features, use cases)
 
 ### Shared Components
 - **TextKeep Banner**: Featured at top of all marketing pages
@@ -230,6 +231,9 @@ proofbound-oof/
 ├── CLAUDE.md               # This file - development context
 ├── DEPLOYMENT_PLAN.md      # Historical deployment planning (pre-hybrid routing)
 ├── GA4-CONFIGURATION-CHECKLIST.md  # GA4 cross-domain setup
+├── llms.txt                # LLM-friendly documentation (comprehensive TextKeep info)
+├── robots.txt              # Search engine and LLM bot directives
+├── sitemap.xml             # XML sitemap for search engines and LLMs
 ├── .claude/                # Claude Code configuration
 │   └── settings.local.json # Permissions and settings
 └── .claudeignore           # Files to exclude from Claude context
@@ -369,12 +373,20 @@ window.dataLayer  # Should show array of events
 - **Secondary**: "Elite Service" → `elite-service.html`
 - **Tertiary**: "Free Demo" → `https://app.proofbound.com/demo`
 
-### SEO Considerations
-- Descriptive page titles and meta descriptions
-- Semantic HTML structure
-- Alt text on images (logo)
-- Internal linking between pages
-- Footer links on all pages
+### SEO & LLM Optimization
+- **Descriptive page titles and meta descriptions**: All pages have comprehensive meta tags
+- **Semantic HTML structure**: Proper heading hierarchy and landmarks
+- **Alt text on images**: Logo and important images have descriptive alt text
+- **Internal linking**: Cross-linking between pages via header/footer navigation
+- **Footer links**: Comprehensive footer with links to all pages
+- **Sitemap.xml**: XML sitemap with all pages, FAQ entries, and llms.txt
+- **llms.txt**: LLM-friendly documentation file (comprehensive TextKeep info for AI assistants)
+  - Contains all 25 FAQ questions with summaries and URLs
+  - Product overview, features, use cases, technical specs
+  - Quick Q&A section for common questions
+  - Referenced in robots.txt for easy discovery by LLM bots
+- **Schema.org markup**: Structured data for SoftwareApplication and FAQPage
+- **Robots.txt**: Explicitly allows all LLM bots (GPTBot, ClaudeBot, ChatGPT-User, etc.)
 
 ## Development Workflow
 
