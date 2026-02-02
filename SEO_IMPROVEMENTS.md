@@ -141,7 +141,7 @@ Added comprehensive SEO meta tags to all marketing pages:
 
 ### Medium Impact
 4. **Performance Optimization**
-   - Compress images (especially logo-562x675.png)
+   - Compress images (especially assets/logos/logo-562x675.png)
    - Add lazy loading to images
    - Minify CSS (currently inline, could be compressed)
    - Enable gzip compression on server

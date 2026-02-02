@@ -1,5 +1,7 @@
 # Proofbound Marketing Site
 
+> **Last Updated:** February 2, 2026
+
 **Static marketing website for proofbound.com featuring comprehensive information about Proofbound's AI-powered book generation services.**
 
 ## Purpose
@@ -214,8 +216,12 @@ proofbound-oof/
 │   ├── version.json        # Version metadata (v1.3.6)
 │   └── iMessageExport.md   # Research document (source for FAQ content)
 ├── downloads/              # Downloadable files (TextKeep app)
-├── logo-562x675.png        # Proofbound logo
-├── favicons/               # Favicon assets
+├── assets/                 # All site assets (organized)
+│   ├── favicons/           # Favicon files
+│   ├── logos/              # Proofbound logo files
+│   ├── videos/             # Video files (book animations)
+│   ├── textkeep/           # TextKeep screenshots
+│   └── kdp-assets/         # Amazon KDP related images
 ├── docs/                   # Documentation
 │   ├── ANALYTICS.md        # Analytics implementation guide
 │   └── DEPLOYMENT.md       # Hybrid routing deployment guide
@@ -409,7 +415,7 @@ When a new TextKeep version is released, follow this checklist to update all ref
 **1. Prepare Files**
 - Place new version zip in `downloads/` with naming: `TextKeep-{VERSION}.zip` (e.g., `TextKeep-1.3.6.zip`)
   - **IMPORTANT**: Use format `TextKeep-1.3.6.zip` NOT `TextKeep-v1.3.6.zip`
-- Add any new screenshots/assets to `favicons/assets/` if needed
+- Add any new screenshots/assets to `assets/textkeep/` if needed
 
 **2. Update Version References**
 Edit these files to update version numbers:
@@ -429,7 +435,7 @@ Edit these files to update version numbers:
 git add textkeep/version.json textkeep/index.html \
   downloads/TextKeep-{VERSION}.zip \
   CLAUDE.md README.md docs/DEPLOYMENT.md \
-  favicons/assets/  # if new assets added
+  assets/textkeep/  # if new assets added
 
 # Commit with clear message
 git commit -m "Update TextKeep to v{VERSION}
@@ -472,7 +478,7 @@ curl -I "https://status.proofbound.com/downloads/TextKeep-{VERSION}.zip"
 - `CLAUDE.md` (documentation)
 - `README.md` (documentation)
 - `docs/DEPLOYMENT.md` (documentation)
-- `favicons/assets/` (if new screenshots)
+- `assets/textkeep/` (if new screenshots)
 
 ## Hosting & Deployment
 
@@ -587,35 +593,6 @@ Potential improvements to consider:
 - [ ] Enhanced analytics (heatmaps, session recording)
 - [ ] Cookie consent banner for GDPR compliance
 
-## Version History
-
-See git commit history for changes. Notable updates:
-- **Feb 1, 2026**: Added comprehensive FAQ system for TextKeep
-  - Created main FAQ index (textkeep/faq.html) with 25 questions in 5 categories
-  - Added 25 individual SEO-optimized FAQ answer pages
-  - Categories: Apple export strategy, technical architecture, TextKeep usage, legal compliance, alternatives, privacy
-  - Updated textkeep/index.html with prominent FAQ links
-  - Added iMessageExport.md research document
-  - Moved DEPLOYMENT.md to docs/ directory and updated to reflect FAQ system
-- **Jan 29, 2026**: Implemented hybrid routing architecture
-  - Reorganized TextKeep from `textkeep.html` to `textkeep/` directory
-  - Added `textkeep/version.json` with version metadata (v1.3.6)
-  - Updated DNS: `proofbound.com` → A record to droplet (was CNAME to static site)
-  - Configured Cloudflare Worker for `/textkeep/*` routing and failover
-  - Updated nginx-fallback.conf to handle `proofbound.com` requests
-  - Created docs/DEPLOYMENT.md to document hybrid routing setup
-  - Updated all marketing pages to link to `/textkeep` (clean URLs)
-- **Jan 28, 2026**: Converted to full marketing site (7 pages)
-  - Added: how-it-works, service-tiers, faq, elite-service, privacy, terms
-  - Expanded index.html with typing animation, CTAs, Amazon KDP panel
-  - Created DEPLOYMENT_PLAN.md with comprehensive deployment plan
-  - Updated README and CLAUDE.md to reflect new purpose
-- **Jan 26, 2026**: Added TextKeep banner and landing page
-- **Jan 23, 2026**: Updated to light theme with Crimson Text font
-- Initial release: Simple fallback page with glassmorphism design
-
 ---
-
-**Last Updated**: February 1, 2026
 
 For main application development, see [proofbound-monorepo/CLAUDE.md](../proofbound-monorepo/CLAUDE.md).

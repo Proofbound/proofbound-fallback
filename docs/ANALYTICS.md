@@ -679,7 +679,7 @@ test('TextKeep download fires GA4 event', async ({ page }) => {
 ### 1. **Enhanced Event Tracking**
 
 **Add Events For:**
-- Video plays (book-pages-flipping.mp4 on index.html)
+- Video plays (assets/videos/book-pages-flipping.mp4 on index.html)
 - Form interactions (if forms added)
 - Scroll depth (% of page viewed)
 - Time on page milestones (30s, 1min, 2min)

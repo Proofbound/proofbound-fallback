@@ -41,8 +41,8 @@
     <!-- Additional SEO -->
     <meta name="author" content="Proofbound">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <link rel="icon" type="image/svg+xml" href="favicons/favicon.svg">
-    <link rel="icon" type="image/x-icon" href="favicons/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="assets/favicons/favicon.svg">
+    <link rel="icon" type="image/x-icon" href="assets/favicons/favicon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -601,7 +601,7 @@
     <header>
         <div class="container">
             <h1 class="brand-name">Proofbound<sup>™</sup></h1>
-            <img src="proofbound-logo.svg" alt="Proofbound logo - AI-powered book creation service" class="logo">
+            <img src="assets/logos/proofbound-logo.svg" alt="Proofbound logo - AI-powered book creation service" class="logo">
         </div>
     </header>
 
@@ -617,7 +617,7 @@
                 Turn your <span class="typing-container" id="typing">ideas</span> into a<br>
                 <span class="published-book">
                     <video autoplay loop muted playsinline class="book-video">
-                        <source src="book-pages-flipping.mp4" type="video/mp4">
+                        <source src="assets/videos/book-pages-flipping.mp4" type="video/mp4">
                     </video>
                     Published Book
                 </span>
@@ -784,7 +784,7 @@
 
         function startFullAnimation() {
             // Reset the h1 content
-            h1Element.innerHTML = '<span id="typed-text"></span><span class="typing-cursor">|</span><br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
+            h1Element.innerHTML = '<span id="typed-text"></span><span class="typing-cursor">|</span><br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="assets/videos/book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
 
             const typedTextElement = document.getElementById('typed-text');
             const fullInitialText = fullTextBefore + words[0] + fullTextAfter;
@@ -799,7 +799,7 @@
                 } else {
                     // Remove cursor and restructure HTML for word cycling
                     setTimeout(() => {
-                        h1Element.innerHTML = fullTextBefore + '<span class="typing-container" id="typing">' + words[0] + '</span>' + fullTextAfter + '<br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
+                        h1Element.innerHTML = fullTextBefore + '<span class="typing-container" id="typing">' + words[0] + '</span>' + fullTextAfter + '<br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="assets/videos/book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
 
                         // Start cycling through words
                         currentWordIndex = 1; // Start with second word

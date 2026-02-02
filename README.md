@@ -328,8 +328,12 @@ curl -I https://status.proofbound.com
 │   ├── index.html            # TextKeep landing page
 │   └── version.json          # Version metadata (v1.3.6)
 ├── downloads/                # Downloadable files
-├── logo-562x675.png          # Proofbound logo
-├── favicons/                 # Favicon assets
+├── assets/                   # All site assets (organized)
+│   ├── favicons/             # Favicon files
+│   ├── logos/                # Proofbound logo files
+│   ├── videos/               # Video files (book animations)
+│   ├── textkeep/             # TextKeep screenshots
+│   └── kdp-assets/           # Amazon KDP related images
 ├── README.md                 # This file
 ├── CLAUDE.md                 # Development context & integration docs
 ├── DEPLOYMENT.md             # Hybrid routing architecture guide
@@ -351,6 +355,44 @@ curl -I https://status.proofbound.com
 - **Technical Issues:** Check CLAUDE.md for architecture details
 - **Content Updates:** Edit HTML files directly, push to master
 - **Design Changes:** Update inline CSS in each HTML file (consistent variables)
+
+## Version History
+
+See git commit history for detailed changes. Notable updates:
+
+- **Feb 2, 2026**: Reorganized all assets under `/assets/` directory
+  - Created organized subdirectories: `assets/favicons/`, `assets/logos/`, `assets/videos/`, `assets/textkeep/`
+  - Moved 8 asset files from root and `favicons/` to new locations
+  - Updated 48 files: 34 HTML pages + 4 documentation files
+  - Updated all asset references across the site
+  - Improved file organization and maintainability
+
+- **Feb 1, 2026**: Added comprehensive FAQ system for TextKeep
+  - Created main FAQ index (textkeep/faq.html) with 25 questions in 5 categories
+  - Added 25 individual SEO-optimized FAQ answer pages
+  - Categories: Apple export strategy, technical architecture, TextKeep usage, legal compliance, alternatives, privacy
+  - Updated textkeep/index.html with prominent FAQ links
+  - Added iMessageExport.md research document
+  - Moved DEPLOYMENT.md to docs/ directory and updated to reflect FAQ system
+
+- **Jan 29, 2026**: Implemented hybrid routing architecture
+  - Reorganized TextKeep from `textkeep.html` to `textkeep/` directory
+  - Added `textkeep/version.json` with version metadata (v1.3.6)
+  - Updated DNS: `proofbound.com` → A record to droplet (was CNAME to static site)
+  - Configured Cloudflare Worker for `/textkeep/*` routing and failover
+  - Updated nginx-fallback.conf to handle `proofbound.com` requests
+  - Created docs/DEPLOYMENT.md to document hybrid routing setup
+  - Updated all marketing pages to link to `/textkeep` (clean URLs)
+
+- **Jan 28, 2026**: Converted to full marketing site (7 pages)
+  - Added: how-it-works, service-tiers, faq, elite-service, privacy, terms
+  - Expanded index.html with typing animation, CTAs, Amazon KDP panel
+  - Created DEPLOYMENT_PLAN.md with comprehensive deployment plan
+  - Updated README and CLAUDE.md to reflect new purpose
+
+- **Jan 26, 2026**: Added TextKeep banner and landing page
+- **Jan 23, 2026**: Updated to light theme with Crimson Text font
+- **Initial release**: Simple fallback page with glassmorphism design
 
 ## License
 
