@@ -12,6 +12,7 @@ This repository contains the **static fallback and special content** for Proofbo
 - **TextKeep version metadata**: Version info at `/textkeep/version.json` (v1.3.6)
 - **Privacy Policy**: Always-available legal page at `/privacy.html`
 - **Terms of Service**: Always-available legal page at `/terms.html`
+- **SEO/Discovery files**: sitemap.xml, robots.txt, llms.txt (always accessible for crawlers)
 - **Future**: Can host additional static marketing content
 
 **Architecture**: Static HTML pages with inline CSS and vanilla JavaScript. No build process, frameworks, or dependencies.
@@ -33,7 +34,8 @@ This repository uses a **hybrid routing architecture** with the [proofbound-mono
 
 **Cloudflare Worker Routes:**
 - Monitors: `proofbound.com/*` AND `app.proofbound.com/*`
-- Special routing: `/textkeep/*`, `/privacy`, `/terms` → ALWAYS route to this static site
+- Special routing (ALL hostnames): `/textkeep/*`, `/privacy`, `/terms`, `/sitemap.xml`, `/robots.txt`, `/llms.txt` → ALWAYS route to this static site
+- Marketing pages (ONLY proofbound.com): `/faq`, `/how-it-works`, `/service-tiers`, `/elite-service` → Route to static site
 - Failover: Other paths → droplet (when up) OR static site (when down)
 
 ### Traffic Flow
@@ -44,8 +46,16 @@ User visits proofbound.com
   ↓
 Cloudflare Worker intercepts request
   ↓
-If path is /textkeep/*, /privacy, or /terms → Proxy to status.proofbound.com (this repo)
+If hostname is proofbound.com AND path is /faq, /how-it-works, /service-tiers, /elite-service → Proxy to status.proofbound.com (this repo)
+If path is /textkeep/*, /privacy, /terms, /sitemap.xml, /robots.txt, or /llms.txt (ANY hostname) → Proxy to status.proofbound.com (this repo)
 If other path → Pass through to droplet (React app)
+
+User visits app.proofbound.com
+  ↓
+Cloudflare Worker intercepts request
+  ↓
+If path is /textkeep/*, /privacy, /terms, /sitemap.xml, /robots.txt, or /llms.txt → Proxy to status.proofbound.com (this repo)
+If other path (including /faq, /how-it-works, etc.) → Pass through to droplet (React app)
 ```
 
 **When Droplet is DOWN:**
@@ -54,7 +64,7 @@ User visits proofbound.com
   ↓
 Cloudflare Worker intercepts request
   ↓
-If path is /textkeep/*, /privacy, or /terms → Proxy to status.proofbound.com (this repo)
+If path is /textkeep/*, /faq, /how-it-works, /service-tiers, /elite-service, /privacy, /terms, /sitemap.xml, /robots.txt, or /llms.txt → Proxy to status.proofbound.com (this repo)
 If other path → Droplet returns 5xx error → Redirect to status.proofbound.com (fallback page)
 ```
 
@@ -70,21 +80,48 @@ async function handleRequest(request) {
   // Normalize pathname (remove trailing slashes, lowercase)
   const pathname = url.pathname.toLowerCase().replace(/\/$/, '');
 
-  // ALWAYS route these paths to static site (no health check)
-  // - /textkeep: Product landing page (always available)
-  // - /privacy, /terms: Legal pages (must be always accessible)
-  if (pathname.startsWith('/textkeep') ||
-      pathname === '/privacy' ||
-      pathname === '/privacy.html' ||
-      pathname === '/terms' ||
-      pathname === '/terms.html') {
+  // Check hostname to determine routing
+  const hostname = url.hostname.toLowerCase();
+  const isMarketingSite = hostname === 'proofbound.com' || hostname === 'www.proofbound.com';
 
+  // ALWAYS route these paths to static site (no health check, any hostname)
+  // - /textkeep/*: Product landing page (always available)
+  // - Legal pages: /privacy, /terms (must be always accessible)
+  // - SEO/discovery files: /sitemap.xml, /robots.txt, /llms.txt (must be always accessible)
+  const isAlwaysStaticPath = pathname.startsWith('/textkeep') ||
+                             pathname === '/privacy' ||
+                             pathname === '/privacy.html' ||
+                             pathname === '/terms' ||
+                             pathname === '/terms.html' ||
+                             pathname === '/sitemap.xml' ||
+                             pathname === '/robots.txt' ||
+                             pathname === '/llms.txt';
+
+  // Marketing pages only route to static site on proofbound.com (not app.proofbound.com)
+  const isMarketingPagePath = pathname === '/faq' ||
+                              pathname === '/faq.html' ||
+                              pathname === '/how-it-works' ||
+                              pathname === '/how-it-works.html' ||
+                              pathname === '/service-tiers' ||
+                              pathname === '/service-tiers.html' ||
+                              pathname === '/elite-service' ||
+                              pathname === '/elite-service.html';
+
+  if (isAlwaysStaticPath || (isMarketingSite && isMarketingPagePath)) {
     // Convert clean URLs to .html extension for static site
     let staticPath = url.pathname;
     if (pathname === '/privacy') {
       staticPath = '/privacy.html';
     } else if (pathname === '/terms') {
       staticPath = '/terms.html';
+    } else if (pathname === '/faq') {
+      staticPath = '/faq.html';
+    } else if (pathname === '/how-it-works') {
+      staticPath = '/how-it-works.html';
+    } else if (pathname === '/service-tiers') {
+      staticPath = '/service-tiers.html';
+    } else if (pathname === '/elite-service') {
+      staticPath = '/elite-service.html';
     }
 
     // Preserve query parameters
@@ -111,7 +148,8 @@ async function handleRequest(request) {
 
 **Key Points:**
 - Worker applies to BOTH `proofbound.com/*` and `app.proofbound.com/*`
-- `/textkeep/*`, `/privacy`, `/terms` paths ALWAYS serve from this static site
+- **Hostname-based routing**: Marketing pages (`/faq`, `/how-it-works`, `/service-tiers`, `/elite-service`) ONLY serve from static site on `proofbound.com` (not on `app.proofbound.com`)
+- **Always static paths** (any hostname): TextKeep (`/textkeep/*`), legal pages (`/privacy`, `/terms`), and SEO files (`/sitemap.xml`, `/robots.txt`, `/llms.txt`)
 - Handles both clean URLs (`/privacy`) and `.html` extensions (`/privacy.html`)
 - Other paths failover to this static site when droplet is down
 
@@ -121,10 +159,17 @@ async function handleRequest(request) {
 - **React App**: [https://proofbound.com](https://proofbound.com) (monorepo on droplet)
 - **React App**: [https://app.proofbound.com](https://app.proofbound.com) (monorepo on droplet)
 - **Static Site**: [https://status.proofbound.com](https://status.proofbound.com) (this repo)
-- **TextKeep Page**: [https://proofbound.com/textkeep](https://proofbound.com/textkeep) (proxied from this repo)
-- **TextKeep Direct**: [https://status.proofbound.com/textkeep](https://status.proofbound.com/textkeep) (direct to this repo)
-- **Privacy Policy**: [https://proofbound.com/privacy](https://proofbound.com/privacy) (proxied from this repo)
-- **Terms of Service**: [https://proofbound.com/terms](https://proofbound.com/terms) (proxied from this repo)
+
+**Marketing Pages** (proxied from this repo):
+- **FAQ**: [https://proofbound.com/faq](https://proofbound.com/faq)
+- **How It Works**: [https://proofbound.com/how-it-works](https://proofbound.com/how-it-works)
+- **Service Tiers**: [https://proofbound.com/service-tiers](https://proofbound.com/service-tiers)
+- **Elite Service**: [https://proofbound.com/elite-service](https://proofbound.com/elite-service)
+
+**Special Pages** (proxied from this repo):
+- **TextKeep Page**: [https://proofbound.com/textkeep](https://proofbound.com/textkeep)
+- **Privacy Policy**: [https://proofbound.com/privacy](https://proofbound.com/privacy)
+- **Terms of Service**: [https://proofbound.com/terms](https://proofbound.com/terms)
 
 ### Digital Ocean
 - **Static Site**: [https://proofbound-main.ondigitalocean.app/](https://proofbound-main.ondigitalocean.app/) (this repo)
