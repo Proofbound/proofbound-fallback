@@ -12,7 +12,8 @@
       "Bash(gh run view:*)",
       "WebFetch(domain:status.proofbound.com)",
       "WebFetch(domain:king-prawn-app-zmwl2.ondigitalocean.app)",
-      "WebFetch(domain:github.com)"
+      "WebFetch(domain:github.com)",
+      "Bash(ls:*)"
     ],
     "deny": [],
     "ask": []
