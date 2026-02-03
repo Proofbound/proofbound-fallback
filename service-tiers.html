@@ -16,15 +16,15 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pricing & Service Tiers - Proofbound | $49 to $5,000+ Options</title>
-    <meta name="description" content="Choose the right publishing path for your book. Proof of Concept ($49), Professional ($500-$2,000), or Premium Elite ($2,000+). All tiers include Amazon KDP-ready files.">
+    <title>Simple Pricing - Proofbound | Start at $49</title>
+    <meta name="description" content="Simple pricing with no hidden fees. Start with a single book for $49. Free demo available. Book Pass for unlimited iteration. Elite service for professional quality.">
     <link rel="canonical" href="https://proofbound.com/service-tiers.html">
-    <meta property="og:title" content="Pricing & Service Tiers - Proofbound">
-    <meta property="og:description" content="From $49 proof of concept to $5,000+ premium consulting. Choose the right tier for your book.">
+    <meta property="og:title" content="Simple Pricing - Proofbound">
+    <meta property="og:description" content="Start with a single book for $49. Upgrade when you need more.">
     <meta property="og:url" content="https://proofbound.com/service-tiers.html">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="Pricing & Service Tiers - Proofbound">
+    <meta name="twitter:title" content="Simple Pricing - Proofbound">
     <meta name="robots" content="index, follow">
     <link rel="icon" type="image/svg+xml" href="assets/favicons/favicon.svg">
     <link rel="icon" type="image/x-icon" href="assets/favicons/favicon.ico">
@@ -41,8 +41,12 @@
         :root {
             --primary: #007bff;
             --primary-dark: #0056b3;
-            --amber: #f59e0b;
-            --amber-dark: #d97706;
+            --green: #10b981;
+            --green-dark: #059669;
+            --orange: #f97316;
+            --orange-dark: #ea580c;
+            --purple: #9333ea;
+            --purple-dark: #7e22ce;
             --text-dark: #212529;
             --text-secondary: #495057;
             --text-muted: #6c757d;
@@ -169,12 +173,21 @@
             margin-bottom: 3rem;
         }
 
-        /* Pricing Tiers */
+        h2 {
+            font-family: 'Crimson Text', Georgia, serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        /* Tier Cards */
         .tiers-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
 
         .tier-card {
@@ -183,17 +196,15 @@
             padding: 2rem;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             border: 2px solid transparent;
-            transition: all 0.3s ease;
             position: relative;
-        }
-
-        .tier-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
         }
 
         .tier-card.popular {
             border-color: var(--primary);
+        }
+
+        .tier-card.green-border {
+            border-color: var(--green);
         }
 
         .popular-badge {
@@ -203,9 +214,9 @@
             transform: translateX(-50%);
             background: var(--primary);
             color: var(--white);
-            padding: 0.5rem 1rem;
+            padding: 0.25rem 1rem;
             border-radius: 2rem;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -223,7 +234,6 @@
             font-weight: 700;
             text-align: center;
             margin-bottom: 0.5rem;
-            color: var(--text-dark);
         }
 
         .tier-price {
@@ -233,34 +243,27 @@
             margin-bottom: 0.5rem;
         }
 
-        .tier-card.concept .tier-price {
-            color: var(--primary);
-        }
+        .tier-card.free .tier-price { color: var(--text-secondary); }
+        .tier-card.basic .tier-price { color: var(--primary); }
+        .tier-card.book-pass .tier-price { color: var(--green); }
 
-        .tier-card.professional .tier-price {
-            color: var(--primary);
-        }
-
-        .tier-card.premium .tier-price {
-            color: var(--amber);
+        .tier-tagline {
+            text-align: center;
+            color: var(--text-secondary);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
         }
 
         .tier-description {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.9375rem;
-            font-style: italic;
+            color: var(--text-dark);
             margin-bottom: 1.5rem;
+            font-size: 0.9375rem;
+            line-height: 1.6;
         }
 
         .tier-features {
             margin-bottom: 1.5rem;
-        }
-
-        .tier-features h4 {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: var(--text-dark);
         }
 
         .tier-features ul {
@@ -278,70 +281,264 @@
         }
 
         .checkmark {
-            color: #10b981;
+            color: var(--green);
             font-size: 1.25rem;
             flex-shrink: 0;
             line-height: 1;
         }
 
-        .best-for {
-            background: var(--bg-light);
-            border-radius: 0.75rem;
-            padding: 1rem;
-        }
-
-        .best-for h4 {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--text-dark);
-        }
-
-        .best-for p {
-            font-size: 0.9375rem;
+        .tier-note {
+            text-align: center;
+            font-size: 0.875rem;
             color: var(--text-secondary);
-            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 1rem;
         }
 
-        /* CTA Section */
-        .cta-section {
-            background: var(--bg-light);
+        .tier-button {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
             border-radius: 0.75rem;
-            padding: 2rem;
+            font-weight: 600;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: block;
             text-align: center;
         }
 
-        .cta-section h3 {
+        .tier-button.gray {
+            background: #4b5563;
+            color: var(--white);
+        }
+
+        .tier-button.gray:hover {
+            background: #374151;
+        }
+
+        .tier-button.blue {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        .tier-button.blue:hover {
+            background: var(--primary-dark);
+        }
+
+        .tier-button.green {
+            background: var(--green);
+            color: var(--white);
+        }
+
+        .tier-button.green:hover {
+            background: var(--green-dark);
+        }
+
+        /* Add-on Cards */
+        .addon-card {
+            background: var(--white);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border: 2px solid;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .addon-card.orange {
+            background: #fff7ed;
+            border-color: #fed7aa;
+        }
+
+        .addon-card.purple {
+            background: linear-gradient(to right, #faf5ff, #f3e8ff);
+            border-color: #d8b4fe;
+        }
+
+        .addon-content {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .addon-content h3 {
             font-family: 'Crimson Text', Georgia, serif;
-            font-size: 1.75rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .addon-content p {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 0.9375rem;
+        }
+
+        .addon-content .note {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .addon-button {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
             font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            white-space: nowrap;
+        }
+
+        .addon-button.orange {
+            background: var(--orange);
+            color: var(--white);
+        }
+
+        .addon-button.orange:hover {
+            background: var(--orange-dark);
+        }
+
+        .addon-button.purple {
+            background: linear-gradient(135deg, var(--purple), #6366f1);
+            color: var(--white);
+        }
+
+        .addon-button.purple:hover {
+            background: linear-gradient(135deg, var(--purple-dark), #4f46e5);
+            transform: scale(1.05);
+        }
+
+        /* Elite Features Grid */
+        .elite-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.75rem;
             margin-bottom: 1rem;
+        }
+
+        .elite-features li {
+            padding: 0.25rem 0;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            margin-bottom: 1.5rem;
+        }
+
+        table td {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--bg-mid);
+        }
+
+        table td:first-child {
             color: var(--text-dark);
         }
 
-        .cta-section p {
-            color: var(--text-secondary);
-            margin-bottom: 0.75rem;
-            font-size: 1.125rem;
+        table td:last-child {
+            text-align: right;
+            font-weight: 700;
+            color: var(--text-dark);
         }
 
-        .cta-section .note {
-            color: var(--text-muted);
-            font-size: 0.9375rem;
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Info Boxes */
+        .info-box {
+            background: var(--bg-light);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
             margin-bottom: 2rem;
         }
 
-        .cta-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 1rem;
+        .info-box h3 {
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-align: left;
+            font-size: 1.125rem;
+        }
+
+        .info-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .info-box li {
+            padding: 0.25rem 0;
+            color: var(--text-dark);
+            font-size: 0.9375rem;
+        }
+
+        /* Which Tier Section */
+        .tier-selector {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+        }
+
+        .tier-option {
+            background: var(--bg-light);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--bg-mid);
+        }
+
+        .tier-option p:first-child {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .tier-option p:last-child {
+            color: var(--text-secondary);
+            font-size: 0.9375rem;
+        }
+
+        /* No Hidden Fees */
+        .no-fees {
+            background: #eff6ff;
+            border: 2px solid #bfdbfe;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .no-fees h2 {
+            margin-bottom: 1rem;
+        }
+
+        .no-fees ul {
+            list-style: none;
+            padding: 0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .no-fees li {
+            padding: 0.5rem 0;
+            color: var(--text-dark);
+            font-size: 0.9375rem;
+        }
+
+        /* CTA */
+        .final-cta {
+            text-align: center;
         }
 
         .cta-button {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), #0ea5e9);
             color: var(--white);
             padding: 1rem 2rem;
             border-radius: 0.75rem;
@@ -353,21 +550,8 @@
         }
 
         .cta-button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
+            transform: scale(1.05);
             box-shadow: 0 6px 28px rgba(0, 123, 255, 0.4);
-        }
-
-        .cta-button.secondary {
-            background: var(--white);
-            color: var(--primary);
-            border: 2px solid var(--primary);
-            box-shadow: none;
-        }
-
-        .cta-button.secondary:hover {
-            background: var(--bg-light);
-            transform: translateY(-2px);
         }
 
         /* Footer */
@@ -414,14 +598,18 @@
                 grid-template-columns: 1fr;
             }
 
-            .cta-buttons {
+            .addon-card {
                 flex-direction: column;
                 align-items: stretch;
             }
 
-            .cta-button {
+            .addon-button {
                 width: 100%;
-                justify-content: center;
+                text-align: center;
+            }
+
+            .elite-features {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -451,160 +639,265 @@
 
     <!-- Main Content -->
     <main class="container">
-        <div class="glass-card">
-            <h1>Choose Your Publishing Path</h1>
-            <p class="subtitle">Three Ways to Turn Your Expertise Into Published Authority</p>
+        <article class="glass-card">
+            <h1>Simple Pricing, No Surprises</h1>
+            <p class="subtitle">Start with a single book for $49. Upgrade when you need more.</p>
 
-            <div class="tiers-grid">
-                <!-- Proof of Concept -->
-                <div class="tier-card concept">
-                    <div class="tier-icon">📚</div>
-                    <h3>Proof of Concept Books</h3>
-                    <div class="tier-price">Starting at $49</div>
-                    <p class="tier-description">Perfect for business development and market testing</p>
+            <!-- Generation Tiers -->
+            <section>
+                <h2>Generation Tiers</h2>
 
-                    <div class="tier-features">
-                        <h4>What's Included:</h4>
-                        <ul>
+                <div class="tiers-grid">
+                    <!-- Free -->
+                    <div class="tier-card free">
+                        <div class="tier-icon">✨</div>
+                        <h3>Free</h3>
+                        <div class="tier-price">$0</div>
+                        <p class="tier-tagline">Try the experience</p>
+
+                        <ul class="tier-features">
                             <li>
                                 <span class="checkmark">✓</span>
-                                <span>Professional book based on proven templates</span>
+                                <span>Unlimited demo books with sample content</span>
                             </li>
                             <li>
                                 <span class="checkmark">✓</span>
-                                <span>Quick customization with your branding and content</span>
+                                <span>See exactly how your book will look</span>
                             </li>
                             <li>
                                 <span class="checkmark">✓</span>
-                                <span>Ideal for door-openers and business development</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Great for testing market response to your ideas</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Self-service web portal for fast turnaround</span>
+                                <span>No credit card required</span>
                             </li>
                         </ul>
+
+                        <a href="https://app.proofbound.com/demo" class="tier-button gray" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'free_demo_tiers'});">
+                            Try Free Demo
+                        </a>
                     </div>
 
-                    <div class="best-for">
-                        <h4>Best For:</h4>
-                        <p>Entrepreneurs, sales professionals, and consultants who need professional materials for business development and relationship building.</p>
+                    <!-- Basic -->
+                    <div class="tier-card basic popular">
+                        <span class="popular-badge">MOST POPULAR</span>
+                        <div class="tier-icon">📖</div>
+                        <h3>Basic</h3>
+                        <div class="tier-price">$49</div>
+                        <p class="tier-tagline">Your first real book</p>
+
+                        <div class="tier-description">
+                            <p>Your first book includes everything you need: complete AI-generated book from your notes (up to 200 pages), professional formatting and cover design, printed to look like a typical book you'd find in an airport bookstore.</p>
+                            <p style="font-weight: 600; margin-top: 0.75rem;">Includes a printed book shipped to your door in about a week.</p>
+                        </div>
+
+                        <p class="tier-note">*Most people start here.*</p>
+
+                        <a href="https://app.proofbound.com/signup" class="tier-button blue" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'basic_tiers'});">
+                            Start Your Book
+                        </a>
+                    </div>
+
+                    <!-- Book Pass -->
+                    <div class="tier-card book-pass green-border">
+                        <div class="tier-icon">🚀</div>
+                        <h3>Book Pass</h3>
+                        <div class="tier-price">$99</div>
+                        <p class="tier-tagline">Iterate until perfect</p>
+
+                        <ul class="tier-features">
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>30 days of unlimited book generation</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Create as many versions as you want</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>One clean PDF included (Amazon-ready, no watermark)</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Perfect for perfectionists</span>
+                            </li>
+                        </ul>
+
+                        <p class="tier-note">*Our most popular tier for serious authors.*</p>
+
+                        <a href="https://app.proofbound.com/signup" class="tier-button green" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'book_pass_tiers'});">
+                            Get Book Pass
+                        </a>
                     </div>
                 </div>
 
-                <!-- Professional Books -->
-                <div class="tier-card professional popular">
-                    <span class="popular-badge">Most Popular</span>
-                    <div class="tier-icon">📖</div>
-                    <h3>Professional Books</h3>
-                    <div class="tier-price">$500 - $2,000</div>
-                    <p class="tier-description">Comprehensive custom publications for serious thought leadership</p>
-
-                    <div class="tier-features">
-                        <h4>What's Included:</h4>
-                        <ul>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Complete custom book from your materials and expertise</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Full research synthesis and professional writing</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Conference-quality publication ready for Amazon</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Professional cover design and formatting</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Consultation on content strategy and positioning</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Perfect for building industry credibility</span>
-                            </li>
-                        </ul>
+                <!-- Refresh Add-on -->
+                <div class="addon-card orange">
+                    <div class="addon-content">
+                        <h3>Refresh — +$25</h3>
+                        <p>Try a different direction with one full regeneration (new outline/structure). Available after you've used Basic. Same unlimited chapter revisions.</p>
+                        <p class="note">*For when you want to explore a different angle.*</p>
                     </div>
-
-                    <div class="best-for">
-                        <h4>Best For:</h4>
-                        <p>Industry experts, conference speakers, and established professionals who want to establish serious thought leadership.</p>
-                    </div>
-                </div>
-
-                <!-- Premium Consulting -->
-                <div class="tier-card premium">
-                    <div class="tier-icon">🏆</div>
-                    <h3>Premium Consulting</h3>
-                    <div class="tier-price">$2,000 - $5,000</div>
-                    <p class="tier-description">White-glove service with dedicated project management</p>
-
-                    <div class="tier-features">
-                        <h4>What's Included:</h4>
-                        <ul>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Dedicated project manager and publishing consultant</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Multiple revision cycles and collaborative development</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Premium research and content development</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>International market optimization</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Complete Amazon publishing support with marketing guidance</span>
-                            </li>
-                            <li>
-                                <span class="checkmark">✓</span>
-                                <span>Ongoing support and potential series development</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div class="best-for">
-                        <h4>Best For:</h4>
-                        <p>C-level executives, international professionals, and organizations requiring the highest quality publications with full service support.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CTA Section -->
-            <div class="cta-section">
-                <h3>Not Sure Which is Right for You?</h3>
-                <p><strong>Start with a free consultation</strong> to discuss your goals and determine the best approach for your specific needs.</p>
-                <p class="note">Every tier delivers professional results—the difference is in the level of customization, research depth, and hands-on support.</p>
-
-                <div class="cta-buttons">
-                    <a href="https://app.proofbound.com/signup" class="cta-button" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'get_started_service_tiers'});">
-                        Get Started Now
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M5 12h14M12 5l7 7-7 7"/>
-                        </svg>
-                    </a>
-                    <a href="https://app.proofbound.com/demo" class="cta-button secondary" onclick="gtag('event', 'cta_click', {'event_category': 'engagement', 'event_label': 'demo_service_tiers'});">
-                        Try Free Demo
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
-                        </svg>
+                    <a href="https://app.proofbound.com/signup" class="addon-button orange" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'refresh_tiers'});">
+                        Add Refresh
                     </a>
                 </div>
+
+                <!-- Elite -->
+                <div class="addon-card purple">
+                    <div class="addon-content">
+                        <div style="margin-bottom: 1rem;">
+                            <h3 style="display: inline-flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--purple);">
+                                    <circle cx="12" cy="8" r="7"/><path d="M8.21 13.89L7 23l5-3 5 3-1.21-9.12"/>
+                                </svg>
+                                Elite — $500
+                            </h3>
+                            <p style="font-weight: 600; margin-bottom: 1rem;">Publication-ready, guaranteed</p>
+                        </div>
+
+                        <ul class="elite-features">
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Human editor reviews your content</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>3 revision cycles with feedback</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Professional fact-checking</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>Domain expert matching</span>
+                            </li>
+                            <li>
+                                <span class="checkmark">✓</span>
+                                <span>1-2 week turnaround</span>
+                            </li>
+                        </ul>
+
+                        <p class="note">*For when you need professional quality.*</p>
+                    </div>
+                    <a href="elite-service.html" class="addon-button purple" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'elite_tiers'});">
+                        Learn About Elite →
+                    </a>
+                </div>
+            </section>
+
+            <!-- Printing -->
+            <section style="margin-top: 4rem;">
+                <h2>Printing</h2>
+                <p style="text-align: center; color: var(--text-dark); margin-bottom: 2rem;">Order printed copies of any book you create.</p>
+
+                <div style="max-width: 700px; margin: 0 auto; background: var(--white); border-radius: 1rem; padding: 2rem; border: 2px solid var(--bg-mid);">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>First copy</td>
+                                <td>$29.95</td>
+                            </tr>
+                            <tr>
+                                <td>Additional copies</td>
+                                <td>$19.95 each</td>
+                            </tr>
+                            <tr>
+                                <td>Express shipping (1-2 days)</td>
+                                <td>+$39.95</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p style="color: var(--text-dark); margin-bottom: 1.5rem;">
+                        <strong>All printed books are clean</strong> — no watermarks, professional quality.
+                    </p>
+
+                    <div class="info-box" style="margin-bottom: 0;">
+                        <h3>Examples:</h3>
+                        <ul>
+                            <li>• 1 book, standard shipping: <strong>$29.95</strong></li>
+                            <li>• 5 books, standard shipping: <strong>$109.75</strong></li>
+                            <li>• 10 books, standard shipping: <strong>$209.50</strong></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Unlocks -->
+            <section style="margin-top: 4rem;">
+                <h2>Unlocks</h2>
+                <p style="text-align: center; color: var(--text-dark); margin-bottom: 2rem;">Want to publish on Amazon yourself or print elsewhere?</p>
+
+                <div style="max-width: 700px; margin: 0 auto; background: var(--white); border-radius: 1rem; padding: 2rem; border: 2px solid var(--bg-mid);">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Clean PDF (no watermark)</td>
+                                <td>+$99</td>
+                            </tr>
+                            <tr>
+                                <td>Source files (docx, epub, html)</td>
+                                <td>+$449</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p style="font-size: 0.875rem; color: var(--text-secondary); font-style: italic;">
+                        *Elite tier includes one clean PDF.*
+                    </p>
+                </div>
+            </section>
+
+            <!-- Which Tier Is Right for You -->
+            <section style="margin-top: 4rem;">
+                <h2>Which Tier Is Right for You?</h2>
+
+                <div class="tier-selector">
+                    <div class="tier-option">
+                        <p>"I just want to see what my book would look like"</p>
+                        <p>→ Start with <strong>Free</strong> demo</p>
+                    </div>
+
+                    <div class="tier-option">
+                        <p>"I have a specific book idea and want to make it real"</p>
+                        <p>→ <strong>Basic</strong> ($49) — see your book in minutes, print it in a week</p>
+                    </div>
+
+                    <div class="tier-option">
+                        <p>"I want to experiment with different approaches"</p>
+                        <p>→ <strong>Book Pass</strong> ($99) — unlimited iteration for 30 days</p>
+                    </div>
+
+                    <div class="tier-option">
+                        <p>"I need this to be perfect for Amazon/professional use"</p>
+                        <p>→ <strong>Elite</strong> ($500) — human expertise + AI speed</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- No Hidden Fees -->
+            <div class="no-fees">
+                <h2>No Hidden Fees</h2>
+                <ul>
+                    <li>• Generation tiers are one-time purchases (Book Pass is 30 days, not recurring)</li>
+                    <li>• Printing is always separate — you only pay for copies you order</li>
+                    <li>• Unlocks are optional — only if you want to publish elsewhere</li>
+                </ul>
             </div>
-        </div>
+
+            <!-- Final CTA -->
+            <div class="final-cta">
+                <a href="https://app.proofbound.com/signup" class="cta-button" onclick="gtag('event', 'cta_click', {'event_category': 'conversion', 'event_label': 'start_book_bottom'});">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/>
+                    </svg>
+                    <span>Start Your Book — $49</span>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </article>
     </main>
 
     <!-- Footer -->
