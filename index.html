@@ -166,31 +166,14 @@
             height: 20px;
         }
 
-        /* Under Construction Banner */
-        .construction-banner {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.75rem;
-            background: linear-gradient(135deg, #ff9500, #ff6b00);
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--white);
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .construction-icon {
-            font-size: 1.25rem;
-            animation: bounce 1s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+        /* Pulse Animation for Logo */
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.85;
+            }
         }
 
         .container {
@@ -238,13 +221,6 @@
             color: var(--text-dark);
             margin-bottom: 1rem;
             line-height: 1.2;
-        }
-
-        .typing-container {
-            display: inline-block;
-            color: var(--primary);
-            min-width: 10.5ch;
-            text-align: center;
         }
 
         .hero h1 .published-book {
@@ -601,20 +577,24 @@
     <header>
         <div class="container">
             <h1 class="brand-name">Proofbound<sup>™</sup></h1>
-            <img src="assets/logos/proofbound-logo.svg" alt="Proofbound logo - AI-powered book creation service" class="logo">
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="construction-banner">
-                <span class="construction-icon">&#9888;</span>
-                <span>Under Construction</span>
-                <span class="construction-icon">&#9888;</span>
+            <!-- Large Logo at Top -->
+            <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+                <div style="display: flex; flex-direction: column; align-items: center;">
+                    <img src="assets/logos/proofbound-logo.svg" alt="Proofbound logo" class="logo" style="width: 160px; height: 160px; margin-bottom: 1.5rem; filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1)); animation: pulse 2s infinite;">
+                    <div class="glass-card" style="padding: 0.75rem 1.5rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+                        <span style="color: var(--text-dark); font-weight: 500;">AI-Powered Book Authoring</span>
+                    </div>
+                </div>
             </div>
+
             <h1>
-                Turn your <span class="typing-container" id="typing">ideas</span> into a<br>
+                Turn Your Ideas Into a<br>
                 <span class="published-book">
                     <img src="assets/videos/book-pages-flipping-optimized.gif" alt="Animated book pages flipping" class="book-video" width="96" height="143" loading="eager">
                     Published Book
@@ -622,21 +602,29 @@
             </h1>
 
             <p class="hero-subtitle">
-                You have the expertise. You have the notes. Let us finish it for you.
+                See your book in minutes. Hold it in your hands in a week.
             </p>
 
             <p class="hero-description">
-                We'll turn your knowledge into a professional 200-page book — in days, not weeks.
+                You have the expertise. You have the notes. You just haven't had time to write it.<br>
+                Proofbound transforms your knowledge into a professional 200-page book — generated in minutes, printed and shipped to your door.
             </p>
 
-            <!-- Perfect For Card -->
+            <!-- People use Proofbound to create Card -->
             <div class="perfect-for-card">
-                <h3>Perfect for:</h3>
+                <h3>People use Proofbound to create:</h3>
                 <div class="perfect-for-grid">
-                    <div>✓ Busy professionals with scattered notes but no time</div>
-                    <div>✓ Anyone who's been "meaning to write that book"</div>
-                    <div>✓ Non-native speakers with great ideas</div>
-                    <div>✓ Experts who hate writing</div>
+                    <div>✓ Thought leadership books</div>
+                    <div>✓ Business credibility books</div>
+                    <div>✓ Custom proposals for prospects</div>
+                    <div>✓ Family keepsakes</div>
+                    <div>✓ Study materials</div>
+                    <div>✓ Conference materials</div>
+                </div>
+                <div style="margin-top: 1rem; text-align: center;">
+                    <a href="https://app.proofbound.com/use-cases" style="color: var(--primary); font-weight: 500; font-size: 0.875rem; text-decoration: none;">
+                        See all use cases →
+                    </a>
                 </div>
             </div>
 
@@ -665,12 +653,39 @@
             <!-- Service Description Cards -->
             <div class="service-cards">
                 <div class="service-card try-free">
-                    <h3>Try for Free</h3>
-                    <p>Create your first book at no cost. Upload your notes and ideas, and our AI generates a complete book with professional formatting. No credit card required.</p>
+                    <h3>Free Demo</h3>
+                    <p>Try the experience with unlimited demo books using sample content. See exactly how your book will look. No credit card required.</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        <a href="service-tiers.html" style="color: var(--primary); text-decoration: none;">View all tiers →</a>
+                    </p>
                 </div>
                 <div class="service-card elite">
-                    <h3>Elite Service</h3>
-                    <p>Premium service with professional editing, research enhancement, and custom publishing support. Perfect for serious authors.</p>
+                    <h3>Elite Service — $500</h3>
+                    <p>Publication-ready quality with human editor review, professional fact-checking, 3 revision cycles, and domain expert matching. 1-2 week turnaround.</p>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                        <a href="elite-service.html" style="color: var(--purple); text-decoration: none;">Learn more →</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Start for $49 Pricing Panel -->
+            <div class="glass-card" style="padding: 2rem; max-width: 800px; margin: 3rem auto 2rem; border: 2px solid rgba(16, 185, 129, 0.3);">
+                <h2 style="font-family: 'Crimson Text', Georgia, serif; font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-dark); text-align: center;">
+                    Start for $49
+                </h2>
+                <p style="font-size: 1.125rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">
+                    Your first book includes everything you need: complete AI-generated book from your notes (up to 200 pages), professional formatting and cover design, printed to look like a typical book you'd find in an airport bookstore.
+                </p>
+                <p style="font-size: 1rem; color: var(--text-secondary); margin-bottom: 1.5rem; text-align: center;">
+                    <strong>Includes a printed book</strong> shipped to your door in about a week.
+                </p>
+                <div style="text-align: center;">
+                    <a href="service-tiers.html" style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #10b981, #059669); color: var(--white); padding: 1rem 2rem; border-radius: 0.75rem; text-decoration: none; font-weight: 600; font-size: 1.125rem; transition: all 0.3s ease; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 28px rgba(16, 185, 129, 0.4)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 20px rgba(16, 185, 129, 0.3)'">
+                        <span>See All Pricing Tiers</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
 
@@ -685,6 +700,29 @@
                     </svg>
                 </a>
                 <p class="kdp-note">Free guide • No additional fees • Keep 100% of royalties</p>
+
+                <!-- Amazon Logo at Bottom -->
+                <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--bg-mid); width: 100%;">
+                    <a href="https://amzn.to/430Ojzv" target="_blank" rel="noopener noreferrer" style="display: inline-block; transition: opacity 0.2s ease; text-decoration: none;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+                        <p style="font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.75rem;">Buy one of our books now</p>
+                        <div style="background: linear-gradient(135deg, #ff9500, var(--orange)); padding: 0.75rem 1.5rem; border-radius: 0.75rem; box-shadow: 0 4px 20px rgba(255, 107, 0, 0.3); display: inline-block;">
+                            <img src="assets/kdp-assets/available_at_amazon_US_EN_logo_stacked_RGB_WHITE.png" alt="Available at Amazon" style="height: 40px; width: auto;">
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Navigation Links -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; font-size: 0.875rem; color: var(--text-secondary); margin-top: 2rem;">
+                <a href="how-it-works.html" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-secondary)'">How It Works</a>
+                <span style="color: var(--text-muted);">•</span>
+                <a href="https://app.proofbound.com/use-cases" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-secondary)'">Use Cases</a>
+                <span style="color: var(--text-muted);">•</span>
+                <a href="service-tiers.html" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-secondary)'">Pricing</a>
+                <span style="color: var(--text-muted);">•</span>
+                <a href="faq.html" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-secondary)'">FAQ</a>
+                <span style="color: var(--text-muted);">•</span>
+                <a href="elite-service.html" style="color: var(--text-secondary); text-decoration: none; font-weight: 500; transition: color 0.2s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='var(--text-secondary)'">Elite Service</a>
             </div>
 
         </div>
@@ -760,108 +798,5 @@
         </div>
     </footer>
 
-    <!-- Typing Animation Script -->
-    <script>
-        const words = ["ideas", "notes", "expertise", "knowledge"];
-        let currentWordIndex = 0;
-        const typingElement = document.getElementById('typing');
-        const h1Element = document.querySelector('.hero h1');
-
-        // Store the original HTML structure
-        const fullTextBefore = "Turn your ";
-        const fullTextAfter = " into a";
-
-        // Hide text initially and prepare for typing
-        h1Element.style.opacity = '0';
-
-        // Wait a moment after page load before starting animation
-        setTimeout(() => {
-            h1Element.style.opacity = '1';
-            startFullAnimation();
-        }, 300);
-
-        function startFullAnimation() {
-            // Reset the h1 content
-            h1Element.innerHTML = '<span id="typed-text"></span><span class="typing-cursor">|</span><br><span class="published-book"><img src="assets/videos/book-pages-flipping-optimized.gif" alt="Animated book pages flipping" class="book-video" width="96" height="143" loading="eager">Published Book</span>';
-
-            const typedTextElement = document.getElementById('typed-text');
-            const fullInitialText = fullTextBefore + words[0] + fullTextAfter;
-            let charIndex = 0;
-
-            // Type out the full sentence character by character
-            function typeCharacter() {
-                if (charIndex < fullInitialText.length) {
-                    typedTextElement.textContent = fullInitialText.substring(0, charIndex + 1);
-                    charIndex++;
-                    setTimeout(typeCharacter, 50); // 50ms per character
-                } else {
-                    // Remove cursor and restructure HTML for word cycling
-                    setTimeout(() => {
-                        h1Element.innerHTML = fullTextBefore + '<span class="typing-container" id="typing">' + words[0] + '</span>' + fullTextAfter + '<br><span class="published-book"><img src="assets/videos/book-pages-flipping-optimized.gif" alt="Animated book pages flipping" class="book-video" width="96" height="143" loading="eager">Published Book</span>';
-
-                        // Start cycling through words
-                        currentWordIndex = 1; // Start with second word
-                        setTimeout(cycleWords, 2000); // Wait 2 seconds before first word change
-                    }, 1000);
-                }
-            }
-
-            typeCharacter();
-        }
-
-        function cycleWords() {
-            const typingContainer = document.getElementById('typing');
-            if (!typingContainer) return;
-
-            const currentWord = words[currentWordIndex];
-            const previousWord = words[(currentWordIndex - 1 + words.length) % words.length];
-
-            // Erase previous word character by character
-            let eraseIndex = previousWord.length;
-            function eraseCharacter() {
-                if (eraseIndex > 0) {
-                    typingContainer.textContent = previousWord.substring(0, eraseIndex);
-                    eraseIndex--;
-                    setTimeout(eraseCharacter, 30); // 30ms per character when erasing
-                } else {
-                    // Type new word character by character
-                    let typeIndex = 0;
-                    function typeNewWord() {
-                        if (typeIndex <= currentWord.length) {
-                            typingContainer.textContent = currentWord.substring(0, typeIndex);
-                            typeIndex++;
-                            setTimeout(typeNewWord, 50); // 50ms per character when typing
-                        } else {
-                            // Move to next word or restart animation
-                            currentWordIndex++;
-                            if (currentWordIndex < words.length) {
-                                setTimeout(cycleWords, 2000); // Wait 2 seconds before next word
-                            } else {
-                                // All words cycled, restart entire animation
-                                setTimeout(() => {
-                                    currentWordIndex = 0;
-                                    startFullAnimation();
-                                }, 3000); // Wait 3 seconds before restarting
-                            }
-                        }
-                    }
-                    typeNewWord();
-                }
-            }
-            eraseCharacter();
-        }
-    </script>
-
-    <style>
-        .typing-cursor {
-            animation: blink 1s infinite;
-            font-weight: 400;
-        }
-
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-    </style>
 </body>
 </html>
