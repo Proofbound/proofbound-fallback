@@ -616,9 +616,7 @@
             <h1>
                 Turn your <span class="typing-container" id="typing">ideas</span> into a<br>
                 <span class="published-book">
-                    <video autoplay loop muted playsinline class="book-video">
-                        <source src="assets/videos/book-pages-flipping.mp4" type="video/mp4">
-                    </video>
+                    <img src="assets/videos/book-pages-flipping-optimized.gif" alt="Animated book pages flipping" class="book-video" width="96" height="143" loading="eager">
                     Published Book
                 </span>
             </h1>
@@ -784,7 +782,7 @@
 
         function startFullAnimation() {
             // Reset the h1 content
-            h1Element.innerHTML = '<span id="typed-text"></span><span class="typing-cursor">|</span><br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="assets/videos/book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
+            h1Element.innerHTML = '<span id="typed-text"></span><span class="typing-cursor">|</span><br><span class="published-book"><img src="assets/videos/book-pages-flipping-optimized.gif" alt="Animated book pages flipping" class="book-video" width="96" height="143" loading="eager">Published Book</span>';
 
             const typedTextElement = document.getElementById('typed-text');
             const fullInitialText = fullTextBefore + words[0] + fullTextAfter;
@@ -799,7 +797,7 @@
                 } else {
                     // Remove cursor and restructure HTML for word cycling
                     setTimeout(() => {
-                        h1Element.innerHTML = fullTextBefore + '<span class="typing-container" id="typing">' + words[0] + '</span>' + fullTextAfter + '<br><span class="published-book"><video autoplay loop muted playsinline class="book-video"><source src="assets/videos/book-pages-flipping.mp4" type="video/mp4"></video>Published Book</span>';
+                        h1Element.innerHTML = fullTextBefore + '<span class="typing-container" id="typing">' + words[0] + '</span>' + fullTextAfter + '<br><span class="published-book"><img src="assets/videos/book-pages-flipping-optimized.gif" alt="Animated book pages flipping" class="book-video" width="96" height="143" loading="eager">Published Book</span>';
 
                         // Start cycling through words
                         currentWordIndex = 1; // Start with second word
