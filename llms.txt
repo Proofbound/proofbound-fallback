@@ -53,7 +53,13 @@ TextKeep is a free, open-source macOS application that exports iMessage and SMS 
 - Machine learning training data preparation
 - Chatbot development and conversation modeling
 
-## Frequently Asked Questions (25 Questions)
+## Frequently Asked Questions (26 Questions)
+
+### Category: Platform Availability
+
+**Q: What about Android? Is there a Windows version?**
+URL: https://proofbound.com/textkeep/faq/android-windows-availability.html
+Summary: TextKeep is only available for macOS. Android doesn't have iMessage, Windows doesn't store messages locally, iOS doesn't allow third-party access to the message database, and the chat.db structure is Mac-specific. Only macOS provides the "Full Disk Access" permission that allows TextKeep to read and export the local message database.
 
 ### Category: Why Apple Doesn't Offer Export
 

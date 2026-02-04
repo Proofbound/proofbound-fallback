@@ -63,7 +63,15 @@
   <!-- TextKeep FAQ System -->
   <url>
     <loc>https://proofbound.com/textkeep/faq.html</loc>
-    <lastmod>2026-02-01</lastmod>
+    <lastmod>2026-02-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- TextKeep FAQ - Platform Availability -->
+  <url>
+    <loc>https://proofbound.com/textkeep/faq/android-windows-availability.html</loc>
+    <lastmod>2026-02-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
