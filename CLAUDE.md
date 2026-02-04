@@ -1,6 +1,6 @@
 # Proofbound Marketing Site
 
-> **Last Updated:** February 2, 2026
+> **Last Updated:** February 4, 2026
 
 **Static marketing website for proofbound.com featuring comprehensive information about Proofbound's AI-powered book generation services.**
 
@@ -206,11 +206,10 @@ python3 -m http.server 8000
    - CTAs to start or try demo
 
 3. **service-tiers.html** (20 KB)
-   - 3 pricing tiers with feature comparison
-   - Proof of Concept: $49
-   - Professional: $500-$2,000 (Most Popular)
-   - Premium: $2,000-$5,000
-   - Detailed feature lists, testimonials
+   - Generation tiers: Free ($0), Basic ($49 - Most Popular), Book Pass ($99)
+   - Add-ons: Refresh (+$25), Elite ($500)
+   - Unlocks: Clean PDF (+$99), Source files (+$449)
+   - Printing prices and detailed feature lists
 
 4. **faq.html** (24 KB)
    - 12 Q&A items with interactive accordion

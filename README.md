@@ -25,9 +25,9 @@ This repository contains **static fallback and special content** for Proofbound:
 ## Site Pages
 
 ### Marketing Pages
-1. **index.html** - Landing page with typing animation, service overview, CTAs
+1. **index.html** - Landing page with pulsing logo, service overview, CTAs
 2. **how-it-works.html** - 4-step book creation process
-3. **service-tiers.html** - Pricing tiers ($49, $500-$2000, $2000-$5000)
+3. **service-tiers.html** - Pricing tiers (Free, Basic $49, Book Pass $99, Elite $500)
 4. **faq.html** - FAQ with interactive accordion (12 Q&A items)
 5. **elite-service.html** - Premium service details with 6 features
 6. **privacy.html** - Privacy policy (11 sections)
@@ -37,7 +37,7 @@ This repository contains **static fallback and special content** for Proofbound:
 - **TextKeep Banner** - Featured on every page, links to textkeep.html
 - **Consistent Design** - Glass-morphism cards, blue/purple gradient theme
 - **Responsive** - Mobile-first design, works on all devices
-- **Interactive Elements** - Typing animation (landing), accordion (FAQ)
+- **Interactive Elements** - Pulsing logo animation (landing), accordion (FAQ)
 
 ## URLs
 
